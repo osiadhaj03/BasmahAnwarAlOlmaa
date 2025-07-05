@@ -14,6 +14,10 @@ class ViewLesson extends ViewRecord
     {
         return [
             Actions\EditAction::make()->label('تعديل'),
+            Actions\Action::make('back')
+                ->label('العودة للقائمة')
+                ->url('/admin/lessons')
+                ->icon('heroicon-o-arrow-left'),
         ];
     }
 }

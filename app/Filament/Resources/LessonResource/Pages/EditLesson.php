@@ -30,6 +30,6 @@ class EditLesson extends EditRecord
     
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index');
+        return '/admin/lessons';
     }
 }
