@@ -240,34 +240,32 @@
         </div>
     @endif
 
-    <!-- Header Card -->
-    <div class="card-anwar islamic-pattern mb-4">
-        <div class="card-body p-4">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="h2 fw-bold text-dark mb-2">
-                        <i class="fas fa-clipboard-check text-muted me-2" style="color: #6c757d !important;"></i>
-                        إدارة الحضور
-                    </h1>
-                    <p class="text-muted mb-0">
-                        @if(auth()->user()->role === 'admin')
-                            عرض وتقارير الحضور لجميع المعلمين
-                        @else
-                            إدارة حضور دروسك
-                        @endif
-                    </p>
+    <!-- Header Card with Green Gradient -->
+    <div style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);" class="p-4 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="h2 fw-bold mb-2" style="color: white;">
+                    <i class="fas fa-clipboard-check me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
+                    إدارة الحضور
+                </h1>
+                <p class="mb-0" style="color: rgba(255, 255, 255, 0.8);">
+                    @if(auth()->user()->role === 'admin')
+                        عرض وتقارير الحضور لجميع المعلمين
+                    @else
+                        إدارة حضور دروسك
+                    @endif
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="d-inline-block px-3 py-2 rounded mb-2 me-2" style="background: rgba(255, 255, 255, 0.15); color: white; font-size: 0.85rem; backdrop-filter: blur(10px);">
+                    <i class="fas fa-info-circle me-1"></i>
+                    تسجيل الحضور يتم عبر الطلاب باستخدام QR Code فقط
                 </div>
-                <div class="col-md-4 text-end">
-                    <div class="anwar-alert-info d-inline-block px-3 py-2 rounded mb-2 me-2" style="font-size: 0.85rem;">
-                        <i class="fas fa-info-circle me-1"></i>
-                        تسجيل الحضور يتم عبر الطلاب باستخدام QR Code فقط
-                    </div>
-                    <br>
-                    <a href="{{ route('admin.attendances.reports') }}" class="btn btn-anwar-primary">
-                        <i class="fas fa-chart-line me-2"></i>
-                        التقارير المتقدمة
-                    </a>
-                </div>
+                <br>
+                <a href="{{ route('admin.attendances.reports') }}" class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 20px; border-radius: 10px; backdrop-filter: blur(10px);">
+                    <i class="fas fa-chart-line me-2"></i>
+                    التقارير المتقدمة
+                </a>
             </div>
         </div>
     </div>

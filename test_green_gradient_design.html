@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار التصميم الجديد - التدرج الأخضر للصفحات</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .demo-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .green-gradient-header {
+            background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+            padding: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 12px 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+        }
+
+        .card-green {
+            background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
+            color: white;
+        }
+
+        .card-header-glass {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px 15px 0 0;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center mb-5" style="color: #0d9488; font-weight: 700;">
+            <i class="fas fa-palette me-3"></i>
+            اختبار التصميم الجديد - التدرج الأخضر للصفحات
+        </h1>
+
+        <!-- صفحة إدارة المستخدمين -->
+        <div class="demo-section">
+            <h2 class="mb-4" style="color: #0d9488;">
+                <i class="fas fa-users me-2"></i>
+                صفحة إدارة المستخدمين
+            </h2>
+            
+            <div class="green-gradient-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="h3 mb-2" style="font-weight: 700;">
+                            <i class="fas fa-users me-2"></i>
+                            إدارة المستخدمين
+                        </h1>
+                        <p class="mb-0" style="color: rgba(255, 255, 255, 0.8);">إدارة وتنظيم مستخدمي النظام</p>
+                    </div>
+                    <a href="#" class="btn-glass">
+                        <i class="fas fa-plus me-2"></i>
+                        إضافة مستخدم جديد
+                    </a>
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>تم التطبيق:</strong> هيدر بتدرج أخضر جميل مع أزرار شفافة
+            </div>
+        </div>
+
+        <!-- صفحة إدارة الحضور -->
+        <div class="demo-section">
+            <h2 class="mb-4" style="color: #0d9488;">
+                <i class="fas fa-clipboard-check me-2"></i>
+                صفحة إدارة الحضور
+            </h2>
+            
+            <div class="green-gradient-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="h2 fw-bold mb-2">
+                            <i class="fas fa-clipboard-check me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
+                            إدارة الحضور
+                        </h1>
+                        <p class="mb-0" style="color: rgba(255, 255, 255, 0.8);">
+                            عرض وتقارير الحضور لجميع المعلمين
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <div class="d-inline-block px-3 py-2 rounded mb-2" style="background: rgba(255, 255, 255, 0.15); font-size: 0.85rem; backdrop-filter: blur(10px);">
+                            <i class="fas fa-info-circle me-1"></i>
+                            تسجيل الحضور يتم عبر الطلاب باستخدام QR Code فقط
+                        </div>
+                        <br>
+                        <a href="#" class="btn-glass">
+                            <i class="fas fa-chart-line me-2"></i>
+                            التقارير المتقدمة
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>تم التطبيق:</strong> هيدر أخضر جذاب مع معلومات واضحة
+            </div>
+        </div>
+
+        <!-- قسم الإجراءات السريعة ومعلومات النظام -->
+        <div class="demo-section">
+            <h2 class="mb-4" style="color: #0d9488;">
+                <i class="fas fa-tachometer-alt me-2"></i>
+                قسم الإجراءات السريعة ومعلومات النظام (لوحة التحكم)
+            </h2>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card card-green">
+                        <div class="card-header card-header-glass p-3">
+                            <h5 class="card-title mb-0" style="font-weight: 600;">
+                                <i class="fas fa-tachometer-alt me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
+                                الإجراءات السريعة
+                            </h5>
+                        </div>
+                        <div class="card-body" style="padding: 2rem;">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <a href="#" class="btn-glass w-100 text-center d-block" style="padding: 15px;">
+                                        <i class="fas fa-users me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
+                                        إدارة المستخدمين
+                                    </a>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <a href="#" class="btn-glass w-100 text-center d-block" style="padding: 15px;">
+                                        <i class="fas fa-book me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
+                                        إدارة الدروس
+                                    </a>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <a href="#" class="btn-glass w-100 text-center d-block" style="padding: 15px;">
+                                        <i class="fas fa-clipboard-check me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
+                                        إدارة الحضور
+                                    </a>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <a href="#" class="btn-glass w-100 text-center d-block" style="padding: 15px;">
+                                        <i class="fas fa-user-plus me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
+                                        إضافة مستخدم
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card card-green">
+                        <div class="card-header card-header-glass p-3">
+                            <h5 class="card-title mb-0" style="font-weight: 600;">
+                                <i class="fas fa-info-circle me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
+                                معلومات النظام
+                            </h5>
+                        </div>
+                        <div class="card-body" style="padding: 2rem;">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-user-circle fa-2x" style="color: rgba(255, 255, 255, 0.9);"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0" style="font-weight: 600;">أحمد محمد</h6>
+                                    <small style="color: rgba(255, 255, 255, 0.8);">مدير النظام</small>
+                                </div>
+                            </div>
+                            
+                            <hr style="border-color: rgba(255, 255, 255, 0.3); margin: 1.5rem 0;">
+                            
+                            <div class="text-center">
+                                <h6 style="font-weight: 600;">BasmahApp</h6>
+                                <small style="color: rgba(255, 255, 255, 0.8);">نظام إدارة الحضور الذكي</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-success mt-3">
+                <strong>تم التطبيق:</strong> تدرج أخضر جميل مع تأثيرات زجاجية شفافة في الأزرار والبطاقات
+            </div>
+        </div>
+
+        <!-- معلومات التصميم -->
+        <div class="demo-section">
+            <h2 class="mb-4" style="color: #0d9488;">
+                <i class="fas fa-palette me-2"></i>
+                معلومات التصميم الجديد
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 style="color: #0d9488;">التدرج الأخضر المستخدم:</h5>
+                    <div class="p-3 rounded mb-3" style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%);">
+                        <code style="color: white;">linear-gradient(135deg, #0d9488 0%, #1e40af 100%)</code>
+                    </div>
+                    
+                    <h6 style="color: #0d9488;">المميزات:</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            تدرج أخضر-أزرق جذاب ومهدئ
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            تأثيرات شفافية (backdrop-filter: blur)
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            ظلال مع لون متناسق
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            أزرار شفافة أنيقة
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5 style="color: #0d9488;">التطبيقات المنجزة:</h5>
+                    <div class="list-group">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-users me-2"></i>
+                                صفحة إدارة المستخدمين
+                            </span>
+                            <span class="badge bg-success">✓ مكتمل</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-clipboard-check me-2"></i>
+                                صفحة إدارة الحضور
+                            </span>
+                            <span class="badge bg-success">✓ مكتمل</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-tachometer-alt me-2"></i>
+                                لوحة التحكم - الإجراءات السريعة
+                            </span>
+                            <span class="badge bg-success">✓ مكتمل</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-info-circle me-2"></i>
+                                لوحة التحكم - معلومات النظام
+                            </span>
+                            <span class="badge bg-success">✓ مكتمل</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="fas fa-book me-2"></i>
+                                صفحة إدارة الدروس
+                            </span>
+                            <span class="badge bg-primary">أصلي</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-success text-center" style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border: none; color: white;">
+            <h4 class="alert-heading" style="color: white;">
+                <i class="fas fa-check-circle me-2"></i>
+                تم تطبيق التصميم الأخضر الجديد بنجاح!
+            </h4>
+            <p class="mb-0">جميع الصفحات المطلوبة أصبحت بالتدرج الأخضر الجميل المتناسق مع هوية "أنوار العلماء"</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

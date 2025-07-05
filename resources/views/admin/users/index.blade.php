@@ -6,16 +6,24 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">
-                        <i class="fas fa-users me-2"></i>
-                        إدارة المستخدمين
-                    </h4>
-                    <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+            <!-- Header Section with Green Gradient -->
+            <div style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);" class="p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="h3 mb-2" style="color: white; font-weight: 700;">
+                            <i class="fas fa-users me-2"></i>
+                            إدارة المستخدمين
+                        </h1>
+                        <p class="mb-0" style="color: rgba(255, 255, 255, 0.8);">إدارة وتنظيم مستخدمي النظام</p>
+                    </div>
+                    <a href="{{ route('admin.users.create') }}" class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 12px 24px; border-radius: 10px; backdrop-filter: blur(10px);">
                         <i class="fas fa-plus me-2"></i>
                         إضافة مستخدم جديد
-                    </a>                </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card" style="border-radius: 15px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1);")
                 
                 <div class="card-body">
                     <!-- رسائل النجاح والخطأ -->

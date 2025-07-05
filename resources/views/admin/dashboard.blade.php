@@ -187,42 +187,42 @@
 <!-- Quick Actions -->
 <div class="row">
     <div class="col-lg-8">
-        <div class="card card-white-gradient">
-            <div class="card-header card-header-white">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-tachometer-alt me-2"></i>
+        <div class="card" style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);">
+            <div class="card-header" style="background: rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.2); border-radius: 15px 15px 0 0; backdrop-filter: blur(10px);">
+                <h5 class="card-title mb-0" style="color: white; font-weight: 600;">
+                    <i class="fas fa-tachometer-alt me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
                     الإجراءات السريعة
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="padding: 2rem;">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <a href="{{ route('admin.users.index') }}" class="btn btn-lg w-100 btn-white-action">
-                            <i class="fas fa-users me-2"></i>
+                        <a href="{{ route('admin.users.index') }}" class="btn btn-lg w-100" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 15px; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.25)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'">
+                            <i class="fas fa-users me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
                             إدارة المستخدمين
                         </a>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <a href="{{ route('admin.lessons.index') }}" class="btn btn-lg w-100 btn-white-action">
-                            <i class="fas fa-book me-2"></i>
+                        <a href="{{ route('admin.lessons.index') }}" class="btn btn-lg w-100" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 15px; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.25)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'">
+                            <i class="fas fa-book me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
                             إدارة الدروس
                         </a>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <a href="{{ route('admin.attendances.index') }}" class="btn btn-lg w-100 btn-white-action">
-                            <i class="fas fa-clipboard-check me-2"></i>
+                        <a href="{{ route('admin.attendances.index') }}" class="btn btn-lg w-100" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 15px; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.25)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'">
+                            <i class="fas fa-clipboard-check me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
                             إدارة الحضور
                         </a>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <a href="{{ route('admin.users.create') }}" class="btn btn-lg w-100 btn-white-action">
-                            <i class="fas fa-user-plus me-2"></i>
+                        <a href="{{ route('admin.users.create') }}" class="btn btn-lg w-100" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 15px; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.25)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'">
+                            <i class="fas fa-user-plus me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
                             إضافة مستخدم
                         </a>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <a href="{{ route('admin.lessons.create') }}" class="btn btn-lg w-100 btn-white-action">
-                            <i class="fas fa-plus me-2"></i>
+                        <a href="{{ route('admin.lessons.create') }}" class="btn btn-lg w-100" style="background: rgba(255, 255, 255, 0.15); color: white; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 15px; backdrop-filter: blur(10px); transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255, 255, 255, 0.25)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.15)'">
+                            <i class="fas fa-plus me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
                             إضافة درس جديد
                         </a>
                     </div>
@@ -232,69 +232,35 @@
     </div>
 
     <div class="col-lg-4">
-        <div class="card card-white-gradient">
-            <div class="card-header card-header-white">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-info-circle me-2"></i>
+        <div class="card" style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);">
+            <div class="card-header" style="background: rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.2); border-radius: 15px 15px 0 0; backdrop-filter: blur(10px);">
+                <h5 class="card-title mb-0" style="color: white; font-weight: 600;">
+                    <i class="fas fa-info-circle me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
                     معلومات النظام
                 </h5>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="padding: 2rem;">
                 <div class="d-flex align-items-center mb-3">
                     <div class="flex-shrink-0">
-                        <i class="fas fa-user-circle fa-2x" style="color: #6c757d;"></i>
+                        <i class="fas fa-user-circle fa-2x" style="color: rgba(255, 255, 255, 0.9);"></i>
                     </div>
                     <div class="flex-grow-1 ms-3">
-                        <h6 class="mb-0" style="color: #495057;">{{ auth()->user()->name }}</h6>
-                        <small class="text-muted">
+                        <h6 class="mb-0" style="color: white; font-weight: 600;">{{ auth()->user()->name }}</h6>
+                        <small style="color: rgba(255, 255, 255, 0.8);">
                             {{ auth()->user()->role === 'admin' ? 'مدير النظام' : 'معلم' }}
                         </small>
                     </div>
                 </div>
                 
-                <hr style="border-color: rgba(0,0,0,0.1);">
+                <hr style="border-color: rgba(255, 255, 255, 0.3); margin: 1.5rem 0;">
                 
                 <div class="text-center">
-                    <h6 style="color: #6c757d;">BasmahApp</h6>
-                    <small class="text-muted">نظام إدارة الحضور الذكي</small>
+                    <h6 style="color: white; font-weight: 600;">BasmahApp</h6>
+                    <small style="color: rgba(255, 255, 255, 0.8);">نظام إدارة الحضور الذكي</small>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-/* أزرار الإجراءات السريعة بألوان بيضاء وتدرجات هادئة */
-.btn-white-action {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
-    border: 1px solid rgba(0,0,0,0.1) !important;
-    color: #495057 !important;
-    transition: all 0.3s ease;
-}
-
-.btn-white-action:hover {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
-    border-color: rgba(0,0,0,0.15) !important;
-    color: #495057 !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.btn-white-action i {
-    color: #6c757d !important;
-}
-
-.btn-white-action:hover i {
-    color: #495057 !important;
-}
-
-/* تأكيد ألوان العناوين والأيقونات في القسم */
-.card-title {
-    color: #495057 !important;
-}
-
-.card-title i {
-    color: #6c757d !important;
-}
-</style>
 @endsection
