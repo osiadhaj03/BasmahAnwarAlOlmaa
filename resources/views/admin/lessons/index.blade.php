@@ -71,31 +71,33 @@
 @endpush
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0">
-        <i class="fas fa-book-open me-2 text-primary"></i>
-        إدارة الدروس
-    </h1>
-    <a href="{{ route('admin.lessons.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus me-2"></i>
-        إضافة درس جديد
-    </a>
+<div class="anwar-header islamic-pattern-enhanced">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="anwar-title">
+            <i class="fas fa-book-open anwar-text-gold me-2"></i>
+            إدارة الدروس
+        </h1>
+        <a href="{{ route('admin.lessons.create') }}" class="btn anwar-btn-primary">
+            <i class="fas fa-plus me-2"></i>
+            إضافة درس جديد
+        </a>
+    </div>
 </div>
 
 <!-- نظام البحث والفلترة المتقدم -->
-<div class="card filter-card mb-4">
-    <div class="card-body">
+<div class="card anwar-card islamic-pattern-subtle mb-4">
+    <div class="card-body anwar-card-body">
         <form method="GET" action="{{ route('admin.lessons.index') }}" id="filterForm">
             <div class="row g-3">
                 <!-- البحث الرئيسي -->
                 <div class="col-md-4">
                     <div class="filter-section">
-                        <h6 class="text-primary mb-3">
+                        <h6 class="anwar-text-gold mb-3">
                             <i class="fas fa-search me-2"></i>البحث
                         </h6>
                         <div class="search-box">
                             <input type="text" 
-                                   class="form-control" 
+                                   class="form-control-anwar" 
                                    name="search" 
                                    value="{{ request('search') }}"
                                    placeholder="ابحث في المادة، الوصف، أو اسم المعلم..."
@@ -110,10 +112,10 @@
                     <div class="row g-3">
                         <!-- فلتر اليوم -->
                         <div class="col-md-3">
-                            <h6 class="text-success mb-2">
+                            <h6 class="anwar-text-green mb-2">
                                 <i class="fas fa-calendar-day me-1"></i>اليوم
                             </h6>
-                            <select class="form-select" name="day_filter" onchange="document.getElementById('filterForm').submit()">
+                            <select class="form-control-anwar" name="day_filter" onchange="document.getElementById('filterForm').submit()">
                                 <option value="">كل الأيام</option>
                                 @foreach($days as $value => $label)
                                     <option value="{{ $value }}" 
@@ -127,10 +129,10 @@
                         <!-- فلتر المعلم (للمدير فقط) -->
                         @if(auth()->user()->role === 'admin' && $teachers->count() > 0)
                         <div class="col-md-3">
-                            <h6 class="text-info mb-2">
+                            <h6 class="anwar-text-blue mb-2">
                                 <i class="fas fa-user-tie me-1"></i>المعلم
                             </h6>
-                            <select class="form-select" name="teacher_filter" onchange="document.getElementById('filterForm').submit()">
+                            <select class="form-control-anwar" name="teacher_filter" onchange="document.getElementById('filterForm').submit()">
                                 <option value="">كل المعلمين</option>
                                 @foreach($teachers as $teacher)
                                     <option value="{{ $teacher->id }}" 
@@ -144,10 +146,10 @@
 
                         <!-- فلتر الوقت -->
                         <div class="col-md-3">
-                            <h6 class="text-warning mb-2">
+                            <h6 class="anwar-text-orange mb-2">
                                 <i class="fas fa-clock me-1"></i>الوقت
                             </h6>
-                            <select class="form-select" name="time_filter" onchange="document.getElementById('filterForm').submit()">
+                            <select class="form-control-anwar" name="time_filter" onchange="document.getElementById('filterForm').submit()">
                                 <option value="">كل الأوقات</option>
                                 <option value="morning" @if(request('time_filter') == 'morning') selected @endif>
                                     صباحي (قبل 12 ظهراً)

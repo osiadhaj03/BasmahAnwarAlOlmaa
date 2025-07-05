@@ -1,28 +1,37 @@
 @extends('layouts.admin')
 
-@section('title', 'تعديل الدرس')
+@section('title', 'تعديل الدرس - أنوار العلماء')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid islamic-pattern-enhanced">
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="h3 mb-0">تعديل الدرس</h1>
-                <a href="{{ route('admin.lessons.index') }}" class="btn btn-secondary">
+            <div class="d-flex justify-content-between align-items-center mb-4 fade-in">
+                <div>
+                    <h1 class="text-anwar-gradient mb-1 heading-anwar-center">
+                        <i class="fas fa-edit me-2"></i>
+                        تعديل الدرس
+                    </h1>
+                    <p class="text-anwar-teal mb-0">تحديث بيانات الدرس في نظام أنوار العلماء</p>
+                </div>
+                <a href="{{ route('admin.lessons.index') }}" class="btn-anwar-teal hover-lift">
                     <i class="fas fa-arrow-right me-2"></i>العودة للقائمة
                 </a>
             </div>
 
-            <div class="card shadow">
-                <div class="card-body">
-                    <form action="{{ route('admin.lessons.update', $lesson) }}" method="POST">
+            <div class="card-anwar shadow-anwar fade-in">
+                <div class="card-body p-4">
+                    <form action="{{ route('admin.lessons.update', $lesson) }}" method="POST" class="needs-validation" novalidate>
                         @csrf
                         @method('PUT')
                           <div class="row">
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="subject" class="form-label">المادة <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('subject') is-invalid @enderror" 
+                                <div class="form-group-anwar">
+                                    <label for="subject" class="form-label-anwar">
+                                        <i class="fas fa-book me-2 text-anwar-gold"></i>
+                                        المادة <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control-anwar @error('subject') is-invalid @enderror hover-lift" 
                                            id="subject" name="subject" value="{{ old('subject', $lesson->subject ?: $lesson->name) }}" required>
                                     @error('subject')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -32,9 +41,12 @@
 
                             @if(auth()->user()->role === 'admin')
                             <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="teacher_id" class="form-label">المعلم <span class="text-danger">*</span></label>
-                                    <select class="form-control @error('teacher_id') is-invalid @enderror" 
+                                <div class="form-group-anwar">
+                                    <label for="teacher_id" class="form-label-anwar">
+                                        <i class="fas fa-chalkboard-teacher me-2 text-anwar-teal"></i>
+                                        المعلم <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-control-anwar @error('teacher_id') is-invalid @enderror hover-lift" 
                                             id="teacher_id" name="teacher_id" required>
                                         <option value="">اختر المعلم</option>
                                         @foreach($teachers as $teacher)
@@ -54,9 +66,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="day_of_week" class="form-label">يوم الأسبوع <span class="text-danger">*</span></label>
-                                <select class="form-control @error('day_of_week') is-invalid @enderror" 
+                            <div class="col-md-4 form-group-anwar">
+                                <label for="day_of_week" class="form-label-anwar">
+                                    <i class="fas fa-calendar-day me-2 text-anwar-gold"></i>
+                                    يوم الأسبوع <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-control-anwar @error('day_of_week') is-invalid @enderror hover-lift" 
                                         id="day_of_week" 
                                         name="day_of_week" 
                                         required>
@@ -74,10 +89,13 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="start_time" class="form-label">وقت البداية <span class="text-danger">*</span></label>
+                            <div class="col-md-4 form-group-anwar">
+                                <label for="start_time" class="form-label-anwar">
+                                    <i class="fas fa-clock me-2 text-anwar-teal"></i>
+                                    وقت البداية <span class="text-danger">*</span>
+                                </label>
                                 <input type="time" 
-                                       class="form-control @error('start_time') is-invalid @enderror" 
+                                       class="form-control-anwar @error('start_time') is-invalid @enderror hover-lift" 
                                        id="start_time" 
                                        name="start_time" 
                                        value="{{ old('start_time', $lesson->start_time ? $lesson->start_time->format('H:i') : '') }}" 
@@ -87,10 +105,13 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="end_time" class="form-label">وقت النهاية <span class="text-danger">*</span></label>
+                            <div class="col-md-4 form-group-anwar">
+                                <label for="end_time" class="form-label-anwar">
+                                    <i class="fas fa-clock me-2 text-anwar-gold"></i>
+                                    وقت النهاية <span class="text-danger">*</span>
+                                </label>
                                 <input type="time" 
-                                       class="form-control @error('end_time') is-invalid @enderror" 
+                                       class="form-control-anwar @error('end_time') is-invalid @enderror hover-lift" 
                                        id="end_time" 
                                        name="end_time" 
                                        value="{{ old('end_time', $lesson->end_time ? $lesson->end_time->format('H:i') : '') }}" 

@@ -6,46 +6,51 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1 class="h3 mb-0">تفاصيل الدرس</h1>
-                <div>
-                    <a href="{{ route('admin.lessons.edit', $lesson) }}" class="btn btn-warning me-2">
-                        <i class="fas fa-edit me-2"></i>تعديل
-                    </a>
-                    <a href="{{ route('admin.lessons.index') }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-right me-2"></i>العودة للقائمة
-                    </a>
+            <div class="anwar-header islamic-pattern-enhanced">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1 class="anwar-title">
+                        <i class="fas fa-eye anwar-text-gold me-2"></i>
+                        تفاصيل الدرس
+                    </h1>
+                    <div>
+                        <a href="{{ route('admin.lessons.edit', $lesson) }}" class="btn anwar-btn-warning me-2">
+                            <i class="fas fa-edit me-2"></i>تعديل
+                        </a>
+                        <a href="{{ route('admin.lessons.index') }}" class="btn anwar-btn-secondary">
+                            <i class="fas fa-arrow-right me-2"></i>العودة للقائمة
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <!-- Lesson Details -->
                 <div class="col-lg-8">
-                    <div class="card shadow mb-4">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">
+                    <div class="card anwar-card islamic-pattern-subtle shadow mb-4">
+                        <div class="card-header anwar-card-header">
+                            <h5 class="card-title mb-0 anwar-text-gold">
                                 <i class="fas fa-book me-2"></i>معلومات الدرس
                             </h5>
                         </div>
-                        <div class="card-body">
-                            <table class="table table-borderless">
+                        <div class="card-body anwar-card-body">
+                            <table class="table table-borderless anwar-table">
                                 <tr>
-                                    <th style="width: 200px;">اسم الدرس:</th>
-                                    <td>{{ $lesson->name }}</td>
+                                    <th class="anwar-text-gold" style="width: 200px;">اسم الدرس:</th>
+                                    <td class="anwar-text-dark">{{ $lesson->name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>المادة:</th>
-                                    <td>{{ $lesson->subject ?? 'غير محدد' }}</td>
+                                    <th class="anwar-text-gold">المادة:</th>
+                                    <td class="anwar-text-dark">{{ $lesson->subject ?? 'غير محدد' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>المعلم:</th>
+                                    <th class="anwar-text-gold">المعلم:</th>
                                     <td>
-                                        <span class="badge bg-primary">{{ $lesson->teacher->name }}</span>
+                                        <span class="badge anwar-badge-blue">{{ $lesson->teacher->name }}</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>وقت الدرس:</th>
-                                    <td>{{ $lesson->schedule_time ?? 'غير محدد' }}</td>
+                                    <th class="anwar-text-gold">وقت الدرس:</th>
+                                    <td class="anwar-text-dark">{{ $lesson->schedule_time ?? 'غير محدد' }}</td>
                                 </tr>
                                 <tr>
                                     <th>تاريخ الإنشاء:</th>

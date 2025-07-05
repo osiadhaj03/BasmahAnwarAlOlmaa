@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-fluid">
     <!-- رسائل النجاح والخطأ -->    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert anwar-alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle me-2"></i>
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -13,7 +13,7 @@
     @endif
     
     @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert anwar-alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-triangle me-2"></i>
             {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -23,15 +23,15 @@
     <div class="row">
         <div class="col-12">
             <!-- Header Card -->
-            <div class="card mb-4">
-                <div class="card-header">
+            <div class="card anwar-card islamic-pattern-subtle mb-4">
+                <div class="card-header anwar-card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h4 class="mb-0">
-                                <i class="fas fa-clipboard-check me-2 text-primary"></i>
+                            <h4 class="mb-0 anwar-text-gold">
+                                <i class="fas fa-clipboard-check me-2"></i>
                                 إدارة الحضور
                             </h4>
-                            <small class="text-muted">
+                            <small class="anwar-text-muted">
                                 @if(auth()->user()->role === 'admin')
                                     عرض وتقارير الحضور لجميع المعلمين
                                 @else
@@ -39,11 +39,11 @@
                                 @endif
                             </small>
                         </div>                        <div class="col-auto">
-                            <div class="alert alert-info mb-0 me-2" style="font-size: 0.85rem;">
+                            <div class="alert anwar-alert-info mb-0 me-2" style="font-size: 0.85rem;">
                                 <i class="fas fa-info-circle me-1"></i>
                                 تسجيل الحضور يتم عبر الطلاب باستخدام QR Code فقط
                             </div>
-                            <a href="{{ route('admin.attendances.reports') }}" class="btn btn-info">
+                            <a href="{{ route('admin.attendances.reports') }}" class="btn anwar-btn-info">
                                 <i class="fas fa-chart-line me-2"></i>
                                 التقارير المتقدمة
                             </a>

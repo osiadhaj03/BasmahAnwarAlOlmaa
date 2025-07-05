@@ -180,31 +180,4 @@ if (env('APP_ENV') === 'local') {
         ->name('quick.qr');
 }
 
-// Temporary fix for missing Filament routes
-Route::get('/admin/filament/lessons', function() {
-    return redirect('/admin/lessons');
-})->name('filament.admin.resources.lessons.index');
-
-Route::get('/admin/filament/lessons/create', function() {
-    return redirect('/admin/lessons/create');
-})->name('filament.admin.resources.lessons.create');
-
-// Temporary fix for missing Filament Attendance routes
-Route::get('/admin/filament/attendances', function() {
-    return redirect('/admin/attendances');
-})->name('filament.admin.resources.attendances.index');
-
-Route::get('/admin/filament/attendances/create', function() {
-    return redirect('/admin/attendances');
-})->name('filament.admin.resources.attendances.create');
-
-// Temporary fix for missing Filament auth logout route
-Route::match(['GET', 'POST'], '/admin/filament/logout', function() {
-    // Handle both GET and POST for logout
-    if (auth()->check()) {
-        auth()->logout();
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
-    }
-    return redirect()->route('admin.login');
-})->name('filament.admin.auth.logout');
+// End of routes - Filament integration removed to use custom design
