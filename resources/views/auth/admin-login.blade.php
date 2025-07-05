@@ -22,7 +22,7 @@
             color: var(--anwar-gray-dark);
         }
         
-        /* خلفية إسلامية محسّنة ومريحة */
+        /* خلفية مبسطة ومريحة */
         body::before {
             content: '';
             position: absolute;
@@ -30,7 +30,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23DAA520' fill-opacity='0.015'%3E%3Cpolygon points='70,0 86.52,49.98 140,49.98 99.24,80.76 115.76,130.74 70,99.96 24.24,130.74 40.76,80.76 0,49.98 53.48,49.98'/%3E%3Cpolygon points='35,35 43.26,59.99 70,59.99 49.62,75.38 57.88,100.37 35,85.98 12.12,100.37 20.38,75.38 0,59.99 26.74,59.99'/%3E%3Cpolygon points='105,35 113.26,59.99 140,59.99 119.62,75.38 127.88,100.37 105,85.98 82.12,100.37 90.38,75.38 70,59.99 96.74,59.99'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background: linear-gradient(135deg, 
+                rgba(218, 165, 32, 0.015) 0%, 
+                rgba(0, 128, 128, 0.01) 50%,
+                rgba(218, 165, 32, 0.008) 100%);
             opacity: 0.7;
             pointer-events: none;
         }

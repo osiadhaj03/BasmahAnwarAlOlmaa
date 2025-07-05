@@ -27,7 +27,7 @@
             box-shadow: 4px 0 25px var(--anwar-shadow-teal);
         }
         
-        /* نقش إسلامي محسّن في الشريط الجانبي */
+        /* خلفية مبسطة في الشريط الجانبي */
         .sidebar::before {
             content: '';
             position: absolute;
@@ -35,7 +35,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.035'%3E%3Cpolygon points='50,0 61.8,35.36 100,35.36 70.9,57.64 82.7,93 50,70.72 17.3,93 29.1,57.64 0,35.36 38.2,35.36'/%3E%3Cpolygon points='25,25 30.9,42.68 50,42.68 35.45,54.82 41.35,72.5 25,60.36 8.65,72.5 14.55,54.82 0,42.68 19.1,42.68'/%3E%3Cpolygon points='75,25 80.9,42.68 100,42.68 85.45,54.82 91.35,72.5 75,60.36 58.65,72.5 64.55,54.82 50,42.68 69.1,42.68'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.04) 0%, 
+                rgba(255, 255, 255, 0.02) 50%,
+                rgba(255, 255, 255, 0.01) 100%);
             opacity: 0.9;
             pointer-events: none;
         }
@@ -134,7 +137,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpolygon points='40,0 48.33,28 80,28 56.67,46 65,74 40,56 15,74 23.33,46 0,28 31.67,28'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
             opacity: 0.6;
             pointer-events: none;
         }
@@ -239,7 +244,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpolygon points='30,0 36.18,21.18 60,21.18 42.27,34.64 48.45,55.82 30,42.36 11.55,55.82 17.73,34.64 0,21.18 23.82,21.18'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.08) 0%, 
+                rgba(255, 255, 255, 0.03) 100%);
             opacity: 0.8;
             pointer-events: none;
         }
