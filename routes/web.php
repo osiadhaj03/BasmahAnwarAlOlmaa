@@ -11,10 +11,9 @@ use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Teacher\TeacherDashboardController;
 use App\Http\Controllers\Teacher\TeacherLessonController;
 use App\Http\Controllers\QRCodeController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome-premium');
-})->name('welcome.premium');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/welcome-simple', function () {
     return view('welcome-simple');
