@@ -22,7 +22,7 @@
             color: var(--anwar-gray-dark);
         }
         
-        /* خلفية مبسطة ومريحة */
+        /* خلفية مبسطة ومريحة بالتدرج الأخضر */
         body::before {
             content: '';
             position: absolute;
@@ -31,28 +31,31 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg, 
-                rgba(218, 165, 32, 0.015) 0%, 
-                rgba(0, 128, 128, 0.01) 50%,
-                rgba(218, 165, 32, 0.008) 100%);
-            opacity: 0.7;
+                rgba(5, 150, 105, 0.02) 0%, 
+                rgba(13, 148, 136, 0.015) 50%,
+                rgba(5, 150, 105, 0.01) 100%);
+            opacity: 0.8;
             pointer-events: none;
         }
         
         .login-card {
             background: var(--anwar-white);
             border-radius: 30px;
-            box-shadow: 0 25px 80px var(--anwar-shadow-gold);
+            box-shadow: 0 25px 80px rgba(5, 150, 105, 0.15);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(218, 165, 32, 0.08);
+            border: 1px solid rgba(5, 150, 105, 0.08);
             position: relative;
             z-index: 1;
         }
         
         .logo {
-            color: var(--anwar-gold);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            text-shadow: 0 4px 8px var(--anwar-shadow-gold);
+            text-shadow: 0 4px 8px rgba(5, 150, 105, 0.2);
             font-family: var(--font-arabic);
             font-weight: 800;
         }
@@ -61,33 +64,37 @@
         
         .app-title {
             font-family: 'Amiri', serif;
-            color: var(--anwar-teal-dark);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
             font-size: 2rem;
             margin-bottom: 0.5rem;
         }
         
         .btn-primary {
-            background: var(--anwar-gradient-gold);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             border: none;
             border-radius: 25px;
             padding: 15px 35px;
             font-weight: 600;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 25px var(--anwar-shadow-gold);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
             font-family: var(--font-main);
             letter-spacing: 0.5px;
         }
         
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px var(--anwar-shadow-gold);
+            box-shadow: 0 15px 40px rgba(5, 150, 105, 0.4);
+            background: linear-gradient(135deg, #047857 0%, #0f766e 100%);
             color: white;
         }
         
         .btn-outline-success {
-            border: 2px solid var(--anwar-teal);
-            color: var(--anwar-teal);
+            border: 2px solid #059669;
+            color: #059669;
             background: transparent;
             border-radius: 20px;
             padding: 10px 25px;
@@ -96,10 +103,10 @@
         }
         
         .btn-outline-success:hover {
-            background: var(--anwar-teal);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px var(--anwar-shadow-teal);
+            box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
         }
         
         .form-control {
@@ -112,8 +119,8 @@
         }
         
         .form-control:focus {
-            border-color: var(--anwar-gold);
-            box-shadow: 0 0 0 0.3rem var(--anwar-shadow-gold);
+            border-color: #059669;
+            box-shadow: 0 0 0 0.3rem rgba(5, 150, 105, 0.25);
             transform: translateY(-1px);
             background: var(--anwar-white);
         }
@@ -122,11 +129,11 @@
             background: var(--anwar-gray-light);
             border: 2px solid var(--anwar-gray-light);
             border-radius: 15px 0 0 15px;
-            color: var(--anwar-teal);
+            color: #059669;
         }
         
         .text-info {
-            color: var(--anwar-teal) !important;
+            color: #059669 !important;
         }
         
         .border-top {
@@ -141,7 +148,7 @@
                 <div class="login-card p-5">                    <div class="text-center mb-4">
                         <i class="fas fa-graduation-cap logo"></i>
                         <h2 class="app-title mb-3">أنوار العلماء</h2>
-                        <p class="text-muted">تسجيل الدخول</p>
+                        <p class="text-muted">تسجيل الدخول إلى نظام البصمة </p>
                         <small class="text-info">للطلاب والمعلمين والإداريين</small>
                     </div>
 
