@@ -149,6 +149,19 @@
         border-radius: 20px;
         font-size: 0.8rem;
     }
+    
+    /* إزالة الألوان الذهبية بقوة */
+    .text-warning, 
+    .fa-clipboard-check.text-warning,
+    .fa-table.text-warning,
+    i.text-warning {
+        color: #6c757d !important;
+    }
+    
+    /* التأكد من أن جميع الأيقونات تستخدم اللون الرمادي */
+    h1 i, h2 i, h3 i {
+        color: #6c757d !important;
+    }
 </style>
 @endpush
 
@@ -181,7 +194,7 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h1 class="h2 fw-bold text-dark mb-2">
-                        <i class="fas fa-clipboard-check text-muted me-2"></i>
+                        <i class="fas fa-clipboard-check text-muted me-2" style="color: #6c757d !important;"></i>
                         إدارة الحضور
                     </h1>
                     <p class="text-muted mb-0">
@@ -329,7 +342,7 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h2 class="h5 fw-semibold text-dark mb-0">
-                        <i class="fas fa-table text-muted me-2"></i>
+                        <i class="fas fa-table text-muted me-2" style="color: #6c757d !important;"></i>
                         سجلات الحضور
                         @if($attendances->total() > 0)
                             <span class="badge bg-secondary ms-2">{{ $attendances->total() }} سجل</span>
