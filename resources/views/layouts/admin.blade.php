@@ -220,6 +220,27 @@
             box-shadow: 0 15px 40px var(--anwar-shadow-dark);
         }
         
+        /* بطاقات بيضاء للإجراءات السريعة ومعلومات النظام */
+        .card-white-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .card-white-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .card-header-white {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.25rem;
+        }
+        
         .table {
             background: var(--anwar-white);
             border-radius: 20px;
