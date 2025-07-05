@@ -179,3 +179,12 @@ if (env('APP_ENV') === 'local') {
     Route::get('/quick-qr/{lesson}', [\App\Http\Controllers\QRCodeController::class, 'quickGenerate'])
         ->name('quick.qr');
 }
+
+// Temporary fix for missing Filament routes
+Route::get('/admin/filament/lessons', function() {
+    return redirect('/admin/lessons');
+})->name('filament.admin.resources.lessons.index');
+
+Route::get('/admin/filament/lessons/create', function() {
+    return redirect('/admin/lessons/create');
+})->name('filament.admin.resources.lessons.create');

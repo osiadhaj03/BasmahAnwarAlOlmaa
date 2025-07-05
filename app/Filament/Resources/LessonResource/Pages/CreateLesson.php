@@ -21,6 +21,6 @@ class CreateLesson extends CreateRecord
     
     protected function getRedirectUrl(): string
     {
-        return '/admin/lessons';
+        return route('filament.admin.resources.lessons.index');
     }
 }
