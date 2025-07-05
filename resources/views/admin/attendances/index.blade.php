@@ -89,10 +89,10 @@
         border: none;
         font-weight: 600;
         font-size: 0.85rem;
-        color: #495057;
+        color: #6c757d;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     
     .table tbody tr {
@@ -181,7 +181,7 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h1 class="h2 fw-bold text-dark mb-2">
-                        <i class="fas fa-clipboard-check text-warning me-2"></i>
+                        <i class="fas fa-clipboard-check text-muted me-2"></i>
                         إدارة الحضور
                     </h1>
                     <p class="text-muted mb-0">
