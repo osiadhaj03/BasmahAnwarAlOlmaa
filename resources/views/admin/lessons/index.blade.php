@@ -3,468 +3,487 @@
 @section('title', 'إدارة الدروس')
 
 @push('styles')
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-    .filter-card {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+    
+    body {
+        font-family: 'Tajawal', sans-serif;
     }
-    .filter-section {
-        border-right: 2px solid #dee2e6;
-        padding-right: 20px;
-        margin-right: 20px;
+    
+    .islamic-pattern {
+        background-color: #F8F8F8;
     }
-    .filter-section:last-child {
-        border-right: none;
-        padding-right: 0;
-        margin-right: 0;
-    }
-    .search-box {
-        position: relative;
-    }
-    .search-box .fas {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6c757d;
-    }
-    .search-box input {
-        padding-right: 40px;
-    }
-    .sort-controls {
-        background: #f8f9fa;
-        border-radius: 10px;
-        padding: 10px;
-    }
-    .lesson-card {
-        transition: all 0.3s ease;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .lesson-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-    .day-badge {
-        font-size: 0.85em;
-        padding: 6px 12px;
-        border-radius: 20px;
-    }
-    .time-badge {
-        background: linear-gradient(45deg, #28a745, #20c997);
+    
+    .status-scheduled {
+        background-color: #3b82f6;
         color: white;
-        border-radius: 15px;
-        padding: 4px 8px;
-        font-size: 0.8em;
     }
-    .students-count {
-        background: linear-gradient(45deg, #007bff, #6610f2);
+    
+    .status-active {
+        background-color: #008080;
         color: white;
-        border-radius: 15px;
-        padding: 4px 8px;
-        font-size: 0.8em;
+    }
+    
+    .status-completed {
+        background-color: #4682B4;
+        color: white;
+    }
+    
+    .status-cancelled {
+        background-color: #B22222;
+        color: white;
+    }
+    
+    .day-sunday {
+        background-color: #3b82f6;
+        color: white;
+    }
+    
+    .day-monday {
+        background-color: #008080;
+        color: white;
+    }
+    
+    .day-tuesday {
+        background-color: #4682B4;
+        color: white;
+    }
+    
+    .day-wednesday {
+        background-color: #DAA520;
+        color: white;
+    }
+    
+    .day-thursday {
+        background-color: #B22222;
+        color: white;
+    }
+    
+    .day-friday {
+        background-color: #4b5563;
+        color: white;
+    }
+    
+    .day-saturday {
+        background-color: #6b7280;
+        color: white;
+    }
+    
+    .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-weight: bold;
+        color: white;
+    }
+    
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    .pagination a, .pagination span {
+        padding: 0.5rem 0.75rem;
+        margin: 0 0.25rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.375rem;
+        color: #4b5563;
+    }
+    
+    .pagination a:hover {
+        background-color: #f3f4f6;
+    }
+    
+    .pagination .active {
+        background-color: #3b82f6;
+        color: white;
+        border-color: #3b82f6;
+    }
+    
+    .alert-success {
+        background-color: #d1fae5;
+        border-left: 4px solid #10b981;
+        color: #065f46;
+    }
+    
+    .alert-danger {
+        background-color: #fee2e2;
+        border-left: 4px solid #ef4444;
+        color: #991b1b;
+    }
+    
+    .alert-info {
+        background-color: #E0F2F1;
+        border-left: 4px solid #008080;
+        color: #008080;
+    }
+    
+    .btn-primary {
+        background-color: #DAA520;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background-color: #c6951c;
+    }
+    
+    .btn-outline {
+        border: 1px solid #d1d5db;
+        color: #4b5563;
+    }
+    
+    .btn-outline:hover {
+        background-color: #f3f4f6;
+    }
+    
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .filter-grid {
+            grid-template-columns: repeat(1, 1fr);
+        }
     }
 </style>
 @endpush
 
 @section('content')
-<div class="anwar-header islamic-pattern-enhanced">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="anwar-title">
-            <i class="fas fa-book-open anwar-text-gold me-2"></i>
-            إدارة الدروس
-        </h1>
-        <a href="{{ route('admin.lessons.create') }}" class="btn anwar-btn-primary">
-            <i class="fas fa-plus me-2"></i>
-            إضافة درس جديد
-        </a>
+<div class="islamic-pattern min-h-screen p-6">
+    <!-- Header Section -->
+    <div class="bg-gradient-to-r from-teal-600 to-blue-600 rounded-lg shadow-lg p-6 mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+            <div class="mb-4 md:mb-0">
+                <h1 class="text-3xl font-bold text-white mb-2">إدارة الدروس</h1>
+                <p class="text-teal-100">إدارة وتنظيم دروس المؤسسة</p>
+            </div>
+            <div class="flex space-x-4 space-x-reverse">
+                <a href="{{ route('admin.lessons.create') }}" class="btn-primary px-6 py-3 rounded-lg flex items-center space-x-2 space-x-reverse hover:shadow-lg transition-all duration-300">
+                    <i class="fas fa-plus"></i>
+                    <span>إضافة درس جديد</span>
+                </a>
+            </div>
+        </div>
     </div>
-</div>
 
-<!-- نظام البحث والفلترة المتقدم -->
-<div class="card anwar-card islamic-pattern-subtle mb-4">
-    <div class="card-body anwar-card-body">
-        <form method="GET" action="{{ route('admin.lessons.index') }}" id="filterForm">
-            <div class="row g-3">
-                <!-- البحث الرئيسي -->
-                <div class="col-md-4">
-                    <div class="filter-section">
-                        <h6 class="anwar-text-gold mb-3">
-                            <i class="fas fa-search me-2"></i>البحث
-                        </h6>
-                        <div class="search-box">
-                            <input type="text" 
-                                   class="form-control-anwar" 
-                                   name="search" 
-                                   value="{{ request('search') }}"
-                                   placeholder="ابحث في المادة، الوصف، أو اسم المعلم..."
-                                   style="padding-right: 40px;">
-                            <i class="fas fa-search"></i>
+    <!-- Statistics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 stats-grid">
+        <!-- Total Lessons -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">إجمالي الدروس</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ $totalLessons ?? $lessons->total() }}</p>
+                </div>
+                <div class="p-3 bg-blue-100 rounded-full">
+                    <i class="fas fa-book text-blue-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scheduled Lessons -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">دروس مجدولة</p>
+                    <p class="text-2xl font-bold text-blue-600">{{ $scheduledLessons ?? 0 }}</p>
+                </div>
+                <div class="p-3 bg-blue-100 rounded-full">
+                    <i class="fas fa-calendar-alt text-blue-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Lessons -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">دروس نشطة</p>
+                    <p class="text-2xl font-bold text-teal-600">{{ $activeLessons ?? 0 }}</p>
+                </div>
+                <div class="p-3 bg-teal-100 rounded-full">
+                    <i class="fas fa-play text-teal-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completed Lessons -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">دروس مكتملة</p>
+                    <p class="text-2xl font-bold text-green-600">{{ $completedLessons ?? 0 }}</p>
+                </div>
+                <div class="p-3 bg-green-100 rounded-full">
+                    <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    @if(session('success'))
+        <div class="alert-success p-4 rounded-lg mb-6">
+            <div class="flex items-center">
+                <i class="fas fa-check-circle ml-2"></i>
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert-danger p-4 rounded-lg mb-6">
+            <div class="flex items-center">
+                <i class="fas fa-exclamation-circle ml-2"></i>
+                {{ session('error') }}
+            </div>
+        </div>
+    @endif
+
+    <!-- Filters Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">تصفية الدروس</h3>
+        
+        <form method="GET" action="{{ route('admin.lessons.index') }}" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 filter-grid">
+                <!-- Search -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">البحث</label>
+                    <div class="relative">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="ابحث في الدروس..." 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- فلاتر متقدمة -->
-                <div class="col-md-8">
-                    <div class="row g-3">
-                        <!-- فلتر اليوم -->
-                        <div class="col-md-3">
-                            <h6 class="anwar-text-green mb-2">
-                                <i class="fas fa-calendar-day me-1"></i>اليوم
-                            </h6>
-                            <select class="form-control-anwar" name="day_filter" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">كل الأيام</option>
-                                @foreach($days as $value => $label)
-                                    <option value="{{ $value }}" 
-                                            @if(request('day_filter') == $value) selected @endif>
-                                        {{ $label }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                <!-- Status Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">حالة الدرس</label>
+                    <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">جميع الحالات</option>
+                        <option value="scheduled" {{ request('status') === 'scheduled' ? 'selected' : '' }}>مجدول</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>نشط</option>
+                        <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>مكتمل</option>
+                        <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>ملغى</option>
+                    </select>
+                </div>
 
-                        <!-- فلتر المعلم (للمدير فقط) -->
-                        @if(auth()->user()->role === 'admin' && $teachers->count() > 0)
-                        <div class="col-md-3">
-                            <h6 class="anwar-text-blue mb-2">
-                                <i class="fas fa-user-tie me-1"></i>المعلم
-                            </h6>
-                            <select class="form-control-anwar" name="teacher_filter" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">كل المعلمين</option>
-                                @foreach($teachers as $teacher)
-                                    <option value="{{ $teacher->id }}" 
-                                            @if(request('teacher_filter') == $teacher->id) selected @endif>
-                                        {{ $teacher->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                <!-- Day Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">اليوم</label>
+                    <select name="day" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">جميع الأيام</option>
+                        <option value="sunday" {{ request('day') === 'sunday' ? 'selected' : '' }}>الأحد</option>
+                        <option value="monday" {{ request('day') === 'monday' ? 'selected' : '' }}>الاثنين</option>
+                        <option value="tuesday" {{ request('day') === 'tuesday' ? 'selected' : '' }}>الثلاثاء</option>
+                        <option value="wednesday" {{ request('day') === 'wednesday' ? 'selected' : '' }}>الأربعاء</option>
+                        <option value="thursday" {{ request('day') === 'thursday' ? 'selected' : '' }}>الخميس</option>
+                        <option value="friday" {{ request('day') === 'friday' ? 'selected' : '' }}>الجمعة</option>
+                        <option value="saturday" {{ request('day') === 'saturday' ? 'selected' : '' }}>السبت</option>
+                    </select>
+                </div>
+
+                <!-- Teacher Filter -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">المدرس</label>
+                    <select name="teacher_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">جميع المدرسين</option>
+                        @if(isset($teachers))
+                            @foreach($teachers as $teacher)
+                                <option value="{{ $teacher->id }}" {{ request('teacher_id') == $teacher->id ? 'selected' : '' }}>
+                                    {{ $teacher->name }}
+                                </option>
+                            @endforeach
                         @endif
-
-                        <!-- فلتر الوقت -->
-                        <div class="col-md-3">
-                            <h6 class="anwar-text-orange mb-2">
-                                <i class="fas fa-clock me-1"></i>الوقت
-                            </h6>
-                            <select class="form-control-anwar" name="time_filter" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">كل الأوقات</option>
-                                <option value="morning" @if(request('time_filter') == 'morning') selected @endif>
-                                    صباحي (قبل 12 ظهراً)
-                                </option>
-                                <option value="afternoon" @if(request('time_filter') == 'afternoon') selected @endif>
-                                    بعد الظهر (12-6 مساءً)
-                                </option>
-                                <option value="evening" @if(request('time_filter') == 'evening') selected @endif>
-                                    مسائي (بعد 6 مساءً)
-                                </option>
-                            </select>
-                        </div>                        <!-- فلتر عدد الطلاب -->
-                        <div class="col-md-2">
-                            <h6 class="text-danger mb-2">
-                                <i class="fas fa-users me-1"></i>الطلاب
-                            </h6>
-                            <select class="form-select" name="students_filter" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">كل الأعداد</option>
-                                <option value="none" @if(request('students_filter') == 'none') selected @endif>
-                                    بدون طلاب
-                                </option>
-                                <option value="few" @if(request('students_filter') == 'few') selected @endif>
-                                    قليل (1-10)
-                                </option>
-                                <option value="medium" @if(request('students_filter') == 'medium') selected @endif>
-                                    متوسط (11-25)
-                                </option>
-                                <option value="many" @if(request('students_filter') == 'many') selected @endif>
-                                    كثير (+25)
-                                </option>
-                            </select>
-                        </div>
-
-                        <!-- فلتر حالة الدرس -->
-                        <div class="col-md-2">
-                            <h6 class="text-purple mb-2">
-                                <i class="fas fa-flag me-1"></i>الحالة
-                            </h6>
-                            <select class="form-select" name="status_filter" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">كل الحالات</option>
-                                @foreach($statuses as $value => $label)
-                                    <option value="{{ $value }}" 
-                                            @if(request('status_filter') == $value) selected @endif>
-                                        {{ $label }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                    </select>
                 </div>
             </div>
 
-            <!-- أزرار التحكم -->
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary me-2">
-                        <i class="fas fa-search me-1"></i>بحث
-                    </button>
-                    <a href="{{ route('admin.lessons.index') }}" class="btn btn-outline-secondary">
-                        <i class="fas fa-redo me-1"></i>مسح الفلاتر
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <div class="sort-controls d-flex align-items-center justify-content-end">
-                        <label class="me-2 text-muted small">ترتيب حسب:</label>
-                        <select class="form-select form-select-sm me-2" name="sort_by" style="width: auto;" onchange="document.getElementById('filterForm').submit()">
-                            <option value="created_at" @if(request('sort_by') == 'created_at') selected @endif>تاريخ الإنشاء</option>
-                            <option value="subject" @if(request('sort_by') == 'subject') selected @endif>المادة</option>
-                            <option value="teacher" @if(request('sort_by') == 'teacher') selected @endif>المعلم</option>
-                            <option value="day" @if(request('sort_by') == 'day') selected @endif>اليوم</option>
-                            <option value="time" @if(request('sort_by') == 'time') selected @endif>الوقت</option>
-                            <option value="students" @if(request('sort_by') == 'students') selected @endif>عدد الطلاب</option>
-                        </select>
-                        <select class="form-select form-select-sm" name="sort_direction" style="width: auto;" onchange="document.getElementById('filterForm').submit()">
-                            <option value="asc" @if(request('sort_direction') == 'asc') selected @endif>تصاعدي</option>
-                            <option value="desc" @if(request('sort_direction') == 'desc') selected @endif>تنازلي</option>
-                        </select>
-                    </div>
-                </div>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button type="submit" class="btn-primary px-6 py-2 rounded-lg flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fas fa-filter"></i>
+                    <span>تطبيق التصفية</span>
+                </button>
+                
+                <a href="{{ route('admin.lessons.index') }}" class="btn-outline px-6 py-2 rounded-lg flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fas fa-times"></i>
+                    <span>إزالة التصفية</span>
+                </a>
             </div>
         </form>
     </div>
-</div>
 
-<!-- إحصائيات سريعة -->
-@if(request()->hasAny(['search', 'day_filter', 'teacher_filter', 'time_filter', 'students_filter', 'status_filter']))
-<div class="alert alert-info">
-    <i class="fas fa-info-circle me-2"></i>
-    تم العثور على <strong>{{ $lessons->total() }}</strong> درس مطابق للبحث والفلاتر المحددة
-    @if(request('search'))
-        <span class="badge bg-primary ms-2">البحث: "{{ request('search') }}"</span>
-    @endif
-    @if(request('day_filter'))
-        <span class="badge bg-success ms-2">اليوم: {{ $days[request('day_filter')] }}</span>
-    @endif
-    @if(request('status_filter'))
-        <span class="badge bg-purple ms-2">الحالة: {{ $statuses[request('status_filter')] }}</span>
-    @endif
-</div>
-@endif
-
-<!-- قائمة الدروس -->
-<div class="card">
-    <div class="card-body">
-        @if($lessons->count() > 0)
-            <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="border-0">
-                                <i class="fas fa-book me-1 text-primary"></i>المادة
-                            </th>
-                            <th class="border-0">
-                                <i class="fas fa-user-tie me-1 text-info"></i>المعلم
-                            </th>
-                            <th class="border-0">
-                                <i class="fas fa-calendar-day me-1 text-success"></i>اليوم
-                            </th>
-                            <th class="border-0">
-                                <i class="fas fa-clock me-1 text-warning"></i>الوقت
-                            </th>                            <th class="border-0">
-                                <i class="fas fa-users me-1 text-danger"></i>الطلاب
-                            </th>
-                            <th class="border-0">
-                                <i class="fas fa-flag me-1 text-purple"></i>الحالة
-                            </th>
-                            <th class="border-0">
-                                <i class="fas fa-cogs me-1 text-secondary"></i>الإجراءات
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($lessons as $lesson)
-                            <tr class="lesson-row">
-                                <td>
-                                    <div>
-                                        <strong class="text-primary">{{ $lesson->subject }}</strong>
+    <!-- Lessons Table -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-800">قائمة الدروس</h3>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">اسم الدرس</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">المدرس</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">اليوم والوقت</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">عدد الطلاب</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الحالة</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @forelse($lessons as $lesson)
+                        <tr class="hover:bg-gray-50 transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10">
+                                        <div class="avatar bg-gradient-to-r from-blue-500 to-teal-500">
+                                            {{ substr($lesson->name, 0, 1) }}
+                                        </div>
+                                    </div>
+                                    <div class="mr-4">
+                                        <div class="text-sm font-medium text-gray-900">{{ $lesson->name }}</div>
                                         @if($lesson->description)
-                                            <br><small class="text-muted">{{ Str::limit($lesson->description, 50) }}</small>
+                                            <div class="text-sm text-gray-500">{{ Str::limit($lesson->description, 50) }}</div>
                                         @endif
                                     </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-sm bg-light rounded-circle d-flex align-items-center justify-content-center me-2">
-                                            <i class="fas fa-user text-muted"></i>
-                                        </div>
-                                        <div>
-                                            <strong>{{ $lesson->teacher->name }}</strong>
-                                            <br><small class="text-muted">{{ $lesson->teacher->email }}</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="day-badge 
-                                        @switch($lesson->day_of_week)
-                                            @case('sunday') bg-primary @break
-                                            @case('monday') bg-success @break
-                                            @case('tuesday') bg-info @break
-                                            @case('wednesday') bg-warning @break
-                                            @case('thursday') bg-danger @break
-                                            @case('friday') bg-dark @break
-                                            @case('saturday') bg-secondary @break
-                                        @endswitch text-white">
-                                        @switch($lesson->day_of_week)
-                                            @case('sunday') الأحد @break
-                                            @case('monday') الإثنين @break
-                                            @case('tuesday') الثلاثاء @break
-                                            @case('wednesday') الأربعاء @break
-                                            @case('thursday') الخميس @break
-                                            @case('friday') الجمعة @break
-                                            @case('saturday') السبت @break
-                                        @endswitch
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if($lesson->teacher)
+                                    <div class="text-sm text-gray-900">{{ $lesson->teacher->name }}</div>
+                                    <div class="text-sm text-gray-500">{{ $lesson->teacher->email }}</div>
+                                @else
+                                    <span class="text-sm text-gray-500">غير محدد</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex flex-col space-y-1">
+                                    @if($lesson->day_of_week)
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full day-{{ $lesson->day_of_week }}">
+                                            {{ 
+                                                [
+                                                    'sunday' => 'الأحد',
+                                                    'monday' => 'الاثنين', 
+                                                    'tuesday' => 'الثلاثاء',
+                                                    'wednesday' => 'الأربعاء',
+                                                    'thursday' => 'الخميس',
+                                                    'friday' => 'الجمعة',
+                                                    'saturday' => 'السبت'
+                                                ][$lesson->day_of_week] ?? $lesson->day_of_week 
+                                            }}
+                                        </span>
+                                    @endif
+                                    @if($lesson->start_time && $lesson->end_time)
+                                        <span class="text-xs text-gray-600">
+                                            {{ \Carbon\Carbon::parse($lesson->start_time)->format('H:i') }} - 
+                                            {{ \Carbon\Carbon::parse($lesson->end_time)->format('H:i') }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        <i class="fas fa-users mr-1"></i>
+                                        {{ $lesson->attendances_count ?? 0 }}
                                     </span>
-                                </td>
-                                <td>
-                                    <div class="time-badge">
-                                        <i class="fas fa-clock me-1"></i>
-                                        {{ \Carbon\Carbon::parse($lesson->start_time)->format('H:i') }} - 
-                                        {{ \Carbon\Carbon::parse($lesson->end_time)->format('H:i') }}
-                                    </div>
-                                    @php
-                                        $duration = \Carbon\Carbon::parse($lesson->start_time)->diffInMinutes(\Carbon\Carbon::parse($lesson->end_time));
-                                    @endphp
-                                    <br><small class="text-muted">{{ $duration }} دقيقة</small>
-                                </td>
-                                <td>
-                                    <div class="students-count">
-                                        <i class="fas fa-users me-1"></i>
-                                        {{ $lesson->students_count }} طالب
-                                    </div>
-                                    @if($lesson->students_count > 0)
-                                        <br><small class="text-success">
-                                            <i class="fas fa-check-circle me-1"></i>نشط
-                                        </small>
-                                    @else
-                                        <br><small class="text-warning">
-                                            <i class="fas fa-exclamation-triangle me-1"></i>بدون طلاب
-                                        </small>                                    @endif
-                                </td>
-                                <td>
-                                    @php
-                                        $statusColors = [
-                                            'scheduled' => 'primary',
-                                            'active' => 'success',
-                                            'completed' => 'info',
-                                            'cancelled' => 'danger'
-                                        ];
-                                        $statusIcons = [
-                                            'scheduled' => 'calendar-alt',
-                                            'active' => 'play-circle',
-                                            'completed' => 'check-circle',
-                                            'cancelled' => 'times-circle'
-                                        ];
-                                        $statusColor = $statusColors[$lesson->status] ?? 'secondary';
-                                        $statusIcon = $statusIcons[$lesson->status] ?? 'question-circle';
-                                    @endphp
-                                    <span class="badge bg-{{ $statusColor }} d-flex align-items-center">
-                                        <i class="fas fa-{{ $statusIcon }} me-1"></i>
-                                        {{ $statuses[$lesson->status] ?? $lesson->status }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="btn-group" role="group">                                        <!-- QR Code -->
-                                        <a href="{{ route('admin.lessons.qr.display', $lesson) }}" 
-                                           class="btn btn-outline-success btn-sm" 
-                                           title="QR Code للحضور"
-                                           data-bs-toggle="tooltip"
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full status-{{ $lesson->status ?? 'scheduled' }}">
+                                    {{ 
+                                        [
+                                            'scheduled' => 'مجدول',
+                                            'active' => 'نشط',
+                                            'completed' => 'مكتمل',
+                                            'cancelled' => 'ملغى'
+                                        ][$lesson->status ?? 'scheduled'] 
+                                    }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <a href="{{ route('admin.lessons.show', $lesson) }}" 
+                                       class="text-blue-600 hover:text-blue-900 p-2 rounded-lg hover:bg-blue-50 transition-all duration-200"
+                                       title="عرض">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    
+                                    <a href="{{ route('admin.lessons.edit', $lesson) }}" 
+                                       class="text-yellow-600 hover:text-yellow-900 p-2 rounded-lg hover:bg-yellow-50 transition-all duration-200"
+                                       title="تعديل">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    
+                                    @if($lesson->qr_token)
+                                        <a href="{{ route('lessons.qr', $lesson->qr_token) }}" 
+                                           class="text-green-600 hover:text-green-900 p-2 rounded-lg hover:bg-green-50 transition-all duration-200"
+                                           title="رمز QR"
                                            target="_blank">
                                             <i class="fas fa-qrcode"></i>
                                         </a>
-                                        
-                                        <!-- عرض -->
-                                        <a href="{{ route('admin.lessons.show', $lesson) }}" 
-                                           class="btn btn-outline-info btn-sm" 
-                                           title="عرض التفاصيل"
-                                           data-bs-toggle="tooltip">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        
-                                        <!-- تعديل -->
-                                        @if(auth()->user()->role === 'admin' || $lesson->teacher_id === auth()->id())
-                                        <a href="{{ route('admin.lessons.edit', $lesson) }}" 
-                                           class="btn btn-outline-warning btn-sm" 
-                                           title="تعديل"
-                                           data-bs-toggle="tooltip">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        @endif
-                                        
-                                        <!-- حذف -->
-                                        @if(auth()->user()->role === 'admin' || $lesson->teacher_id === auth()->id())
-                                        <form method="POST" 
-                                              action="{{ route('admin.lessons.destroy', $lesson) }}" 
-                                              class="d-inline"
-                                              onsubmit="return confirm('هل أنت متأكد من حذف هذا الدرس؟\\n\\nسيتم حذف جميع سجلات الحضور المرتبطة به.')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" 
-                                                    class="btn btn-outline-danger btn-sm" 
-                                                    title="حذف"
-                                                    data-bs-toggle="tooltip">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
-                                        @endif
+                                    @endif
+                                    
+                                    <form action="{{ route('admin.lessons.destroy', $lesson) }}" 
+                                          method="POST" 
+                                          class="inline-block"
+                                          onsubmit="return confirm('هل أنت متأكد من حذف هذا الدرس؟')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" 
+                                                class="text-red-600 hover:text-red-900 p-2 rounded-lg hover:bg-red-50 transition-all duration-200"
+                                                title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-6 py-12 text-center">
+                                <div class="flex flex-col items-center justify-center space-y-4">
+                                    <i class="fas fa-book-open text-gray-400 text-4xl"></i>
+                                    <div class="text-gray-500">
+                                        <p class="text-lg font-medium">لا توجد دروس</p>
+                                        <p class="text-sm">قم بإضافة أول درس للمؤسسة</p>
                                     </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                                    <a href="{{ route('admin.lessons.create') }}" 
+                                       class="btn-primary px-6 py-2 rounded-lg flex items-center space-x-2 space-x-reverse">
+                                        <i class="fas fa-plus"></i>
+                                        <span>إضافة درس جديد</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
-            <!-- صفحات النتائج -->
-            @if($lessons->hasPages())
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <div class="text-muted">
-                    عرض {{ $lessons->firstItem() }} إلى {{ $lessons->lastItem() }} 
-                    من أصل {{ $lessons->total() }} درس
-                </div>
-                <div>
-                    {{ $lessons->links() }}
-                </div>
-            </div>
-            @endif
-        @else
-            <div class="text-center py-5">
-                <div class="mb-4">
-                    <i class="fas fa-search fa-3x text-muted"></i>
-                </div>                <h5 class="text-muted mb-3">
-                    @if(request()->hasAny(['search', 'day_filter', 'teacher_filter', 'time_filter', 'students_filter', 'status_filter']))
-                        لا توجد دروس مطابقة للبحث
-                    @else
-                        لا توجد دروس
-                    @endif
-                </h5>
-                <p class="text-muted mb-4">
-                    @if(request()->hasAny(['search', 'day_filter', 'teacher_filter', 'time_filter', 'students_filter', 'status_filter']))
-                        جرب تغيير معايير البحث أو إزالة بعض الفلاتر
-                    @else
-                        ابدأ بإضافة درس جديد لبناء جدولك الدراسي
-                    @endif
-                </p>
-                <div>
-                    @if(request()->hasAny(['search', 'day_filter', 'teacher_filter', 'time_filter', 'students_filter', 'status_filter']))
-                        <a href="{{ route('admin.lessons.index') }}" class="btn btn-outline-primary me-2">
-                            <i class="fas fa-redo me-2"></i>
-                            مسح الفلاتر
-                        </a>
-                    @endif
-                    <a href="{{ route('admin.lessons.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-2"></i>
-                        إضافة درس جديد
-                    </a>
+        <!-- Pagination -->
+        @if($lessons->hasPages())
+            <div class="px-6 py-4 border-t border-gray-200">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-700">
+                        عرض {{ $lessons->firstItem() }} إلى {{ $lessons->lastItem() }} من أصل {{ $lessons->total() }} نتيجة
+                    </div>
+                    <div class="pagination">
+                        {{ $lessons->appends(request()->query())->links() }}
+                    </div>
                 </div>
             </div>
         @endif
@@ -474,50 +493,58 @@
 
 @push('scripts')
 <script>
-    // تفعيل tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-
-    // البحث السريع مع Enter
-    document.querySelector('input[name="search"]').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            document.getElementById('filterForm').submit();
-        }
-    });
-
-    // تأثيرات بصرية للصفوف
-    document.querySelectorAll('.lesson-row').forEach(function(row) {
-        row.addEventListener('mouseenter', function() {
-            this.style.backgroundColor = '#f8f9fa';
-            this.style.transform = 'scale(1.01)';
-            this.style.transition = 'all 0.2s ease';
-        });
-        
-        row.addEventListener('mouseleave', function() {
-            this.style.backgroundColor = '';
-            this.style.transform = 'scale(1)';
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-submit form on filter change
+    const filterSelects = document.querySelectorAll('select[name="status"], select[name="day"], select[name="teacher_id"]');
+    filterSelects.forEach(select => {
+        select.addEventListener('change', function() {
+            this.form.submit();
         });
     });
 
-    // حفظ حالة الفلاتر في localStorage
-    const form = document.getElementById('filterForm');
-    const formData = new FormData(form);
-    
-    // تحديث URL بدون إعادة تحميل الصفحة
-    function updateURLWithoutReload() {
-        const formData = new FormData(form);
-        const params = new URLSearchParams();
-        
-        for (let [key, value] of formData.entries()) {
-            if (value) {
-                params.append(key, value);
-            }
-        }
-        
-        const newURL = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
-        window.history.replaceState({}, '', newURL);
+    // Search with debounce
+    const searchInput = document.querySelector('input[name="search"]');
+    if (searchInput) {
+        let timeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                this.form.submit();
+            }, 500);
+        });
     }
+
+    // Confirm delete
+    const deleteButtons = document.querySelectorAll('form[action*="destroy"] button[type="submit"]');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (!confirm('هل أنت متأكد من حذف هذا الدرس؟ سيتم حذف جميع بيانات الحضور المرتبطة به.')) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    // Show success message animation
+    const successAlert = document.querySelector('.alert-success');
+    if (successAlert) {
+        successAlert.style.opacity = '0';
+        successAlert.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            successAlert.style.transition = 'all 0.5s ease';
+            successAlert.style.opacity = '1';
+            successAlert.style.transform = 'translateY(0)';
+        }, 100);
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            successAlert.style.transition = 'all 0.5s ease';
+            successAlert.style.opacity = '0';
+            successAlert.style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                successAlert.remove();
+            }, 500);
+        }, 5000);
+    }
+});
 </script>
 @endpush

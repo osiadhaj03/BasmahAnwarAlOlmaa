@@ -12,7 +12,7 @@ class LessonController extends Controller
 {    public function index(Request $request)
     {
         $user = auth()->user();
-        $query = Lesson::with(['teacher', 'students']);
+        $query = Lesson::with(['teacher'])->withCount(['attendances']);
         
         // إذا كان المستخدم معلم، اعرض دروسه فقط
         if ($user->role === 'teacher') {
@@ -33,85 +33,36 @@ class LessonController extends Controller
         }
         
         // فلترة حسب يوم الأسبوع
-        if ($request->filled('day_filter')) {
-            $query->where('day_of_week', $request->day_filter);
+        if ($request->filled('day')) {
+            $query->where('day_of_week', $request->day);
         }
           // فلترة حسب المعلم (للمدير فقط)
-        if ($request->filled('teacher_filter') && $user->role === 'admin') {
-            $query->where('teacher_id', $request->teacher_filter);
+        if ($request->filled('teacher_id') && $user->role === 'admin') {
+            $query->where('teacher_id', $request->teacher_id);
         }
         
         // فلترة حسب حالة الدرس
-        if ($request->filled('status_filter')) {
-            $query->where('status', $request->status_filter);
-        }
-        
-        // فلترة حسب الوقت
-        if ($request->filled('time_filter')) {
-            switch ($request->time_filter) {
-                case 'morning':
-                    $query->whereTime('start_time', '<', '12:00:00');
-                    break;
-                case 'afternoon':
-                    $query->whereTime('start_time', '>=', '12:00:00')
-                          ->whereTime('start_time', '<', '18:00:00');
-                    break;
-                case 'evening':
-                    $query->whereTime('start_time', '>=', '18:00:00');
-                    break;
-            }
-        }
-        
-        // فلترة حسب عدد الطلاب
-        if ($request->filled('students_filter')) {
-            $query->withCount('students');
-            switch ($request->students_filter) {
-                case 'none':
-                    $query->having('students_count', '=', 0);
-                    break;
-                case 'few':
-                    $query->having('students_count', '>', 0)
-                          ->having('students_count', '<=', 10);
-                    break;
-                case 'medium':
-                    $query->having('students_count', '>', 10)
-                          ->having('students_count', '<=', 25);
-                    break;
-                case 'many':
-                    $query->having('students_count', '>', 25);
-                    break;
-            }
-        } else {
-            $query->withCount('students');
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
         }
         
         // ترتيب النتائج
         $sortBy = $request->get('sort_by', 'created_at');
         $sortDirection = $request->get('sort_direction', 'desc');
         
-        switch ($sortBy) {
-            case 'subject':
-                $query->orderBy('subject', $sortDirection);
-                break;
-            case 'teacher':
-                $query->join('users', 'lessons.teacher_id', '=', 'users.id')
-                      ->orderBy('users.name', $sortDirection)
-                      ->select('lessons.*');
-                break;
-            case 'day':
-                $query->orderByRaw("FIELD(day_of_week, 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday') " . $sortDirection);
-                break;
-            case 'time':
-                $query->orderBy('start_time', $sortDirection);
-                break;
-            case 'students':
-                $query->orderBy('students_count', $sortDirection);
-                break;
-            default:
-                $query->orderBy('created_at', $sortDirection);
-                break;
-        }
+        $query->orderBy($sortBy, $sortDirection);
           $lessons = $query->paginate(15)->appends($request->query());
+        
+        // إحصائيات الدروس
+        $baseQuery = Lesson::query();
+        if ($user->role === 'teacher') {
+            $baseQuery->where('teacher_id', $user->id);
+        }
+        
+        $totalLessons = $baseQuery->count();
+        $scheduledLessons = $baseQuery->where('status', 'scheduled')->count();
+        $activeLessons = $baseQuery->where('status', 'active')->count();
+        $completedLessons = $baseQuery->where('status', 'completed')->count();
         
         // بيانات إضافية للفلاتر
         $teachers = $user->role === 'admin' ? User::where('role', 'teacher')->get() : collect();
@@ -132,7 +83,16 @@ class LessonController extends Controller
             'cancelled' => 'ملغي'
         ];
         
-        return view('admin.lessons.index', compact('lessons', 'teachers', 'days', 'statuses'));
+        return view('admin.lessons.index', compact(
+            'lessons', 
+            'teachers', 
+            'days', 
+            'statuses',
+            'totalLessons',
+            'scheduledLessons',
+            'activeLessons',
+            'completedLessons'
+        ));
     }
 
     public function create()
