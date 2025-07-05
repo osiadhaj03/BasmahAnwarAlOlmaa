@@ -71,17 +71,6 @@
         color: white;
     }
     
-    .avatar {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        font-weight: bold;
-        color: white;
-    }
-    
     .pagination {
         display: flex;
         justify-content: center;
@@ -161,7 +150,7 @@
 @section('content')
 <div class="islamic-pattern min-h-screen p-6">
     <!-- Header Section -->
-    <div class="bg-gradient-to-r from-teal-600 to-blue-600 rounded-lg shadow-lg p-6 mb-8">
+    <div class="bg-gradient-to-r from-teal-600 to-teal-800 rounded-lg shadow-lg p-6 mb-8">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div class="mb-4 md:mb-0">
                 <h1 class="text-3xl font-bold text-white mb-2">إدارة الدروس</h1>
@@ -347,19 +336,7 @@
                     @forelse($lessons as $lesson)
                         <tr class="hover:bg-gray-50 transition-colors duration-200">
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
-                                        <div class="avatar bg-gradient-to-r from-blue-500 to-teal-500">
-                                            {{ substr($lesson->name, 0, 1) }}
-                                        </div>
-                                    </div>
-                                    <div class="mr-4">
-                                        <div class="text-sm font-medium text-gray-900">{{ $lesson->name }}</div>
-                                        @if($lesson->description)
-                                            <div class="text-sm text-gray-500">{{ Str::limit($lesson->description, 50) }}</div>
-                                        @endif
-                                    </div>
-                                </div>
+                                <div class="text-sm font-medium text-gray-900">{{ $lesson->name }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($lesson->teacher)
@@ -395,12 +372,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                        <i class="fas fa-users mr-1"></i>
-                                        {{ $lesson->attendances_count ?? 0 }}
-                                    </span>
-                                </div>
+                                <span class="text-sm font-medium text-gray-900">{{ $lesson->attendances_count ?? 0 }}</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full status-{{ $lesson->status ?? 'scheduled' }}">
