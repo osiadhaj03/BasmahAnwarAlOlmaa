@@ -2,396 +2,530 @@
 
 @section('title', 'إدارة الحضور')
 
+@push('styles')
+<style>
+    body {
+        background-color: #F8F8F8;
+        font-family: 'Tajawal', 'Cairo', sans-serif;
+    }
+    
+    .islamic-pattern {
+        background-color: #F8F8F8;
+    }
+    
+    .status-present {
+        background-color: #008080;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+    
+    .status-absent {
+        background-color: #B22222;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+    
+    .status-late {
+        background-color: #DAA520;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+    
+    .status-excused {
+        background-color: #4682B4;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+    
+    .anwar-alert-success {
+        background-color: #d1fae5;
+        border-left: 4px solid #10b981;
+        color: #065f46;
+        border-radius: 8px;
+    }
+    
+    .anwar-alert-danger {
+        background-color: #fee2e2;
+        border-left: 4px solid #ef4444;
+        color: #991b1b;
+        border-radius: 8px;
+    }
+    
+    .anwar-alert-info {
+        background-color: #E0F2F1;
+        border-left: 4px solid #008080;
+        color: #008080;
+        border-radius: 8px;
+    }
+    
+    .btn-anwar-primary {
+        background-color: #DAA520;
+        border-color: #DAA520;
+        color: white;
+    }
+    
+    .btn-anwar-primary:hover {
+        background-color: #c6951c;
+        border-color: #c6951c;
+        color: white;
+    }
+    
+    .card-anwar {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .table th {
+        background-color: #f8f9fa;
+        border: none;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .table tbody tr {
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .table tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
+    }
+    
+    .stats-card {
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stats-card h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stats-card i {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+    }
+    
+    .btn-action {
+        padding: 0.375rem 0.75rem;
+        border: none;
+        border-radius: 6px;
+        margin: 0 2px;
+        transition: all 0.2s;
+    }
+    
+    .btn-action:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .filter-section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .active-filters-badge {
+        background-color: #e3f2fd;
+        color: #1976d2;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+</style>
+@endpush
+
 @section('content')
-<div class="container-fluid">
-    <!-- رسائل النجاح والخطأ -->    @if(session('success'))
-        <div class="alert anwar-alert-success alert-dismissible fade show" role="alert">
-            <i class="fas fa-check-circle me-2"></i>
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="container-fluid" style="background-color: #F8F8F8; min-height: 100vh; padding: 20px;">
+    <!-- رسائل النجاح والخطأ -->
+    @if(session('success'))
+        <div class="alert anwar-alert-success alert-dismissible fade show d-flex align-items-center justify-content-between" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-check-circle me-2"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     
     @if(session('error'))
-        <div class="alert anwar-alert-danger alert-dismissible fade show" role="alert">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="alert anwar-alert-danger alert-dismissible fade show d-flex align-items-center justify-content-between" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <span>{{ session('error') }}</span>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
-    <div class="row">
-        <div class="col-12">
-            <!-- Header Card -->
-            <div class="card anwar-card islamic-pattern-subtle mb-4">
-                <div class="card-header anwar-card-header">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h4 class="mb-0 anwar-text-gold">
-                                <i class="fas fa-clipboard-check me-2"></i>
-                                إدارة الحضور
-                            </h4>
-                            <small class="anwar-text-muted">
-                                @if(auth()->user()->role === 'admin')
-                                    عرض وتقارير الحضور لجميع المعلمين
-                                @else
-                                    إدارة حضور دروسك
-                                @endif
-                            </small>
-                        </div>                        <div class="col-auto">
-                            <div class="alert anwar-alert-info mb-0 me-2" style="font-size: 0.85rem;">
-                                <i class="fas fa-info-circle me-1"></i>
-                                تسجيل الحضور يتم عبر الطلاب باستخدام QR Code فقط
-                            </div>
-                            <a href="{{ route('admin.attendances.reports') }}" class="btn anwar-btn-info">
-                                <i class="fas fa-chart-line me-2"></i>
-                                التقارير المتقدمة
-                            </a>
-                        </div>
+    <!-- Header Card -->
+    <div class="card-anwar islamic-pattern mb-4">
+        <div class="card-body p-4">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="h2 fw-bold text-dark mb-2">
+                        <i class="fas fa-clipboard-check text-warning me-2"></i>
+                        إدارة الحضور
+                    </h1>
+                    <p class="text-muted mb-0">
+                        @if(auth()->user()->role === 'admin')
+                            عرض وتقارير الحضور لجميع المعلمين
+                        @else
+                            إدارة حضور دروسك
+                        @endif
+                    </p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="anwar-alert-info d-inline-block px-3 py-2 rounded mb-2 me-2" style="font-size: 0.85rem;">
+                        <i class="fas fa-info-circle me-1"></i>
+                        تسجيل الحضور يتم عبر الطلاب باستخدام QR Code فقط
                     </div>
-                </div>
-            </div>
-
-            <!-- إحصائيات سريعة -->
-            @if(isset($stats))
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="card bg-primary text-white">
-                        <div class="card-body text-center">
-                            <i class="fas fa-clipboard-list fa-2x mb-2"></i>
-                            <h3 class="mb-0">{{ $stats['total'] }}</h3>
-                            <small>إجمالي السجلات</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-info text-white">
-                        <div class="card-body text-center">
-                            <i class="fas fa-calendar-day fa-2x mb-2"></i>
-                            <h3 class="mb-0">{{ $stats['today'] }}</h3>
-                            <small>سجلات اليوم</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-success text-white">
-                        <div class="card-body text-center">
-                            <i class="fas fa-user-check fa-2x mb-2"></i>
-                            <h3 class="mb-0">{{ $stats['present_today'] }}</h3>
-                            <small>حاضر اليوم</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-danger text-white">
-                        <div class="card-body text-center">
-                            <i class="fas fa-user-times fa-2x mb-2"></i>
-                            <h3 class="mb-0">{{ $stats['absent_today'] }}</h3>
-                            <small>غائب اليوم</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            <!-- فلاتر البحث -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">
-                        <i class="fas fa-filter me-2"></i>
-                        فلاتر البحث والتصفية
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <form method="GET" action="{{ route('admin.attendances.index') }}">
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="search" class="form-label">البحث</label>
-                                <input type="text" 
-                                       class="form-control" 
-                                       id="search" 
-                                       name="search" 
-                                       value="{{ request('search') }}"
-                                       placeholder="اسم الطالب أو المادة...">
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="lesson_id" class="form-label">الدرس</label>
-                                <select class="form-control" id="lesson_id" name="lesson_id">
-                                    <option value="">جميع الدروس</option>
-                                    @foreach($lessons as $lesson)
-                                        <option value="{{ $lesson->id }}" 
-                                                {{ request('lesson_id') == $lesson->id ? 'selected' : '' }}>
-                                            {{ $lesson->subject }} - {{ $lesson->name }}
-                                            @if(auth()->user()->role === 'admin')
-                                                ({{ $lesson->teacher->name }})
-                                            @endif
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="status" class="form-label">الحالة</label>
-                                <select class="form-control" id="status" name="status">
-                                    <option value="">جميع الحالات</option>
-                                    <option value="present" {{ request('status') === 'present' ? 'selected' : '' }}>حاضر</option>
-                                    <option value="absent" {{ request('status') === 'absent' ? 'selected' : '' }}>غائب</option>
-                                    <option value="late" {{ request('status') === 'late' ? 'selected' : '' }}>متأخر</option>
-                                    <option value="excused" {{ request('status') === 'excused' ? 'selected' : '' }}>بعذر</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="date_from" class="form-label">من تاريخ</label>
-                                <input type="date" 
-                                       class="form-control" 
-                                       id="date_from" 
-                                       name="date_from" 
-                                       value="{{ request('date_from') }}">
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="date_to" class="form-label">إلى تاريخ</label>
-                                <input type="date" 
-                                       class="form-control" 
-                                       id="date_to" 
-                                       name="date_to" 
-                                       value="{{ request('date_to') }}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-search me-2"></i>
-                                    بحث وتصفية
-                                </button>
-                                <a href="{{ route('admin.attendances.index') }}" class="btn btn-outline-secondary">
-                                    <i class="fas fa-undo me-2"></i>
-                                    إعادة تعيين
-                                </a>
-                                @if(request()->hasAny(['search', 'lesson_id', 'status', 'date_from', 'date_to']))
-                                <span class="badge bg-info ms-2">
-                                    <i class="fas fa-filter me-1"></i>
-                                    فلاتر نشطة
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- جدول الحضور -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h5 class="mb-0">
-                                <i class="fas fa-table me-2"></i>
-                                سجلات الحضور
-                                @if($attendances->total() > 0)
-                                    <span class="badge bg-secondary">{{ $attendances->total() }} سجل</span>
-                                @endif
-                            </h5>
-                        </div>
-                        <div class="col-auto">
-                            <small class="text-muted">
-                                عرض {{ $attendances->firstItem() ?? 0 }} إلى {{ $attendances->lastItem() ?? 0 }} 
-                                من أصل {{ $attendances->total() }} سجل
-                            </small>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body p-0">
-                    @if($attendances->count() > 0)
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width: 50px;">#</th>
-                                        <th>الطالب</th>
-                                        <th>المادة/الدرس</th>
-                                        @if(auth()->user()->role === 'admin')
-                                            <th>المعلم</th>
-                                        @endif
-                                        <th style="width: 120px;">التاريخ</th>
-                                        <th style="width: 100px;">الحالة</th>
-                                        <th>الملاحظات</th>
-                                        @if(auth()->user()->role === 'teacher')
-                                            <th style="width: 120px;">الإجراءات</th>
-                                        @endif
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($attendances as $index => $attendance)
-                                        <tr>
-                                            <td class="text-muted">
-                                                {{ ($attendances->currentPage() - 1) * $attendances->perPage() + $index + 1 }}
-                                            </td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar-sm bg-{{ $attendance->status === 'present' ? 'success' : ($attendance->status === 'absent' ? 'danger' : 'warning') }} text-white rounded-circle d-flex align-items-center justify-content-center me-3">
-                                                        {{ substr($attendance->student->name, 0, 2) }}
-                                                    </div>
-                                                    <div>
-                                                        <div class="fw-bold">{{ $attendance->student->name }}</div>
-                                                        <small class="text-muted">{{ $attendance->student->email }}</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <div class="fw-bold text-primary">{{ $attendance->lesson->subject }}</div>
-                                                    <small class="text-muted">{{ $attendance->lesson->name }}</small>
-                                                </div>
-                                            </td>
-                                            @if(auth()->user()->role === 'admin')
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <i class="fas fa-chalkboard-teacher me-2 text-info"></i>
-                                                        {{ $attendance->lesson->teacher->name }}
-                                                    </div>
-                                                </td>
-                                            @endif
-                                            <td>
-                                                <div class="text-center">
-                                                    <div class="fw-bold">{{ $attendance->date->format('Y/m/d') }}</div>
-                                                    <small class="text-muted">{{ $attendance->date->format('l') }}</small>
-                                                </div>
-                                            </td>
-                                            <td class="text-center">
-                                                @switch($attendance->status)
-                                                    @case('present')
-                                                        <span class="badge bg-success">
-                                                            <i class="fas fa-check me-1"></i>
-                                                            حاضر
-                                                        </span>
-                                                        @break
-                                                    @case('absent')
-                                                        <span class="badge bg-danger">
-                                                            <i class="fas fa-times me-1"></i>
-                                                            غائب
-                                                        </span>
-                                                        @break
-                                                    @case('late')
-                                                        <span class="badge bg-warning">
-                                                            <i class="fas fa-clock me-1"></i>
-                                                            متأخر
-                                                        </span>
-                                                        @break
-                                                    @case('excused')
-                                                        <span class="badge bg-info">
-                                                            <i class="fas fa-user-check me-1"></i>
-                                                            بعذر
-                                                        </span>
-                                                        @break
-                                                @endswitch
-                                            </td>
-                                            <td>
-                                                @if($attendance->notes)
-                                                    <span class="text-muted" title="{{ $attendance->notes }}">
-                                                        {{ Str::limit($attendance->notes, 30) }}
-                                                    </span>
-                                                @else
-                                                    <span class="text-muted">-</span>
-                                                @endif
-                                            </td>
-                                            @if(auth()->user()->role === 'teacher')
-                                                <td>
-                                                    <div class="btn-group btn-group-sm" role="group">
-                                                        <a href="{{ route('admin.attendances.show', $attendance) }}" 
-                                                           class="btn btn-outline-info" title="عرض">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a>
-                                                        <a href="{{ route('admin.attendances.edit', $attendance) }}" 
-                                                           class="btn btn-outline-warning" title="تعديل">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        <form method="POST" 
-                                                              action="{{ route('admin.attendances.destroy', $attendance) }}" 
-                                                              class="d-inline"
-                                                              onsubmit="return confirm('هل أنت متأكد من حذف هذا السجل؟')">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-outline-danger btn-sm" title="حذف">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            @endif
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Pagination -->
-                        <div class="card-footer">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <small class="text-muted">
-                                        عرض {{ $attendances->firstItem() }} إلى {{ $attendances->lastItem() }} 
-                                        من أصل {{ $attendances->total() }} سجل
-                                    </small>
-                                </div>
-                                <div class="col-auto">
-                                    {{ $attendances->appends(request()->query())->links() }}
-                                </div>
-                            </div>
-                        </div>
-                    @else
-                        <div class="text-center py-5">
-                            <i class="fas fa-clipboard-check fa-3x text-muted mb-3"></i>
-                            <h5 class="text-muted">لا توجد سجلات حضور</h5>
-                            @if(request()->hasAny(['search', 'lesson_id', 'status', 'date_from', 'date_to']))
-                                <p class="text-muted">لا توجد نتائج مطابقة للفلاتر المحددة</p>
-                                <a href="{{ route('admin.attendances.index') }}" class="btn btn-outline-primary">
-                                    <i class="fas fa-undo me-2"></i>
-                                    إزالة الفلاتر
-                                </a>                            @else
-                                <p class="text-muted">تسجيل الحضور متاح للطلاب فقط عبر QR Code</p>
-                                <div class="alert alert-info">
-                                    <i class="fas fa-qrcode me-2"></i>
-                                    يمكن للطلاب تسجيل الحضور باستخدام رمز QR الخاص بكل درس
-                                </div>
-                            @endif
-                        </div>
-                    @endif
+                    <br>
+                    <a href="{{ route('admin.attendances.reports') }}" class="btn btn-anwar-primary">
+                        <i class="fas fa-chart-line me-2"></i>
+                        التقارير المتقدمة
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- إحصائيات سريعة -->
+    @if(isset($stats))
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="stats-card" style="background-color: #6c757d;">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>{{ $stats['total'] }}</h3>
+                <small>إجمالي السجلات</small>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card" style="background-color: #6c757d;">
+                <i class="fas fa-calendar-day"></i>
+                <h3>{{ $stats['today'] }}</h3>
+                <small>سجلات اليوم</small>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card" style="background-color: #008080;">
+                <i class="fas fa-user-check"></i>
+                <h3>{{ $stats['present_today'] }}</h3>
+                <small>حاضر اليوم</small>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="stats-card" style="background-color: #B22222;">
+                <i class="fas fa-user-times"></i>
+                <h3>{{ $stats['absent_today'] }}</h3>
+                <small>غائب اليوم</small>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <!-- فلاتر البحث -->
+    <div class="filter-section mb-4">
+        <div class="card-body p-4">
+            <div class="border-bottom pb-3 mb-4">
+                <h2 class="h5 fw-semibold text-dark mb-0">
+                    <i class="fas fa-filter text-muted me-2"></i>
+                    فلاتر البحث والتصفية
+                </h2>
+            </div>
+            <form method="GET" action="{{ route('admin.attendances.index') }}" id="filterForm">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-2">
+                        <label for="search" class="form-label fw-medium text-dark">البحث</label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="search" 
+                               name="search" 
+                               value="{{ request('search') }}"
+                               placeholder="اسم الطالب أو المادة...">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="lesson_id" class="form-label fw-medium text-dark">الدرس</label>
+                        <select class="form-select" id="lesson_id" name="lesson_id">
+                            <option value="">جميع الدروس</option>
+                            @foreach($lessons as $lesson)
+                                <option value="{{ $lesson->id }}" 
+                                        {{ request('lesson_id') == $lesson->id ? 'selected' : '' }}>
+                                    {{ $lesson->subject }} - {{ $lesson->name }}
+                                    @if(auth()->user()->role === 'admin')
+                                        ({{ $lesson->teacher->name }})
+                                    @endif
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="status" class="form-label fw-medium text-dark">الحالة</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="">جميع الحالات</option>
+                            <option value="present" {{ request('status') === 'present' ? 'selected' : '' }}>حاضر</option>
+                            <option value="absent" {{ request('status') === 'absent' ? 'selected' : '' }}>غائب</option>
+                            <option value="late" {{ request('status') === 'late' ? 'selected' : '' }}>متأخر</option>
+                            <option value="excused" {{ request('status') === 'excused' ? 'selected' : '' }}>بعذر</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="date_from" class="form-label fw-medium text-dark">من تاريخ</label>
+                        <input type="date" 
+                               class="form-select" 
+                               id="date_from" 
+                               name="date_from" 
+                               value="{{ request('date_from') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="date_to" class="form-label fw-medium text-dark">إلى تاريخ</label>
+                        <input type="date" 
+                               class="form-select" 
+                               id="date_to" 
+                               name="date_to" 
+                               value="{{ request('date_to') }}">
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <button type="submit" class="btn btn-anwar-primary d-flex align-items-center">
+                        <i class="fas fa-search me-2"></i>
+                        بحث وتصفية
+                    </button>
+                    <a href="{{ route('admin.attendances.index') }}" class="btn btn-outline-secondary d-flex align-items-center">
+                        <i class="fas fa-undo me-2"></i>
+                        إعادة تعيين
+                    </a>
+                    @if(request()->hasAny(['search', 'lesson_id', 'status', 'date_from', 'date_to']))
+                    <span class="active-filters-badge d-flex align-items-center">
+                        <i class="fas fa-filter me-1"></i>
+                        فلاتر نشطة
+                    </span>
+                    @endif
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- جدول الحضور -->
+    <div class="card-anwar overflow-hidden">
+        <div class="card-body p-4 border-bottom">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="h5 fw-semibold text-dark mb-0">
+                        <i class="fas fa-table text-muted me-2"></i>
+                        سجلات الحضور
+                        @if($attendances->total() > 0)
+                            <span class="badge bg-secondary ms-2">{{ $attendances->total() }} سجل</span>
+                        @endif
+                    </h2>
+                </div>
+                <div class="col-md-4 text-end">
+                    <p class="text-muted mb-0 small">
+                        عرض {{ $attendances->firstItem() ?? 0 }} إلى {{ $attendances->lastItem() ?? 0 }} 
+                        من أصل {{ $attendances->total() }} سجل
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        @if($attendances->count() > 0)
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-3" style="width: 50px;">#</th>
+                            <th class="px-4 py-3">الطالب</th>
+                            <th class="px-4 py-3">المادة/الدرس</th>
+                            @if(auth()->user()->role === 'admin')
+                                <th class="px-4 py-3">المعلم</th>
+                            @endif
+                            <th class="px-4 py-3" style="width: 120px;">التاريخ</th>
+                            <th class="px-4 py-3" style="width: 100px;">الحالة</th>
+                            <th class="px-4 py-3">الملاحظات</th>
+                            @if(auth()->user()->role === 'teacher')
+                                <th class="px-4 py-3" style="width: 120px;">الإجراءات</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($attendances as $index => $attendance)
+                            <tr>
+                                <td class="px-4 py-3 text-muted small">
+                                    {{ ($attendances->currentPage() - 1) * $attendances->perPage() + $index + 1 }}
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="fw-medium text-dark">{{ $attendance->student->name }}</div>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="fw-medium text-primary">{{ $attendance->lesson->subject }}</div>
+                                    <div class="small text-muted">{{ $attendance->lesson->name }}</div>
+                                </td>
+                                @if(auth()->user()->role === 'admin')
+                                    <td class="px-4 py-3">
+                                        <div class="fw-medium text-dark">{{ $attendance->lesson->teacher->name }}</div>
+                                    </td>
+                                @endif
+                                <td class="px-4 py-3 text-center">
+                                    <div class="fw-medium">{{ $attendance->date->format('Y/m/d') }}</div>
+                                    <div class="small text-muted">{{ $attendance->date->format('l') }}</div>
+                                </td>
+                                <td class="px-4 py-3 text-center">
+                                    @switch($attendance->status)
+                                        @case('present')
+                                            <span class="status-present">
+                                                <i class="fas fa-check me-1"></i>
+                                                حاضر
+                                            </span>
+                                            @break
+                                        @case('absent')
+                                            <span class="status-absent">
+                                                <i class="fas fa-times me-1"></i>
+                                                غائب
+                                            </span>
+                                            @break
+                                        @case('late')
+                                            <span class="status-late">
+                                                <i class="fas fa-clock me-1"></i>
+                                                متأخر
+                                            </span>
+                                            @break
+                                        @case('excused')
+                                            <span class="status-excused">
+                                                <i class="fas fa-user-check me-1"></i>
+                                                بعذر
+                                            </span>
+                                            @break
+                                    @endswitch
+                                </td>
+                                <td class="px-4 py-3">
+                                    @if($attendance->notes)
+                                        <span class="text-muted small" title="{{ $attendance->notes }}">
+                                            {{ Str::limit($attendance->notes, 30) }}
+                                        </span>
+                                    @else
+                                        <span class="text-muted small">-</span>
+                                    @endif
+                                </td>
+                                @if(auth()->user()->role === 'teacher')
+                                    <td class="px-4 py-3">
+                                        <div class="d-flex gap-1">
+                                            <button class="btn-action text-primary" title="عرض">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-action text-warning" title="تعديل">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-action text-danger" title="حذف" onclick="return confirm('هل أنت متأكد من حذف هذا السجل؟')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                @endif
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="card-body border-top">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="text-muted small mb-0">
+                            عرض {{ $attendances->firstItem() }} إلى {{ $attendances->lastItem() }} 
+                            من أصل {{ $attendances->total() }} سجل
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        {{ $attendances->appends(request()->query())->links() }}
+                    </div>
+                </div>
+            </div>
+        @else
+            <!-- Empty State -->
+            <div class="text-center py-5">
+                <i class="fas fa-clipboard-check text-muted mb-4" style="font-size: 4rem;"></i>
+                <h3 class="h5 fw-medium text-muted">لا توجد سجلات حضور</h3>
+                @if(request()->hasAny(['search', 'lesson_id', 'status', 'date_from', 'date_to']))
+                    <p class="text-muted mt-2">لا توجد نتائج مطابقة للفلاتر المحددة</p>
+                    <a href="{{ route('admin.attendances.index') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-undo me-2"></i>
+                        إزالة الفلاتر
+                    </a>
+                @else
+                    <p class="text-muted mt-2">تسجيل الحضور متاح للطلاب فقط عبر QR Code</p>
+                    <div class="anwar-alert-info mx-auto d-inline-block px-4 py-3 rounded mt-4">
+                        <i class="fas fa-qrcode me-2"></i>
+                        يمكن للطلاب تسجيل الحضور باستخدام رمز QR الخاص بكل درس
+                    </div>
+                @endif
+            </div>
+        @endif
+    </div>
 </div>
 @endsection
 
-@section('styles')
-<style>
-.avatar-sm {
-    width: 35px;
-    height: 35px;
-    font-size: 12px;
-    font-weight: bold;
-}
+@push('scripts')
+<script>
+    // تفعيل tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
 
-.table th {
-    font-weight: 600;
-    border-top: none;
-}
+    // البحث السريع مع Enter
+    document.querySelector('input[name="search"]').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('filterForm').submit();
+        }
+    });
 
-.btn-group .btn {
-    border-radius: 0.375rem;
-    margin: 0 1px;
-}
+    // تأثيرات بصرية للصفوف
+    document.querySelectorAll('tbody tr').forEach(function(row) {
+        row.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = 'rgba(0, 123, 255, 0.05)';
+            this.style.transform = 'scale(1.01)';
+            this.style.transition = 'all 0.2s ease';
+        });
+        
+        row.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '';
+            this.style.transform = 'scale(1)';
+        });
+    });
 
-.card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-}
+    // رسائل النجاح/الخطأ التلقائية
+    setTimeout(function() {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            if (alert.classList.contains('alert-dismissible')) {
+                const closeBtn = alert.querySelector('.btn-close');
+                if (closeBtn) {
+                    closeBtn.click();
+                }
+            }
+        });
+    }, 5000);
 
-.badge {
-    font-size: 0.75em;
-}
-
-.table-hover tbody tr:hover {
-    background-color: rgba(0, 123, 255, 0.05);
-}
-</style>
-@endsection
+    // تأكيد الحذف
+    function confirmDelete() {
+        return confirm('هل أنت متأكد من حذف هذا السجل؟');
+    }
+</script>
+@endpush
