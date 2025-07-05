@@ -8,7 +8,7 @@
     <div class="mb-4 p-4 rounded-lg" style="background: linear-gradient(135deg, #008080 0%, #004d40 100%); color: white;">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1 class="mb-2" style="color: #DAA520; font-size: 2rem; font-weight: 700;">
+                <h1 class="mb-2" style="color: #B8860B; font-size: 2rem; font-weight: 700;">
                     <i class="fas fa-user me-3"></i>
                     بيانات المستخدم
                 </h1>
@@ -19,7 +19,7 @@
             <div>
                 <a href="{{ route('admin.users.edit', $user) }}" 
                    class="btn me-2" 
-                   style="background-color: #DAA520; border: none; color: white; padding: 10px 20px; border-radius: 8px;">
+                   style="background-color: #B8860B; border: none; color: white; padding: 10px 20px; border-radius: 8px;">
                     <i class="fas fa-edit me-2"></i>تعديل
                 </a>
                 <a href="{{ route('admin.users.index') }}" 
@@ -36,7 +36,7 @@
         <div class="col-lg-8">
             <div class="card shadow-sm" style="border: none; border-radius: 12px; background-color: white;">
                 <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
-                    <h5 class="mb-0" style="color: #DAA520; font-weight: 600;">
+                    <h5 class="mb-0" style="color: #B8860B; font-weight: 600;">
                         <i class="fas fa-id-card me-2"></i>البيانات الأساسية
                     </h5>
                 </div>
@@ -67,7 +67,7 @@
                                 <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">الصلاحية</label>
                                 @switch($user->role)
                                     @case('admin')
-                                        <span class="badge" style="background-color: #DAA520; color: white; padding: 8px 15px; border-radius: 20px;">
+                                        <span class="badge" style="background-color: #B8860B; color: white; padding: 8px 15px; border-radius: 20px;">
                                             <i class="fas fa-crown me-1"></i>مدير
                                         </span>
                                         @break
@@ -114,16 +114,16 @@
         <div class="col-lg-4">
             <div class="card shadow-sm" style="border: none; border-radius: 12px; background-color: white;">
                 <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
-                    <h5 class="mb-0" style="color: #DAA520; font-weight: 600;">
+                    <h5 class="mb-0" style="color: #B8860B; font-weight: 600;">
                         <i class="fas fa-chart-pie me-2"></i>الإحصائيات
                     </h5>
                 </div>
                 <div class="card-body p-4">
                     @if($user->role === 'teacher' && isset($stats))
-                        <div class="stats-box mb-3 p-3 rounded" style="background: linear-gradient(135deg, #F8F8F8 0%, #e8f4f8 100%); border-left: 4px solid #DAA520;">
+                        <div class="stats-box mb-3 p-3 rounded" style="background: linear-gradient(135deg, #F8F8F8 0%, #e8f4f8 100%); border-left: 4px solid #B8860B;">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <i class="fas fa-book" style="color: #DAA520; font-size: 2rem;"></i>
+                                    <i class="fas fa-book" style="color: #B8860B; font-size: 2rem;"></i>
                                 </div>
                                 <div class="text-end">
                                     <h3 class="mb-0" style="color: #333333; font-weight: 700;">{{ $stats['total_lessons'] }}</h3>
@@ -166,8 +166,8 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="mini-stat p-2 text-center rounded" style="background-color: #F8F8F8; border: 2px solid #DAA520;">
-                                    <i class="fas fa-clock" style="color: #DAA520;"></i>
+                                <div class="mini-stat p-2 text-center rounded" style="background-color: #F8F8F8; border: 2px solid #B8860B;">
+                                    <i class="fas fa-clock" style="color: #B8860B;"></i>
                                     <h6 class="mb-0 mt-1" style="color: #333333;">{{ $stats['late_count'] }}</h6>
                                     <small style="color: #666;">متأخر</small>
                                 </div>
@@ -182,14 +182,14 @@
                         </div>
 
                         @if($stats['total_attendances'] > 0)
-                        <div class="mt-3 p-3 rounded" style="background: linear-gradient(135deg, #F8F8F8 0%, #fff8e7 100%); border: 1px solid #DAA520;">
-                            <h6 style="color: #DAA520; margin-bottom: 10px; font-weight: 600;">نسبة الحضور</h6>
+                        <div class="mt-3 p-3 rounded" style="background: linear-gradient(135deg, #F8F8F8 0%, #fff8e7 100%); border: 1px solid #B8860B;">
+                            <h6 style="color: #B8860B; margin-bottom: 10px; font-weight: 600;">نسبة الحضور</h6>
                             @php
                                 $attendanceRate = round(($stats['present_count'] + $stats['late_count']) / $stats['total_attendances'] * 100, 1);
                             @endphp
                             <div class="progress mb-2" style="height: 10px; background-color: #F8F8F8; border-radius: 5px;">
                                 <div class="progress-bar" 
-                                     style="width: {{ $attendanceRate }}%; background: linear-gradient(90deg, #DAA520 0%, #008080 100%); border-radius: 5px;" 
+                                     style="width: {{ $attendanceRate }}%; background: linear-gradient(90deg, #B8860B 0%, #008080 100%); border-radius: 5px;" 
                                      role="progressbar"></div>
                             </div>
                             <small style="color: #333333; font-weight: 600;">{{ $attendanceRate }}% معدل الحضور</small>
@@ -210,7 +210,7 @@
     <!-- دروس المعلم -->
     <div class="card shadow-sm mt-4" style="border: none; border-radius: 12px; background-color: white;">
         <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
-            <h5 class="mb-0" style="color: #DAA520; font-weight: 600;">
+            <h5 class="mb-0" style="color: #B8860B; font-weight: 600;">
                 <i class="fas fa-chalkboard-teacher me-2"></i>دروس المعلم
             </h5>
         </div>
@@ -223,8 +223,8 @@
                 <div class="row g-3">
                     @foreach($teacherLessons as $lesson)
                     <div class="col-md-6">
-                        <div class="lesson-item p-3 rounded" style="background-color: #F8F8F8; border-left: 4px solid #DAA520; transition: all 0.3s ease;">
-                            <h6 style="color: #DAA520; margin-bottom: 10px; font-weight: 600;">{{ $lesson->subject }}</h6>
+                        <div class="lesson-item p-3 rounded" style="background-color: #F8F8F8; border-left: 4px solid #B8860B; transition: all 0.3s ease;">
+                            <h6 style="color: #B8860B; margin-bottom: 10px; font-weight: 600;">{{ $lesson->subject }}</h6>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <small style="color: #666;">
@@ -270,7 +270,7 @@
     <!-- دروس الطالب -->
     <div class="card shadow-sm mt-4" style="border: none; border-radius: 12px; background-color: white;">
         <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
-            <h5 class="mb-0" style="color: #DAA520; font-weight: 600;">
+            <h5 class="mb-0" style="color: #B8860B; font-weight: 600;">
                 <i class="fas fa-user-graduate me-2"></i>دروس الطالب
             </h5>
         </div>
@@ -318,7 +318,7 @@
                                                 </span>
                                                 @break
                                             @case('late')
-                                                <span class="badge" style="background-color: #DAA520; color: white; padding: 5px 12px; border-radius: 15px;">
+                                                <span class="badge" style="background-color: #B8860B; color: white; padding: 5px 12px; border-radius: 15px;">
                                                     <i class="fas fa-clock me-1"></i>متأخر
                                                 </span>
                                                 @break
