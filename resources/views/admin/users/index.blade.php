@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <!-- Header Section with Green Gradient -->
-            <div style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);" class="p-4 mb-4">
+            <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);" class="p-4 mb-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h1 class="h3 mb-2" style="color: white; font-weight: 700;">

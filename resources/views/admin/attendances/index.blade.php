@@ -241,7 +241,7 @@
     @endif
 
     <!-- Header Card with Green Gradient -->
-    <div style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);" class="p-4 mb-4">
+    <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);" class="p-4 mb-4">
         <div class="row align-items-center">
             <div class="col-md-8">
                 <h1 class="h2 fw-bold mb-2" style="color: white;">

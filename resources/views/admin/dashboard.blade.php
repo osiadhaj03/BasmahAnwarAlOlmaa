@@ -187,7 +187,7 @@
 <!-- Quick Actions -->
 <div class="row">
     <div class="col-lg-8">
-        <div class="card" style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);">
+        <div class="card" style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);">
             <div class="card-header" style="background: rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.2); border-radius: 15px 15px 0 0; backdrop-filter: blur(10px);">
                 <h5 class="card-title mb-0" style="color: white; font-weight: 600;">
                     <i class="fas fa-tachometer-alt me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
@@ -232,7 +232,7 @@
     </div>
 
     <div class="col-lg-4">
-        <div class="card" style="background: linear-gradient(135deg, #0d9488 0%, #1e40af 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);">
+        <div class="card" style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); border-radius: 15px; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);">
             <div class="card-header" style="background: rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.2); border-radius: 15px 15px 0 0; backdrop-filter: blur(10px);">
                 <h5 class="card-title mb-0" style="color: white; font-weight: 600;">
                     <i class="fas fa-info-circle me-2" style="color: rgba(255, 255, 255, 0.9);"></i>
