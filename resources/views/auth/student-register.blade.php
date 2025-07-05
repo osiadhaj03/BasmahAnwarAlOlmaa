@@ -72,12 +72,13 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label">
                                 <i class="fas fa-phone me-1"></i>
-                                رقم الهاتف (اختياري)
+                                رقم الهاتف *
                             </label>
                             <input id="phone" type="text" 
                                    class="form-control @error('phone') is-invalid @enderror" 
                                    name="phone" 
                                    value="{{ old('phone') }}" 
+                                   required
                                    placeholder="05xxxxxxxx">
                             @error('phone')
                                 <span class="invalid-feedback">{{ $message }}</span>

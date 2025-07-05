@@ -102,6 +102,17 @@
                             <i class="fas fa-info-circle me-1"></i>
                             سيتم توجيهك للوحة المناسبة بناءً على دورك
                         </small>
+                        
+                        <!-- رابط التسجيل للطلاب الجدد -->
+                        <div class="mt-3">
+                            <div class="border-top pt-3">
+                                <p class="text-muted small mb-2">طالب جديد؟</p>
+                                <a href="{{ route('student.register.form') }}" class="btn btn-outline-success btn-sm">
+                                    <i class="fas fa-user-plus me-2"></i>
+                                    إنشاء حساب طالب جديد
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -63,6 +63,41 @@
         @enderror
     </div>
 
+    <!-- Phone -->
+    <div class="mb-3">
+        <label for="phone" class="form-label">
+            <i class="fas fa-phone me-1"></i>
+            رقم الهاتف *
+        </label>
+        <input id="phone" type="tel" 
+               class="form-control @error('phone') is-invalid @enderror" 
+               name="phone" 
+               value="{{ old('phone') }}" 
+               required 
+               autocomplete="off"
+               placeholder="05xxxxxxxx">
+        @error('phone')
+            <span class="invalid-feedback">{{ $message }}</span>
+        @enderror
+    </div>
+
+    <!-- Student ID -->
+    <div class="mb-3">
+        <label for="student_id" class="form-label">
+            <i class="fas fa-id-card me-1"></i>
+            رقم الطالب (اختياري)
+        </label>
+        <input id="student_id" type="text" 
+               class="form-control @error('student_id') is-invalid @enderror" 
+               name="student_id" 
+               value="{{ old('student_id') }}" 
+               autocomplete="off"
+               placeholder="أدخل رقمك الجامعي إن وجد">
+        @error('student_id')
+            <span class="invalid-feedback">{{ $message }}</span>
+        @enderror
+    </div>
+
     <!-- Password -->
     <div class="mb-3">
         <label for="password" class="form-label">

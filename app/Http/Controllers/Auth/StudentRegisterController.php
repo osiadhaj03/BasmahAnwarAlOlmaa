@@ -51,6 +51,8 @@ class StudentRegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:20', 'regex:/^[0-9+\-\s()]*$/'],
+            'student_id' => ['nullable', 'string', 'max:50', 'unique:users,student_id'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role' => ['prohibited'], // منع تمرير role من الأساس
         ], [
@@ -58,6 +60,9 @@ class StudentRegisterController extends Controller
             'email.required' => 'البريد الإلكتروني مطلوب',
             'email.email' => 'يجب أن يكون البريد الإلكتروني صحيحاً',
             'email.unique' => 'البريد الإلكتروني مستخدم مسبقاً',
+            'phone.required' => 'رقم الهاتف مطلوب',
+            'phone.regex' => 'رقم الهاتف يجب أن يحتوي على أرقام وعلامات فقط',
+            'student_id.unique' => 'رقم الطالب مستخدم مسبقاً',
             'password.required' => 'كلمة المرور مطلوبة',
             'password.min' => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل',
             'password.confirmed' => 'تأكيد كلمة المرور غير متطابق',
@@ -72,6 +77,8 @@ class StudentRegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => isset($data['phone']) ? $data['phone'] : null,
+            'student_id' => isset($data['student_id']) && !empty($data['student_id']) ? $data['student_id'] : null,
             'password' => Hash::make($data['password']),
             'role' => 'student', // فقط الطلاب يمكنهم التسجيل
         ]);
