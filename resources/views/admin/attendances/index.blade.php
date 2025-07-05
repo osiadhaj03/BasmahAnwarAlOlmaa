@@ -85,14 +85,27 @@
     }
     
     .table th {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        background: #ffffff !important;
         border: none;
         font-weight: 600;
         font-size: 0.85rem;
-        color: #6c757d;
+        color: #495057 !important;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    /* إزالة أي لون ذهبي من header الجدول */
+    .table thead th {
+        background-color: #ffffff !important;
+        background: #ffffff !important;
+        color: #495057 !important;
+    }
+    
+    /* إزالة أي لون ذهبي من Bootstrap */
+    table.table thead th {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
     }
     
     .table tbody tr {
@@ -161,6 +174,31 @@
     /* التأكد من أن جميع الأيقونات تستخدم اللون الرمادي */
     h1 i, h2 i, h3 i {
         color: #6c757d !important;
+    }
+    
+    /* إزالة اللون الذهبي من جدول الحضور بقوة */
+    .table thead tr th {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #495057 !important;
+    }
+    
+    /* إزالة أي ألوان Bootstrap الافتراضية */
+    .table-warning,
+    .table-warning > th,
+    .table-warning > td {
+        background-color: #ffffff !important;
+    }
+    
+    /* تطبيق لون أبيض نظيف على كامل header الجدول */
+    thead {
+        background: #ffffff !important;
+    }
+    
+    thead th {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #495057 !important;
     }
 </style>
 @endpush
