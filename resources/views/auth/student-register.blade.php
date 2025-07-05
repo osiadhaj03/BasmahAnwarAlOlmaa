@@ -12,7 +12,7 @@
                         <i class="fas fa-user-plus me-2"></i>
                         تسجيل طالب جديد
                     </h4>
-                    <small>أنشئ حسابك للانضمام إلى أنوار العلوم</small>
+                    <small>أنشئ حسابك للانضمام إلى أنوار العلماء</small>
                 </div>
                 <div class="card-body p-4">
                     <form method="POST" action="{{ route('student.register') }}">

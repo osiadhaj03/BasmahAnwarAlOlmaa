@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'تسجيل طالب جديد - أنوار العلوم')
+@section('title', 'تسجيل طالب جديد - أنوار العلماء')
 
 @section('content')
 <div class="text-center mb-4 fade-in">
@@ -8,7 +8,7 @@
         <i class="fas fa-user-plus logo-anwar-large"></i>
     </div>
     <h2 class="text-anwar-gradient mb-2 heading-anwar-center">تسجيل طالب جديد</h2>
-    <p class="text-anwar-teal">أنشئ حسابك للانضمام إلى أنوار العلوم</p>
+    <p class="text-anwar-teal">أنشئ حسابك للانضمام إلى أنوار العلماء</p>
 </div>
 
 <!-- Error messages -->
@@ -154,7 +154,7 @@
 
 @section('scripts')
 <script>
-// تحسين تجربة المستخدم مع التأثيرات البصرية المحسّنة
+// تحسين تجربة المستخدم مع التأثيرات البصرية البسيطة
 document.addEventListener('DOMContentLoaded', function() {
     // تأثير fade-in للعناصر
     const elements = document.querySelectorAll('.fade-in');
@@ -179,28 +179,17 @@ document.addEventListener('DOMContentLoaded', function() {
         input.setAttribute('autocomplete', 'off');
         input.setAttribute('data-lpignore', 'true'); // لـ LastPass
         input.setAttribute('data-form-type', 'other'); // لبرامج إدارة كلمات المرور
-        
-        // تأثيرات تفاعلية محسّنة
-        input.addEventListener('focus', function() {
-            this.parentElement.style.transform = 'scale(1.02)';
-        });
-        
-        input.addEventListener('blur', function() {
-            this.parentElement.style.transform = 'scale(1)';
-        });
     });
     
-    // تأكيد كلمة المرور مع تأثيرات بصرية
+    // تأكيد كلمة المرور
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('password_confirmation');
     
     function validatePassword() {
         if (password.value !== confirmPassword.value) {
             confirmPassword.setCustomValidity('كلمات المرور غير متطابقة');
-            confirmPassword.style.borderColor = 'var(--anwar-danger, #e53e3e)';
         } else {
             confirmPassword.setCustomValidity('');
-            confirmPassword.style.borderColor = 'var(--anwar-gold)';
         }
     }
     
@@ -213,52 +202,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('password').value = '';
         document.getElementById('password_confirmation').value = '';
     }, 500);
-    
-    // تأثير النجمة المتحركة في الخلفية
-    createStarEffect();
 });
 
-function createStarEffect() {
-    const container = document.querySelector('.main-container');
-    if (!container) return;
-    
-    setInterval(() => {
-        const star = document.createElement('div');
-        star.style.cssText = `
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--anwar-gold);
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0;
-            z-index: 0;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-            animation: starTwinkle 3s ease-in-out forwards;
-        `;
-        
-        container.appendChild(star);
-        
-        setTimeout(() => {
-            if (star.parentNode) {
-                star.remove();
-            }
-        }, 3000);
-    }, 2000);
-}
-
-// إضافة التأثير المتحرك للنجوم
-if (!document.querySelector('#star-animation-styles')) {
+// إضافة تأثير fade-in بسيط
+if (!document.querySelector('#simple-animation-styles')) {
     const style = document.createElement('style');
-    style.id = 'star-animation-styles';
+    style.id = 'simple-animation-styles';
     style.textContent = `
-        @keyframes starTwinkle {
-            0% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0); }
-        }
-        
         .fade-in {
             opacity: 0;
             transform: translateY(20px);

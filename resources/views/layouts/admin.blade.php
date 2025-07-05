@@ -328,7 +328,7 @@
             <div class="col-md-3 col-lg-2 sidebar">
                 <div class="logo-section">
                     <i class="fas fa-graduation-cap fa-3x mb-3" style="color: var(--anwar-gold);"></i>
-                    <h4 style="font-family: 'Amiri', serif; color: white;">أنوار العلوم</h4>
+                    <h4 style="font-family: 'Amiri', serif; color: white;">أنوار العلماء</h4>
                     <small style="color: rgba(255,255,255,0.8);">{{ auth()->user()->name }}</small>
                     <br>
                     <small class="badge mt-2" style="background: var(--anwar-gold); color: white;">

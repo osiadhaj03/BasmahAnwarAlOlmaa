@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - أنوار العلوم</title>
+    <title>تسجيل الدخول - أنوار العلماء</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts - Arabic -->
@@ -137,7 +137,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="login-card p-5">                    <div class="text-center mb-4">
                         <i class="fas fa-graduation-cap logo"></i>
-                        <h2 class="app-title mb-3">أنوار العلوم</h2>
+                        <h2 class="app-title mb-3">أنوار العلماء</h2>
                         <p class="text-muted">تسجيل الدخول</p>
                         <small class="text-info">للطلاب والمعلمين والإداريين</small>
                     </div>

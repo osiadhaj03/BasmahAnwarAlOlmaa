@@ -1,7 +1,7 @@
 /* 
 ==================================================
-نظام الألوان الجديد لـ BasmahApp - أنوار العلوم
-مستوحى من هوية "أنوار العلوم" الإسلامية الراقية
+نظام الألوان الجديد لـ BasmahApp - أنوار العلماء
+مستوحى من هوية "أنوار العلماء" الإسلامية الراقية
 ==================================================
 */
 
@@ -58,20 +58,31 @@ body {
     text-align: right;
 }
 
-/* النمط الإسلامي الهندسي الخفيف للخلفية */
-.islamic-pattern-overlay {
+/* خلفية بسيطة بدون نقوش معقدة */
+.simple-pattern-overlay {
     position: relative;
+    background: var(--anwar-background);
 }
 
-.islamic-pattern-overlay::before {
+.simple-pattern-overlay::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23DAA520' fill-opacity='0.02'%3E%3Cpolygon points='50,0 60.83,35 100,35 70.83,57.5 81.67,92.5 50,70 18.33,92.5 29.17,57.5 0,35 39.17,35'/%3E%3Cpolygon points='25,25 35.42,42.5 57.5,42.5 42.54,53.75 47.92,71.25 25,60 2.08,71.25 7.46,53.75 -7.5,42.5 14.58,42.5'/%3E%3Cpolygon points='75,25 85.42,42.5 107.5,42.5 92.54,53.75 97.92,71.25 75,60 52.08,71.25 57.46,53.75 42.5,42.5 64.58,42.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.4;
+    background: linear-gradient(45deg, 
+        rgba(218, 165, 32, 0.01) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        rgba(218, 165, 32, 0.01) 75%),
+        linear-gradient(-45deg, 
+        rgba(0, 128, 128, 0.01) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        rgba(0, 128, 128, 0.01) 75%);
+    background-size: 60px 60px;
+    opacity: 0.3;
     pointer-events: none;
     z-index: -1;
 }
@@ -280,7 +291,7 @@ body {
     border-radius: 35px;
 }
 
-/* البطاقات المحسّنة */
+/* البطاقات المحسّنة والمبسطة */
 .card-anwar {
     background: var(--anwar-white);
     border: none;
@@ -307,6 +318,7 @@ body {
     overflow: hidden;
 }
 
+/* نقش بسيط للبطاقات */
 .card-anwar-header::before {
     content: '';
     position: absolute;
@@ -314,8 +326,13 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpolygon points='40,0 48.33,28 80,28 56.67,46 65,74 40,56 15,74 23.33,46 0,28 31.67,28'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.6;
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.1) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        rgba(255, 255, 255, 0.1) 75%);
+    background-size: 20px 20px;
+    opacity: 0.3;
     pointer-events: none;
 }
 
@@ -344,8 +361,13 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpolygon points='40,0 48.33,28 80,28 56.67,46 65,74 40,56 15,74 23.33,46 0,28 31.67,28'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.6;
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.1) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        rgba(255, 255, 255, 0.1) 75%);
+    background-size: 20px 20px;
+    opacity: 0.3;
     pointer-events: none;
 }
 
@@ -355,7 +377,7 @@ body {
     position: relative;
 }
 
-/* الشريط الجانبي المحسّن */
+/* الشريط الجانبي المحسّن والمبسط */
 .sidebar-anwar {
     background: var(--anwar-gradient-teal);
     min-height: 100vh;
@@ -371,8 +393,13 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpolygon points='50,0 61.8,35.36 100,35.36 70.9,57.64 82.7,93 50,70.72 17.3,93 29.1,57.64 0,35.36 38.2,35.36'/%3E%3Cpolygon points='25,25 30.9,42.68 50,42.68 35.45,54.82 41.35,72.5 25,60.36 8.65,72.5 14.55,54.82 0,42.68 19.1,42.68'/%3E%3Cpolygon points='75,25 80.9,42.68 100,42.68 85.45,54.82 91.35,72.5 75,60.36 58.65,72.5 64.55,54.82 50,42.68 69.1,42.68'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.8;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.05) 25%, 
+        transparent 25%, 
+        transparent 75%, 
+        rgba(255, 255, 255, 0.05) 75%);
+    background-size: 40px 40px;
+    opacity: 0.6;
     pointer-events: none;
 }
 
