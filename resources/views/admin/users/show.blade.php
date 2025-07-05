@@ -8,7 +8,7 @@
     <div class="mb-4 p-4 rounded-lg" style="background: linear-gradient(135deg, #008080 0%, #004d40 100%); color: white;">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h1 class="mb-2" style="color: #B8860B; font-size: 2rem; font-weight: 700;">
+                <h1 class="mb-2" style="color: white; font-size: 2rem; font-weight: 700;">
                     <i class="fas fa-user me-3"></i>
                     بيانات المستخدم
                 </h1>
@@ -36,7 +36,7 @@
         <div class="col-lg-8">
             <div class="card shadow-sm" style="border: none; border-radius: 12px; background-color: white;">
                 <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
-                    <h5 class="mb-0" style="color: #B8860B; font-weight: 600;">
+                    <h5 class="mb-0" style="color: #333333; font-weight: 600;">
                         <i class="fas fa-id-card me-2"></i>البيانات الأساسية
                     </h5>
                 </div>
@@ -114,7 +114,7 @@
         <div class="col-lg-4">
             <div class="card shadow-sm" style="border: none; border-radius: 12px; background-color: white;">
                 <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
-                    <h5 class="mb-0" style="color: #B8860B; font-weight: 600;">
+                    <h5 class="mb-0" style="color: #333333; font-weight: 600;">
                         <i class="fas fa-chart-pie me-2"></i>الإحصائيات
                     </h5>
                 </div>
@@ -210,7 +210,7 @@
     <!-- دروس المعلم -->
     <div class="card shadow-sm mt-4" style="border: none; border-radius: 12px; background-color: white;">
         <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
-            <h5 class="mb-0" style="color: #B8860B; font-weight: 600;">
+            <h5 class="mb-0" style="color: #333333; font-weight: 600;">
                 <i class="fas fa-chalkboard-teacher me-2"></i>دروس المعلم
             </h5>
         </div>
@@ -270,7 +270,7 @@
     <!-- دروس الطالب -->
     <div class="card shadow-sm mt-4" style="border: none; border-radius: 12px; background-color: white;">
         <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
-            <h5 class="mb-0" style="color: #B8860B; font-weight: 600;">
+            <h5 class="mb-0" style="color: #333333; font-weight: 600;">
                 <i class="fas fa-user-graduate me-2"></i>دروس الطالب
             </h5>
         </div>
