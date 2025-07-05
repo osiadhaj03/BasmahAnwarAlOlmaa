@@ -85,7 +85,7 @@
     }
     
     .table th {
-        background-color: #ffffff;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
         border: none;
         font-weight: 600;
         font-size: 0.85rem;
@@ -211,28 +211,28 @@
     @if(isset($stats))
     <div class="row mb-4">
         <div class="col-md-3 mb-3">
-            <div class="stats-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="stats-card" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); color: #495057;">
                 <i class="fas fa-clipboard-list"></i>
                 <h3>{{ $stats['total'] }}</h3>
                 <small>إجمالي السجلات</small>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="stats-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="stats-card" style="background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%); color: #6c757d;">
                 <i class="fas fa-calendar-day"></i>
                 <h3>{{ $stats['today'] }}</h3>
                 <small>سجلات اليوم</small>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="stats-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="stats-card" style="background: linear-gradient(135deg, #f7f8f9 0%, #dee2e6 100%); color: #343a40;">
                 <i class="fas fa-user-check"></i>
                 <h3>{{ $stats['present_today'] }}</h3>
                 <small>حاضر اليوم</small>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="stats-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+            <div class="stats-card" style="background: linear-gradient(135deg, #fefefe 0%, #f5f5f5 100%); color: #212529;">
                 <i class="fas fa-user-times"></i>
                 <h3>{{ $stats['absent_today'] }}</h3>
                 <small>غائب اليوم</small>
