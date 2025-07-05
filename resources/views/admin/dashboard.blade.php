@@ -18,11 +18,11 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="text-white-50 small">إجمالي المستخدمين</div>
-                            <div class="h2 mb-0 text-white">{{ $data['totalUsers'] ?? 0 }}</div>
+                            <div class="text-muted small">إجمالي المستخدمين</div>
+                            <div class="h2 mb-0 text-dark">{{ $data['totalUsers'] ?? 0 }}</div>
                         </div>
                         <div class="align-self-center">
-                            <i class="fas fa-users fa-2x text-white-50"></i>
+                            <i class="fas fa-users fa-2x text-muted"></i>
                         </div>
                     </div>
                 </div>
@@ -30,15 +30,15 @@
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-success text-white">
+            <div class="card" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 1px solid rgba(0,0,0,0.05);">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="text-white-50 small">المعلمين</div>
-                            <div class="h2 mb-0">{{ $data['totalTeachers'] ?? 0 }}</div>
+                            <div class="text-muted small">المعلمين</div>
+                            <div class="h2 mb-0 text-dark">{{ $data['totalTeachers'] ?? 0 }}</div>
                         </div>
                         <div class="align-self-center">
-                            <i class="fas fa-chalkboard-teacher fa-2x text-white-50"></i>
+                            <i class="fas fa-chalkboard-teacher fa-2x text-muted"></i>
                         </div>
                     </div>
                 </div>
@@ -46,15 +46,15 @@
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-warning text-white">
+            <div class="card" style="background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%); border: 1px solid rgba(0,0,0,0.05);">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="text-white-50 small">الطلاب</div>
-                            <div class="h2 mb-0">{{ $data['totalStudents'] ?? 0 }}</div>
+                            <div class="text-muted small">الطلاب</div>
+                            <div class="h2 mb-0 text-dark">{{ $data['totalStudents'] ?? 0 }}</div>
                         </div>
                         <div class="align-self-center">
-                            <i class="fas fa-user-graduate fa-2x text-white-50"></i>
+                            <i class="fas fa-user-graduate fa-2x text-muted"></i>
                         </div>
                     </div>
                 </div>
@@ -62,15 +62,15 @@
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-info text-white">
+            <div class="card" style="background: linear-gradient(135deg, #f7f8f9 0%, #dee2e6 100%); border: 1px solid rgba(0,0,0,0.05);">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="text-white-50 small">الدروس</div>
-                            <div class="h2 mb-0">{{ $data['totalLessons'] ?? 0 }}</div>
+                            <div class="text-muted small">الدروس</div>
+                            <div class="h2 mb-0 text-dark">{{ $data['totalLessons'] ?? 0 }}</div>
                         </div>
                         <div class="align-self-center">
-                            <i class="fas fa-book fa-2x text-white-50"></i>
+                            <i class="fas fa-book fa-2x text-muted"></i>
                         </div>
                     </div>
                 </div>
@@ -82,11 +82,11 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <div class="text-white-50 small">دروسي</div>
-                            <div class="h2 mb-0 text-white">{{ $data['myLessons'] ?? 0 }}</div>
+                            <div class="text-muted small">دروسي</div>
+                            <div class="h2 mb-0 text-dark">{{ $data['myLessons'] ?? 0 }}</div>
                         </div>
                         <div class="align-self-center">
-                            <i class="fas fa-book fa-2x text-white-50"></i>
+                            <i class="fas fa-book fa-2x text-muted"></i>
                         </div>
                     </div>
                 </div>

@@ -189,18 +189,20 @@
         }
         
         .stats-card {
-            background: var(--anwar-gradient-gold);
-            color: white;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%);
+            color: #495057;
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
-            box-shadow: 0 8px 30px var(--anwar-shadow);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         
         .stats-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px var(--anwar-shadow);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f1f3f4 100%);
         }
         
         .stats-card-teal {
@@ -227,14 +229,15 @@
         }
         
         .table thead th {
-            background: var(--anwar-gradient-gold);
-            color: white;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            color: #495057;
             border: none;
             padding: 20px;
             font-weight: 700;
             font-family: var(--font-arabic);
             text-align: center;
             position: relative;
+            border-bottom: 2px solid #dee2e6;
         }
         
         .table thead th::before {
