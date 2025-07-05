@@ -188,3 +188,12 @@ Route::get('/admin/filament/lessons', function() {
 Route::get('/admin/filament/lessons/create', function() {
     return redirect('/admin/lessons/create');
 })->name('filament.admin.resources.lessons.create');
+
+// Temporary fix for missing Filament Attendance routes
+Route::get('/admin/filament/attendances', function() {
+    return redirect('/admin/attendances');
+})->name('filament.admin.resources.attendances.index');
+
+Route::get('/admin/filament/attendances/create', function() {
+    return redirect('/admin/attendances');
+})->name('filament.admin.resources.attendances.create');
