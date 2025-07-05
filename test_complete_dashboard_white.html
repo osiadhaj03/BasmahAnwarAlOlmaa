@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار شامل - لوحة التحكم بالتصميم الأبيض الجديد</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        /* بطاقات الإحصائيات - ألوان بيضاء */
+        .stats-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%);
+            color: #495057;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* بطاقات الإجراءات السريعة ومعلومات النظام */
+        .card-white-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .card-white-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .card-header-white {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.25rem;
+        }
+
+        /* أزرار الإجراءات السريعة */
+        .btn-white-action {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+            color: #495057 !important;
+            transition: all 0.3s ease;
+        }
+
+        .btn-white-action:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+            border-color: rgba(0,0,0,0.15) !important;
+            color: #495057 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-white-action i {
+            color: #6c757d !important;
+        }
+
+        .btn-white-action:hover i {
+            color: #495057 !important;
+        }
+
+        /* العناوين والأيقونات */
+        .card-title {
+            color: #495057 !important;
+        }
+
+        .card-title i {
+            color: #6c757d !important;
+        }
+
+        .text-dark {
+            color: #495057 !important;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+        }
+
+        .demo-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center mb-5" style="color: #495057;">
+            <i class="fas fa-palette me-3" style="color: #6c757d;"></i>
+            اختبار شامل - لوحة التحكم بالتصميم الأبيض الجديد
+        </h1>
+
+        <!-- قسم بطاقات الإحصائيات -->
+        <div class="demo-section">
+            <h2 class="mb-4" style="color: #495057;">
+                <i class="fas fa-chart-bar me-2" style="color: #6c757d;"></i>
+                بطاقات الإحصائيات (للمديرين والمعلمين)
+            </h2>
+            <div class="row">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card stats-card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="text-muted small">إجمالي المستخدمين</div>
+                                    <div class="h2 mb-0 text-dark">150</div>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-users fa-2x text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 1px solid rgba(0,0,0,0.05);">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="text-muted small">إجمالي الدروس</div>
+                                    <div class="h2 mb-0 text-dark">45</div>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-book fa-2x text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card" style="background: linear-gradient(135deg, #ffffff 0%, #f1f3f4 100%); border: 1px solid rgba(0,0,0,0.05);">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="text-muted small">حضور اليوم</div>
+                                    <div class="h2 mb-0 text-dark">89</div>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-calendar-day fa-2x text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card" style="background: linear-gradient(135deg, #f7f8f9 0%, #dee2e6 100%); border: 1px solid rgba(0,0,0,0.05);">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="text-muted small">إجمالي الحضور</div>
+                                    <div class="h2 mb-0 text-dark">2,340</div>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-clipboard-check fa-2x text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم الإجراءات السريعة ومعلومات النظام -->
+        <div class="demo-section">
+            <h2 class="mb-4" style="color: #495057;">
+                <i class="fas fa-tools me-2" style="color: #6c757d;"></i>
+                قسم الإجراءات السريعة ومعلومات النظام
+            </h2>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card card-white-gradient">
+                        <div class="card-header card-header-white">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-tachometer-alt me-2"></i>
+                                الإجراءات السريعة
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-lg w-100 btn-white-action">
+                                        <i class="fas fa-users me-2"></i>
+                                        إدارة المستخدمين
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-lg w-100 btn-white-action">
+                                        <i class="fas fa-book me-2"></i>
+                                        إدارة الدروس
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-lg w-100 btn-white-action">
+                                        <i class="fas fa-clipboard-check me-2"></i>
+                                        إدارة الحضور
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-lg w-100 btn-white-action">
+                                        <i class="fas fa-user-plus me-2"></i>
+                                        إضافة مستخدم
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <button class="btn btn-lg w-100 btn-white-action">
+                                        <i class="fas fa-plus me-2"></i>
+                                        إضافة درس جديد
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card card-white-gradient">
+                        <div class="card-header card-header-white">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-info-circle me-2"></i>
+                                معلومات النظام
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-user-circle fa-2x" style="color: #6c757d;"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-0" style="color: #495057;">أحمد محمد</h6>
+                                    <small class="text-muted">مدير النظام</small>
+                                </div>
+                            </div>
+                            
+                            <hr style="border-color: rgba(0,0,0,0.1);">
+                            
+                            <div class="text-center">
+                                <h6 style="color: #6c757d;">BasmahApp</h6>
+                                <small class="text-muted">نظام إدارة الحضور الذكي</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات التصميم -->
+        <div class="demo-section">
+            <h2 class="mb-4" style="color: #495057;">
+                <i class="fas fa-info-circle me-2" style="color: #6c757d;"></i>
+                ملخص الألوان والتصميم الجديد
+            </h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 style="color: #495057;">الألوان المستخدمة:</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>خلفيات البطاقات</span>
+                            <span class="badge" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);">تدرجات بيضاء</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>خلفيات الهيدرات</span>
+                            <span class="badge" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">رمادي فاتح</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>النصوص الرئيسية</span>
+                            <span class="badge" style="background: #495057; color: white;">#495057</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>الأيقونات والنصوص الثانوية</span>
+                            <span class="badge" style="background: #6c757d; color: white;">#6c757d</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5 style="color: #495057;">التحسينات المطبقة:</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            إزالة جميع الألوان الذهبية
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            توحيد ألوان جميع البطاقات
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            تطبيق تدرجات بيضاء هادئة
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            تحسين تجربة المستخدم البصرية
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-check text-success me-2"></i>
+                            ألوان أزرار وأيقونات موحدة
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-success text-center" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid #28a745; color: #495057;">
+            <h4 class="alert-heading" style="color: #28a745;">
+                <i class="fas fa-check-circle me-2"></i>
+                تم تطبيق التصميم الجديد بنجاح!
+            </h4>
+            <p class="mb-0">جميع أقسام لوحة التحكم أصبحت بألوان بيضاء وتدرجات هادئة متوافقة مع هوية "أنوار العلماء"</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

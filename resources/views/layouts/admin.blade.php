@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'لوحة التحكم') - BasmahApp</title>
+    <title>@yield('title', 'لوحة ا        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }م') - BasmahApp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts - Arabic -->
@@ -73,7 +76,7 @@
         
         .sidebar .nav-link:hover i,
         .sidebar .nav-link.active i {
-            color: var(--anwar-gold);
+            color: #6c757d;
             transform: scale(1.1);
         }
         
@@ -92,7 +95,7 @@
         .sidebar .logo-section h3 {
             font-family: var(--font-arabic);
             font-weight: 700;
-            color: var(--anwar-gold);
+            color: #6c757d;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             margin: 0;
             font-size: 1.8rem;
@@ -115,16 +118,16 @@
         
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 60px var(--anwar-shadow-gold);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         
         .card-header {
-            background: var(--anwar-gradient-gold);
-            color: white;
-            border-bottom: none;
-            border-radius: 25px 25px 0 0 !important;
-            padding: 2rem;
-            font-weight: 700;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #495057;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.5rem;
+            font-weight: 600;
             font-family: var(--font-arabic);
             position: relative;
             overflow: hidden;
@@ -149,13 +152,14 @@
         }
         
         .btn-primary {
-            background: var(--anwar-gradient-gold);
-            border: none;
-            border-radius: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid rgba(0,0,0,0.1);
+            color: #495057;
+            border-radius: 15px;
             padding: 12px 30px;
             font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 6px 20px var(--anwar-shadow-gold);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             font-family: var(--font-main);
         }
         
@@ -293,8 +297,8 @@
         }
         
         .form-control:focus {
-            border-color: var(--anwar-gold);
-            box-shadow: 0 0 0 0.3rem var(--anwar-shadow-gold);
+            border-color: #6c757d;
+            box-shadow: 0 0 0 0.3rem rgba(108, 117, 125, 0.25);
             transform: translateY(-1px);
         }
         
@@ -315,8 +319,8 @@
         
         .alert-success {
             background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
-            border-right: 5px solid var(--anwar-gold);
-            color: var(--anwar-teal-dark);
+            border-right: 5px solid #28a745;
+            color: #155724;
         }
         
         .alert-danger {
@@ -346,7 +350,7 @@
             right: 0;
             width: 100px;
             height: 4px;
-            background: var(--anwar-gradient-gold);
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
             border-radius: 2px;
         }
     </style>
@@ -358,11 +362,11 @@
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar">
                 <div class="logo-section">
-                    <i class="fas fa-graduation-cap fa-3x mb-3" style="color: var(--anwar-gold);"></i>
+                    <i class="fas fa-graduation-cap fa-3x mb-3" style="color: #6c757d;"></i>
                     <h4 style="font-family: 'Amiri', serif; color: white;">أنوار العلماء</h4>
                     <small style="color: rgba(255,255,255,0.8);">{{ auth()->user()->name }}</small>
                     <br>
-                    <small class="badge mt-2" style="background: var(--anwar-gold); color: white;">
+                    <small class="badge mt-2" style="background: #6c757d; color: white;">
                         {{ auth()->user()->role === 'admin' ? 'مدير' : 'معلم' }}
                     </small>
                 </div>

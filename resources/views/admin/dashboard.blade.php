@@ -119,7 +119,7 @@
         </div>
     @elseif(auth()->user()->role === 'teacher')
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card stats-card">
+            <div class="card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(0,0,0,0.05);">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
