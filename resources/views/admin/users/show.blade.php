@@ -3,105 +3,107 @@
 @section('title', 'عرض بيانات المستخدم')
 
 @section('content')
-<div class="container-fluid">
-    <div class="anwar-header islamic-pattern-enhanced">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="anwar-title">
-                <i class="fas fa-user anwar-text-gold me-2"></i>
-                بيانات المستخدم
-            </h1>
+<div class="container-fluid" style="background-color: #F8F8F8; min-height: 100vh; padding: 20px;">
+    <!-- Header Section -->
+    <div class="mb-4 p-4 rounded-lg" style="background: linear-gradient(135deg, #008080 0%, #004d40 100%); color: white;">
+        <div class="d-flex justify-content-between align-items-center">
             <div>
-                <a href="{{ route('admin.users.edit', $user) }}" class="btn anwar-btn-warning me-2">
+                <h1 class="mb-2" style="color: #DAA520; font-size: 2rem; font-weight: 700;">
+                    <i class="fas fa-user me-3"></i>
+                    بيانات المستخدم
+                </h1>
+                <p class="mb-0" style="color: #F8F8F8; opacity: 0.9;">
+                    عرض تفاصيل وإحصائيات المستخدم
+                </p>
+            </div>
+            <div>
+                <a href="{{ route('admin.users.edit', $user) }}" 
+                   class="btn me-2" 
+                   style="background-color: #DAA520; border: none; color: white; padding: 10px 20px; border-radius: 8px;">
                     <i class="fas fa-edit me-2"></i>تعديل
                 </a>
-                <a href="{{ route('admin.users.index') }}" class="btn anwar-btn-secondary">
+                <a href="{{ route('admin.users.index') }}" 
+                   class="btn" 
+                   style="background-color: #008080; border: none; color: white; padding: 10px 20px; border-radius: 8px;">
                     <i class="fas fa-arrow-right me-2"></i>العودة للقائمة
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row g-4">
         <!-- بيانات المستخدم الأساسية -->
         <div class="col-lg-8">
-            <div class="card anwar-card islamic-pattern-subtle shadow mb-4">
-                <div class="card-header anwar-card-header">
-                    <h5 class="card-title mb-0 anwar-text-gold">
+            <div class="card shadow-sm" style="border: none; border-radius: 12px; background-color: white;">
+                <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
+                    <h5 class="mb-0" style="color: #DAA520; font-weight: 600;">
                         <i class="fas fa-id-card me-2"></i>البيانات الأساسية
                     </h5>
                 </div>
-                <div class="card-body anwar-card-body">
+                <div class="card-body p-4">
                     <div class="row">
                         <div class="col-md-6">
-                            <table class="table table-borderless anwar-table">
-                                <tr>
-                                    <th class="anwar-text-gold" style="width: 150px;">الاسم:</th>
-                                    <td class="anwar-text-dark">{{ $user->name }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="anwar-text-gold">البريد الإلكتروني:</th>
-                                    <td class="anwar-text-dark">{{ $user->email }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="anwar-text-gold">رقم الهاتف:</th>
-                                    <td class="anwar-text-dark">{{ $user->phone ?? 'غير مسجل' }}</td>
-                                </tr>
-                                @if($user->student_id)
-                                <tr>
-                                    <th class="anwar-text-gold">رقم الطالب:</th>
-                                    <td class="anwar-text-dark">{{ $user->student_id }}</td>
-                                </tr>
-                                @endif
-                            </table>
+                            <div class="info-item mb-3">
+                                <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">الاسم</label>
+                                <p style="color: #333333; margin: 0; font-size: 1.1rem;">{{ $user->name }}</p>
+                            </div>
+                            <div class="info-item mb-3">
+                                <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">البريد الإلكتروني</label>
+                                <p style="color: #333333; margin: 0;">{{ $user->email }}</p>
+                            </div>
+                            <div class="info-item mb-3">
+                                <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">رقم الهاتف</label>
+                                <p style="color: #333333; margin: 0;">{{ $user->phone ?? 'غير مسجل' }}</p>
+                            </div>
+                            @if($user->student_id)
+                            <div class="info-item mb-3">
+                                <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">رقم الطالب</label>
+                                <p style="color: #333333; margin: 0;">{{ $user->student_id }}</p>
+                            </div>
+                            @endif
                         </div>
                         <div class="col-md-6">
-                            <table class="table table-borderless anwar-table">
-                                <tr>
-                                    <th class="anwar-text-gold" style="width: 150px;">الصلاحية:</th>
-                                    <td>
-                                        @switch($user->role)
-                                            @case('admin')
-                                                <span class="badge anwar-badge-red">
-                                                    <i class="fas fa-crown me-1"></i>مدير
-                                                </span>
-                                                @break
-                                            @case('teacher')
-                                                <span class="badge anwar-badge-blue">
-                                                    <i class="fas fa-chalkboard-teacher me-1"></i>معلم
-                                                </span>
-                                                @break
-                                            @case('student')
-                                                <span class="badge anwar-badge-green">
-                                                    <i class="fas fa-user-graduate me-1"></i>طالب
-                                                </span>
-                                                @break
-                                        @endswitch
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="anwar-text-gold">تاريخ التسجيل:</th>
-                                    <td class="anwar-text-dark">{{ $user->created_at->format('Y-m-d H:i') }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="anwar-text-gold">آخر تحديث:</th>
-                                    <td class="anwar-text-dark">{{ $user->updated_at->format('Y-m-d H:i') }}</td>
-                                </tr>
-                                <tr>
-                                    <th class="anwar-text-gold">تفعيل البريد:</th>
-                                    <td>
-                                        @if($user->email_verified_at)
-                                            <span class="badge anwar-badge-green">
-                                                <i class="fas fa-check me-1"></i>مفعّل
-                                            </span>
-                                            <small class="anwar-text-muted d-block">{{ $user->email_verified_at->format('Y-m-d') }}</small>
-                                        @else
-                                            <span class="badge anwar-badge-orange">
-                                                <i class="fas fa-exclamation-triangle me-1"></i>غير مفعّل
-                                            </span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="info-item mb-3">
+                                <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">الصلاحية</label>
+                                @switch($user->role)
+                                    @case('admin')
+                                        <span class="badge" style="background-color: #DAA520; color: white; padding: 8px 15px; border-radius: 20px;">
+                                            <i class="fas fa-crown me-1"></i>مدير
+                                        </span>
+                                        @break
+                                    @case('teacher')
+                                        <span class="badge" style="background-color: #008080; color: white; padding: 8px 15px; border-radius: 20px;">
+                                            <i class="fas fa-chalkboard-teacher me-1"></i>معلم
+                                        </span>
+                                        @break
+                                    @case('student')
+                                        <span class="badge" style="background-color: #004d40; color: white; padding: 8px 15px; border-radius: 20px;">
+                                            <i class="fas fa-user-graduate me-1"></i>طالب
+                                        </span>
+                                        @break
+                                @endswitch
+                            </div>
+                            <div class="info-item mb-3">
+                                <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">تاريخ التسجيل</label>
+                                <p style="color: #333333; margin: 0;">{{ $user->created_at->format('Y-m-d H:i') }}</p>
+                            </div>
+                            <div class="info-item mb-3">
+                                <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">آخر تحديث</label>
+                                <p style="color: #333333; margin: 0;">{{ $user->updated_at->format('Y-m-d H:i') }}</p>
+                            </div>
+                            <div class="info-item mb-3">
+                                <label style="color: #008080; font-weight: 600; display: block; margin-bottom: 5px;">تفعيل البريد</label>
+                                @if($user->email_verified_at)
+                                    <span class="badge" style="background-color: #004d40; color: white; padding: 8px 15px; border-radius: 20px;">
+                                        <i class="fas fa-check me-1"></i>مفعّل
+                                    </span>
+                                    <small style="color: #666; display: block; margin-top: 5px;">{{ $user->email_verified_at->format('Y-m-d') }}</small>
+                                @else
+                                    <span class="badge" style="background-color: #ff6b35; color: white; padding: 8px 15px; border-radius: 20px;">
+                                        <i class="fas fa-exclamation-triangle me-1"></i>غير مفعّل
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,93 +112,93 @@
 
         <!-- الإحصائيات -->
         <div class="col-lg-4">
-            <div class="card anwar-card islamic-pattern-subtle shadow mb-4">
-                <div class="card-header anwar-card-header">
-                    <h5 class="card-title mb-0 anwar-text-gold">
+            <div class="card shadow-sm" style="border: none; border-radius: 12px; background-color: white;">
+                <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
+                    <h5 class="mb-0" style="color: #DAA520; font-weight: 600;">
                         <i class="fas fa-chart-pie me-2"></i>الإحصائيات
                     </h5>
                 </div>
-                <div class="card-body anwar-card-body">
+                <div class="card-body p-4">
                     @if($user->role === 'teacher' && isset($stats))
-                        <div class="stats-item mb-3">
-                            <div class="d-flex justify-content-between align-items-center p-3 rounded anwar-border-gold">
+                        <div class="stats-box mb-3 p-3 rounded" style="background: linear-gradient(135deg, #F8F8F8 0%, #e8f4f8 100%); border-left: 4px solid #DAA520;">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <i class="fas fa-book anwar-text-gold fa-2x"></i>
+                                    <i class="fas fa-book" style="color: #DAA520; font-size: 2rem;"></i>
                                 </div>
                                 <div class="text-end">
-                                    <h4 class="mb-0 anwar-text-dark">{{ $stats['total_lessons'] }}</h4>
-                                    <small class="anwar-text-muted">إجمالي الدروس</small>
+                                    <h3 class="mb-0" style="color: #333333; font-weight: 700;">{{ $stats['total_lessons'] }}</h3>
+                                    <small style="color: #666;">إجمالي الدروس</small>
                                 </div>
                             </div>
                         </div>
-                        <div class="stats-item">
-                            <div class="d-flex justify-content-between align-items-center p-3 rounded anwar-border-blue">
+                        <div class="stats-box p-3 rounded" style="background: linear-gradient(135deg, #F8F8F8 0%, #e8f4f8 100%); border-left: 4px solid #008080;">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <i class="fas fa-users anwar-text-blue fa-2x"></i>
+                                    <i class="fas fa-users" style="color: #008080; font-size: 2rem;"></i>
                                 </div>
                                 <div class="text-end">
-                                    <h4 class="mb-0 anwar-text-dark">{{ $stats['total_students'] }}</h4>
-                                    <small class="anwar-text-muted">إجمالي الطلاب</small>
+                                    <h3 class="mb-0" style="color: #333333; font-weight: 700;">{{ $stats['total_students'] }}</h3>
+                                    <small style="color: #666;">إجمالي الطلاب</small>
                                 </div>
                             </div>
                         </div>
                     @elseif($user->role === 'student' && isset($stats))
-                        <div class="row g-2">
+                        <div class="row g-2 mb-3">
                             <div class="col-6">
-                                <div class="stats-item p-2 text-center rounded anwar-border-green">
-                                    <i class="fas fa-book anwar-text-green"></i>
-                                    <h6 class="mb-0 anwar-text-dark">{{ $stats['total_lessons'] }}</h6>
-                                    <small class="anwar-text-muted">الدروس</small>
+                                <div class="mini-stat p-2 text-center rounded" style="background-color: #F8F8F8; border: 2px solid #004d40;">
+                                    <i class="fas fa-book" style="color: #004d40;"></i>
+                                    <h6 class="mb-0 mt-1" style="color: #333333;">{{ $stats['total_lessons'] }}</h6>
+                                    <small style="color: #666;">الدروس</small>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="stats-item p-2 text-center rounded anwar-border-blue">
-                                    <i class="fas fa-clipboard-check anwar-text-blue"></i>
-                                    <h6 class="mb-0 anwar-text-dark">{{ $stats['total_attendances'] }}</h6>
-                                    <small class="anwar-text-muted">سجلات الحضور</small>
+                                <div class="mini-stat p-2 text-center rounded" style="background-color: #F8F8F8; border: 2px solid #008080;">
+                                    <i class="fas fa-clipboard-check" style="color: #008080;"></i>
+                                    <h6 class="mb-0 mt-1" style="color: #333333;">{{ $stats['total_attendances'] }}</h6>
+                                    <small style="color: #666;">سجلات الحضور</small>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="stats-item p-2 text-center rounded anwar-border-green">
-                                    <i class="fas fa-check anwar-text-green"></i>
-                                    <h6 class="mb-0 anwar-text-dark">{{ $stats['present_count'] }}</h6>
-                                    <small class="anwar-text-muted">حاضر</small>
+                                <div class="mini-stat p-2 text-center rounded" style="background-color: #F8F8F8; border: 2px solid #004d40;">
+                                    <i class="fas fa-check" style="color: #004d40;"></i>
+                                    <h6 class="mb-0 mt-1" style="color: #333333;">{{ $stats['present_count'] }}</h6>
+                                    <small style="color: #666;">حاضر</small>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="stats-item p-2 text-center rounded anwar-border-orange">
-                                    <i class="fas fa-clock anwar-text-orange"></i>
-                                    <h6 class="mb-0 anwar-text-dark">{{ $stats['late_count'] }}</h6>
-                                    <small class="anwar-text-muted">متأخر</small>
+                                <div class="mini-stat p-2 text-center rounded" style="background-color: #F8F8F8; border: 2px solid #DAA520;">
+                                    <i class="fas fa-clock" style="color: #DAA520;"></i>
+                                    <h6 class="mb-0 mt-1" style="color: #333333;">{{ $stats['late_count'] }}</h6>
+                                    <small style="color: #666;">متأخر</small>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="stats-item p-2 text-center rounded anwar-border-red">
-                                    <i class="fas fa-times anwar-text-red"></i>
-                                    <h6 class="mb-0 anwar-text-dark">{{ $stats['absent_count'] }}</h6>
-                                    <small class="anwar-text-muted">غائب</small>
+                                <div class="mini-stat p-2 text-center rounded" style="background-color: #F8F8F8; border: 2px solid #ff6b35;">
+                                    <i class="fas fa-times" style="color: #ff6b35;"></i>
+                                    <h6 class="mb-0 mt-1" style="color: #333333;">{{ $stats['absent_count'] }}</h6>
+                                    <small style="color: #666;">غائب</small>
                                 </div>
                             </div>
                         </div>
 
                         @if($stats['total_attendances'] > 0)
-                        <div class="mt-3 p-3 rounded" style="background: linear-gradient(135deg, rgba(218, 165, 32, 0.1), rgba(0, 128, 128, 0.1));">
-                            <h6 class="anwar-text-gold mb-2">نسبة الحضور</h6>
+                        <div class="mt-3 p-3 rounded" style="background: linear-gradient(135deg, #F8F8F8 0%, #fff8e7 100%); border: 1px solid #DAA520;">
+                            <h6 style="color: #DAA520; margin-bottom: 10px; font-weight: 600;">نسبة الحضور</h6>
                             @php
                                 $attendanceRate = round(($stats['present_count'] + $stats['late_count']) / $stats['total_attendances'] * 100, 1);
                             @endphp
-                            <div class="progress mb-2" style="height: 8px;">
+                            <div class="progress mb-2" style="height: 10px; background-color: #F8F8F8; border-radius: 5px;">
                                 <div class="progress-bar" 
-                                     style="width: {{ $attendanceRate }}%; background: var(--anwar-gradient-gold);" 
+                                     style="width: {{ $attendanceRate }}%; background: linear-gradient(90deg, #DAA520 0%, #008080 100%); border-radius: 5px;" 
                                      role="progressbar"></div>
                             </div>
-                            <small class="anwar-text-dark">{{ $attendanceRate }}% معدل الحضور</small>
+                            <small style="color: #333333; font-weight: 600;">{{ $attendanceRate }}% معدل الحضور</small>
                         </div>
                         @endif
                     @else
                         <div class="text-center py-4">
-                            <i class="fas fa-chart-bar anwar-text-muted fa-3x mb-3"></i>
-                            <p class="anwar-text-muted">لا توجد إحصائيات متاحة</p>
+                            <i class="fas fa-chart-bar" style="color: #ccc; font-size: 3rem; margin-bottom: 15px;"></i>
+                            <p style="color: #666;">لا توجد إحصائيات متاحة</p>
                         </div>
                     @endif
                 </div>
@@ -206,27 +208,27 @@
 
     @if($user->role === 'teacher')
     <!-- دروس المعلم -->
-    <div class="card anwar-card islamic-pattern-subtle shadow">
-        <div class="card-header anwar-card-header">
-            <h5 class="card-title mb-0 anwar-text-gold">
+    <div class="card shadow-sm mt-4" style="border: none; border-radius: 12px; background-color: white;">
+        <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
+            <h5 class="mb-0" style="color: #DAA520; font-weight: 600;">
                 <i class="fas fa-chalkboard-teacher me-2"></i>دروس المعلم
             </h5>
         </div>
-        <div class="card-body anwar-card-body">
+        <div class="card-body p-4">
             @php
                 $teacherLessons = $user->teachingLessons()->with('students')->get();
             @endphp
             
             @if($teacherLessons->count() > 0)
-                <div class="row">
+                <div class="row g-3">
                     @foreach($teacherLessons as $lesson)
-                    <div class="col-md-6 mb-3">
-                        <div class="lesson-card p-3 rounded anwar-border-gold">
-                            <h6 class="anwar-text-gold mb-2">{{ $lesson->subject }}</h6>
+                    <div class="col-md-6">
+                        <div class="lesson-item p-3 rounded" style="background-color: #F8F8F8; border-left: 4px solid #DAA520; transition: all 0.3s ease;">
+                            <h6 style="color: #DAA520; margin-bottom: 10px; font-weight: 600;">{{ $lesson->subject }}</h6>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <small class="anwar-text-muted">
-                                        <i class="fas fa-calendar me-1"></i>
+                                    <small style="color: #666;">
+                                        <i class="fas fa-calendar me-1" style="color: #008080;"></i>
                                         @switch($lesson->day_of_week)
                                             @case('sunday') الأحد @break
                                             @case('monday') الإثنين @break
@@ -238,13 +240,13 @@
                                         @endswitch
                                     </small>
                                     <br>
-                                    <small class="anwar-text-muted">
-                                        <i class="fas fa-clock me-1"></i>
+                                    <small style="color: #666;">
+                                        <i class="fas fa-clock me-1" style="color: #008080;"></i>
                                         {{ \Carbon\Carbon::parse($lesson->start_time)->format('H:i') }}
                                     </small>
                                 </div>
-                                <div class="text-end">
-                                    <span class="badge anwar-badge-blue">
+                                <div>
+                                    <span class="badge" style="background-color: #008080; color: white; padding: 5px 12px; border-radius: 15px;">
                                         <i class="fas fa-users me-1"></i>
                                         {{ $lesson->students->count() }} طالب
                                     </span>
@@ -256,8 +258,8 @@
                 </div>
             @else
                 <div class="text-center py-4">
-                    <i class="fas fa-book-open anwar-text-muted fa-3x mb-3"></i>
-                    <p class="anwar-text-muted">لا يوجد دروس مسجلة لهذا المعلم</p>
+                    <i class="fas fa-book-open" style="color: #ccc; font-size: 3rem; margin-bottom: 15px;"></i>
+                    <p style="color: #666;">لا يوجد دروس مسجلة لهذا المعلم</p>
                 </div>
             @endif
         </div>
@@ -266,32 +268,32 @@
 
     @if($user->role === 'student')
     <!-- دروس الطالب -->
-    <div class="card anwar-card islamic-pattern-subtle shadow">
-        <div class="card-header anwar-card-header">
-            <h5 class="card-title mb-0 anwar-text-gold">
+    <div class="card shadow-sm mt-4" style="border: none; border-radius: 12px; background-color: white;">
+        <div class="card-header" style="background-color: #008080; border-radius: 12px 12px 0 0; border: none;">
+            <h5 class="mb-0" style="color: #DAA520; font-weight: 600;">
                 <i class="fas fa-user-graduate me-2"></i>دروس الطالب
             </h5>
         </div>
-        <div class="card-body anwar-card-body">
+        <div class="card-body p-4">
             @php
                 $studentLessons = $user->lessons()->with('teacher')->get();
             @endphp
             
             @if($studentLessons->count() > 0)
-                <div class="row">
+                <div class="row g-3">
                     @foreach($studentLessons as $lesson)
-                    <div class="col-md-6 mb-3">
-                        <div class="lesson-card p-3 rounded anwar-border-green">
-                            <h6 class="anwar-text-green mb-2">{{ $lesson->subject }}</h6>
+                    <div class="col-md-6">
+                        <div class="lesson-item p-3 rounded" style="background-color: #F8F8F8; border-left: 4px solid #004d40; transition: all 0.3s ease;">
+                            <h6 style="color: #004d40; margin-bottom: 10px; font-weight: 600;">{{ $lesson->subject }}</h6>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <small class="anwar-text-muted">
-                                        <i class="fas fa-user-tie me-1"></i>
+                                    <small style="color: #666;">
+                                        <i class="fas fa-user-tie me-1" style="color: #008080;"></i>
                                         {{ $lesson->teacher->name }}
                                     </small>
                                     <br>
-                                    <small class="anwar-text-muted">
-                                        <i class="fas fa-calendar me-1"></i>
+                                    <small style="color: #666;">
+                                        <i class="fas fa-calendar me-1" style="color: #008080;"></i>
                                         @switch($lesson->day_of_week)
                                             @case('sunday') الأحد @break
                                             @case('monday') الإثنين @break
@@ -304,30 +306,30 @@
                                         {{ \Carbon\Carbon::parse($lesson->start_time)->format('H:i') }}
                                     </small>
                                 </div>
-                                <div class="text-end">
+                                <div>
                                     @php
                                         $userAttendance = $user->attendances()->where('lesson_id', $lesson->id)->latest()->first();
                                     @endphp
                                     @if($userAttendance)
                                         @switch($userAttendance->status)
                                             @case('present')
-                                                <span class="badge anwar-badge-green">
+                                                <span class="badge" style="background-color: #004d40; color: white; padding: 5px 12px; border-radius: 15px;">
                                                     <i class="fas fa-check me-1"></i>حاضر
                                                 </span>
                                                 @break
                                             @case('late')
-                                                <span class="badge anwar-badge-orange">
+                                                <span class="badge" style="background-color: #DAA520; color: white; padding: 5px 12px; border-radius: 15px;">
                                                     <i class="fas fa-clock me-1"></i>متأخر
                                                 </span>
                                                 @break
                                             @case('absent')
-                                                <span class="badge anwar-badge-red">
+                                                <span class="badge" style="background-color: #ff6b35; color: white; padding: 5px 12px; border-radius: 15px;">
                                                     <i class="fas fa-times me-1"></i>غائب
                                                 </span>
                                                 @break
                                         @endswitch
                                     @else
-                                        <span class="badge anwar-badge-gray">
+                                        <span class="badge" style="background-color: #ccc; color: white; padding: 5px 12px; border-radius: 15px;">
                                             <i class="fas fa-question me-1"></i>لا يوجد حضور
                                         </span>
                                     @endif
@@ -339,8 +341,8 @@
                 </div>
             @else
                 <div class="text-center py-4">
-                    <i class="fas fa-book-open anwar-text-muted fa-3x mb-3"></i>
-                    <p class="anwar-text-muted">لا يوجد دروس مسجلة لهذا الطالب</p>
+                    <i class="fas fa-book-open" style="color: #ccc; font-size: 3rem; margin-bottom: 15px;"></i>
+                    <p style="color: #666;">لا يوجد دروس مسجلة لهذا الطالب</p>
                 </div>
             @endif
         </div>
@@ -349,23 +351,32 @@
 </div>
 
 <style>
-.stats-item {
+.stats-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.mini-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.lesson-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff !important;
+}
+
+.info-item {
     transition: all 0.3s ease;
 }
 
-.stats-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.lesson-card {
+.card {
     transition: all 0.3s ease;
-    background: var(--anwar-white);
 }
 
-.lesson-card:hover {
+.card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(218, 165, 32, 0.2);
 }
 </style>
 @endsection
