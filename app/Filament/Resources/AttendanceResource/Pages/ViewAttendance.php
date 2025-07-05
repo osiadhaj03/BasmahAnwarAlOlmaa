@@ -14,6 +14,10 @@ class ViewAttendance extends ViewRecord
     {
         return [
             Actions\EditAction::make()->label('تعديل'),
+            Actions\Action::make('back')
+                ->label('العودة للقائمة')
+                ->url('/admin/attendances')
+                ->icon('heroicon-o-arrow-left'),
         ];
     }
 }

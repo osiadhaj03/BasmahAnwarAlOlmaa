@@ -11,6 +11,6 @@ class CreateAttendance extends CreateRecord
     
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index');
+        return route('filament.admin.resources.attendances.index');
     }
 }

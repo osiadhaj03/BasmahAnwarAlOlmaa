@@ -197,3 +197,14 @@ Route::get('/admin/filament/attendances', function() {
 Route::get('/admin/filament/attendances/create', function() {
     return redirect('/admin/attendances');
 })->name('filament.admin.resources.attendances.create');
+
+// Temporary fix for missing Filament auth logout route
+Route::match(['GET', 'POST'], '/admin/filament/logout', function() {
+    // Handle both GET and POST for logout
+    if (auth()->check()) {
+        auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+    }
+    return redirect()->route('admin.login');
+})->name('filament.admin.auth.logout');

@@ -20,6 +20,6 @@ class EditAttendance extends EditRecord
     
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index');
+        return route('filament.admin.resources.attendances.index');
     }
 }
