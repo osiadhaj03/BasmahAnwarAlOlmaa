@@ -3,44 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - BasmahApp</title>
+    <title>تسجيل الدخول - أنوار العلوم</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Anwar Al-Oloma Colors -->
+    <link href="{{ asset('css/anwar-colors.css') }}" rel="stylesheet">
+    
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--anwar-background);
             min-height: 100vh;
             display: flex;
             align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            color: var(--anwar-gray-dark);
         }
+        
+        /* خلفية إسلامية محسّنة ومريحة */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='140' height='140' viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23DAA520' fill-opacity='0.015'%3E%3Cpolygon points='70,0 86.52,49.98 140,49.98 99.24,80.76 115.76,130.74 70,99.96 24.24,130.74 40.76,80.76 0,49.98 53.48,49.98'/%3E%3Cpolygon points='35,35 43.26,59.99 70,59.99 49.62,75.38 57.88,100.37 35,85.98 12.12,100.37 20.38,75.38 0,59.99 26.74,59.99'/%3E%3Cpolygon points='105,35 113.26,59.99 140,59.99 119.62,75.38 127.88,100.37 105,85.98 82.12,100.37 90.38,75.38 70,59.99 96.74,59.99'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
         .login-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            background: var(--anwar-white);
+            border-radius: 30px;
+            box-shadow: 0 25px 80px var(--anwar-shadow-gold);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(218, 165, 32, 0.08);
+            position: relative;
+            z-index: 1;
         }
+        
         .logo {
-            color: #667eea;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            color: var(--anwar-gold);
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px var(--anwar-shadow-gold);
+            font-family: var(--font-arabic);
+            font-weight: 800;
         }
+            text-shadow: 2px 2px 4px var(--anwar-shadow);
+        }
+        
+        .app-title {
+            font-family: 'Amiri', serif;
+            color: var(--anwar-teal-dark);
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--anwar-gradient-gold);
             border: none;
-            border-radius: 10px;
-            padding: 12px 30px;
+            border-radius: 25px;
+            padding: 15px 35px;
             font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px var(--anwar-shadow-gold);
+            font-family: var(--font-main);
+            letter-spacing: 0.5px;
         }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--anwar-shadow-gold);
+            color: white;
+        }
+        
+        .btn-outline-success {
+            border: 2px solid var(--anwar-teal);
+            color: var(--anwar-teal);
+            background: transparent;
+            border-radius: 20px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .btn-outline-success:hover {
+            background: var(--anwar-teal);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--anwar-shadow-teal);
+        }
+        
         .form-control {
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-            padding: 12px 15px;
-            transition: all 0.3s ease;
+            border-radius: 20px;
+            border: 2px solid var(--anwar-gray-light);
+            padding: 15px 20px;
+            transition: all 0.4s ease;
+            font-family: var(--font-main);
+            background: var(--anwar-off-white);
         }
+        
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            border-color: var(--anwar-gold);
+            box-shadow: 0 0 0 0.3rem var(--anwar-shadow-gold);
+            transform: translateY(-1px);
+            background: var(--anwar-white);
+        }
+        
+        .input-group-text {
+            background: var(--anwar-gray-light);
+            border: 2px solid var(--anwar-gray-light);
+            border-radius: 15px 0 0 15px;
+            color: var(--anwar-teal);
+        }
+        
+        .text-info {
+            color: var(--anwar-teal) !important;
+        }
+        
+        .border-top {
+            border-top: 2px solid var(--anwar-gray-light) !important;
         }
     </style>
 </head>
@@ -50,7 +137,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="login-card p-5">                    <div class="text-center mb-4">
                         <i class="fas fa-graduation-cap logo"></i>
-                        <h2 class="h3 mb-3">BasmahApp</h2>
+                        <h2 class="app-title mb-3">أنوار العلوم</h2>
                         <p class="text-muted">تسجيل الدخول</p>
                         <small class="text-info">للطلاب والمعلمين والإداريين</small>
                     </div>
