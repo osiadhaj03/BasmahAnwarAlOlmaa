@@ -85,13 +85,14 @@
     }
     
     .table th {
-        background-color: #f8f9fa;
+        background-color: #ffffff;
         border: none;
         font-weight: 600;
         font-size: 0.85rem;
-        color: #6c757d;
+        color: #495057;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     
     .table tbody tr {
@@ -210,28 +211,28 @@
     @if(isset($stats))
     <div class="row mb-4">
         <div class="col-md-3 mb-3">
-            <div class="stats-card" style="background-color: #6c757d;">
+            <div class="stats-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                 <i class="fas fa-clipboard-list"></i>
                 <h3>{{ $stats['total'] }}</h3>
                 <small>إجمالي السجلات</small>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="stats-card" style="background-color: #6c757d;">
+            <div class="stats-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                 <i class="fas fa-calendar-day"></i>
                 <h3>{{ $stats['today'] }}</h3>
                 <small>سجلات اليوم</small>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="stats-card" style="background-color: #008080;">
+            <div class="stats-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                 <i class="fas fa-user-check"></i>
                 <h3>{{ $stats['present_today'] }}</h3>
                 <small>حاضر اليوم</small>
             </div>
         </div>
         <div class="col-md-3 mb-3">
-            <div class="stats-card" style="background-color: #B22222;">
+            <div class="stats-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
                 <i class="fas fa-user-times"></i>
                 <h3>{{ $stats['absent_today'] }}</h3>
                 <small>غائب اليوم</small>
@@ -389,25 +390,21 @@
                                     @switch($attendance->status)
                                         @case('present')
                                             <span class="status-present">
-                                                <i class="fas fa-check me-1"></i>
                                                 حاضر
                                             </span>
                                             @break
                                         @case('absent')
                                             <span class="status-absent">
-                                                <i class="fas fa-times me-1"></i>
                                                 غائب
                                             </span>
                                             @break
                                         @case('late')
                                             <span class="status-late">
-                                                <i class="fas fa-clock me-1"></i>
                                                 متأخر
                                             </span>
                                             @break
                                         @case('excused')
                                             <span class="status-excused">
-                                                <i class="fas fa-user-check me-1"></i>
                                                 بعذر
                                             </span>
                                             @break
