@@ -85,14 +85,15 @@
     }
     
     .table th {
-        background: #ffffff !important;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%) !important;
         border: none;
         font-weight: 600;
         font-size: 0.85rem;
         color: #495057 !important;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        border-bottom: 2px solid #dee2e6 !important;
     }
     
     /* إزالة أي لون ذهبي من header الجدول */
@@ -190,15 +191,28 @@
         background-color: #ffffff !important;
     }
     
-    /* تطبيق لون أبيض نظيف على كامل header الجدول */
+    /* تطبيق تدرج جميل من درجات الأبيض على header الجدول */
     thead {
-        background: #ffffff !important;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%) !important;
     }
     
     thead th {
-        background: #ffffff !important;
-        background-color: #ffffff !important;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e9ecef 100%) !important;
+        background-color: transparent !important;
         color: #495057 !important;
+        border-bottom: 2px solid #dee2e6 !important;
+        position: relative;
+    }
+    
+    /* إضافة تأثير بصري خفيف */
+    thead th::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, #ced4da 50%, transparent 100%);
     }
 </style>
 @endpush
