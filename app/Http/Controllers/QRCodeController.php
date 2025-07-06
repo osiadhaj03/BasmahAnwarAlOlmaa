@@ -115,6 +115,14 @@ class QrCodeController extends Controller
 
         $lesson = $qrToken->lesson;
 
+        // التحقق من أن الدرس ما زال في وقته المحدد
+        if (!$lesson->canGenerateQR()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'انتهى وقت الدرس - لا يمكن تسجيل الحضور بعد انتهاء الوقت المحدد'
+            ], 400);
+        }
+
         // التحقق من أن الطالب مسجل في هذا الدرس
         if (!$lesson->students()->where('student_id', $user->id)->exists()) {
             return response()->json([
@@ -190,8 +198,14 @@ class QrCodeController extends Controller
 
             $validToken = $lesson->getValidQRToken();
             
-            // في بيئة التطوير، السماح بتوليد QR دائماً
-            $canGenerate = (env('APP_ENV') === 'local' || env('APP_DEBUG') === true) ? true : $lesson->canGenerateQR();
+            // التحقق من أن الدرس ما زال في وقته
+            $canGenerate = $lesson->canGenerateQR();
+            
+            // إذا انتهى وقت الدرس، أزل أي tokens صالحة
+            if (!$canGenerate && $validToken) {
+                $validToken->update(['expires_at' => now()->subMinute()]);
+                $validToken = null;
+            }
             
             $timeUntil = $lesson->getTimeUntilQRGeneration();
             

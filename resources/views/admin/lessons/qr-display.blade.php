@@ -288,7 +288,16 @@ let tokenData = null;
 document.addEventListener('DOMContentLoaded', function() {
     checkQRStatus();
     // تحديث حالة QR كل 10 ثوانٍ
-    setInterval(checkQRStatus, 10000);
+    window.qrStatusInterval = setInterval(() => {
+        // التحقق من أن tokenData موجود وأن الدرس لم ينته
+        if (tokenData && tokenData.can_generate_qr && tokenData.lesson_remaining_minutes > 0) {
+            checkQRStatus();
+        } else {
+            // إيقاف التحديث إذا انتهى الدرس
+            clearInterval(window.qrStatusInterval);
+            showExpiredQR();
+        }
+    }, 10000);
 });
 
 function checkQRStatus() {
@@ -297,10 +306,25 @@ function checkQRStatus() {
         .then(data => {
             tokenData = data;
             updateQRDisplay(data);
+            
+            // التحقق من انتهاء وقت الدرس
+            if (!data.can_generate_qr && data.has_valid_token) {
+                // الدرس انتهى والـ token لا يزال موجود - أوقف كل شيء
+                showExpiredQR();
+                return;
+            }
+            
             if (data.has_valid_token && data.can_generate_qr) {
                 loadQRImage();
                 // استخدام الوقت المتبقي للدرس
                 const countdownMins = data.lesson_remaining_minutes || data.token_remaining_minutes || 0;
+                
+                // إذا كان الوقت المتبقي صفر أو أقل، أوقف المؤقت
+                if (countdownMins <= 0) {
+                    showExpiredQR();
+                    return;
+                }
+                
                 startCountdown(countdownMins);
             } else {
                 showExpiredQR();
@@ -357,7 +381,14 @@ function updateQRDisplay(data) {
         refreshBtn.disabled = true;
         refreshBtn.innerHTML = '<i class="fas fa-clock me-2"></i>غير متاح حالياً';
         
-        if (data.minutes_until_available && data.minutes_until_available > 0) {
+        // التحقق من انتهاء وقت الدرس
+        if (data.lesson_remaining_minutes !== undefined && data.lesson_remaining_minutes <= 0) {
+            statusEl.innerHTML = '<i class="fas fa-times-circle text-danger me-1"></i>انتهى وقت الدرس - QR Code غير نشط';
+            alertEl.className = 'alert alert-danger';
+            timerEl.textContent = '00:00';
+            timerEl.className = 'badge bg-danger fs-4';
+            refreshBtn.innerHTML = '<i class="fas fa-ban me-2"></i>انتهى الوقت';
+        } else if (data.minutes_until_available && data.minutes_until_available > 0) {
             const hours = Math.floor(data.minutes_until_available / 60);
             const mins = data.minutes_until_available % 60;
             let timeText = '';
@@ -449,6 +480,17 @@ function showErrorQR() {
 }
 
 function generateNewQR() {
+    // التحقق من أن الدرس لم ينته
+    if (tokenData && tokenData.lesson_remaining_minutes !== undefined && tokenData.lesson_remaining_minutes <= 0) {
+        alert('لا يمكن توليد QR جديد - انتهى وقت الدرس');
+        return;
+    }
+    
+    if (tokenData && !tokenData.can_generate_qr) {
+        alert('لا يمكن توليد QR في الوقت الحالي');
+        return;
+    }
+    
     const refreshBtn = document.getElementById('refresh-btn');
     refreshBtn.disabled = true;
     refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري التوليد...';
@@ -470,7 +512,7 @@ function generateNewQR() {
                 refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
             }, 1000);
         } else {
-            alert('حدث خطأ في توليد QR جديد');
+            alert('حدث خطأ في توليد QR جديد: ' + (data.message || 'خطأ غير معروف'));
             refreshBtn.disabled = false;
             refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
         }
@@ -552,7 +594,10 @@ function startCountdown(minutes) {
         }
         
         if (totalSeconds <= 0) {
+            // توقف المؤقت وأظهر انتهاء الدرس
             showExpiredQR();
+            // إيقاف تحديث معلومات QR
+            clearInterval(window.qrStatusInterval);
             return;
         }
         
