@@ -237,8 +237,15 @@ function generateQRCode() {
     document.getElementById('status-text').innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>جاري توليد QR Code...';
     document.getElementById('token-status').className = 'alert alert-info';
     
+    // تحديد الـ route المناسب حسب نوع المستخدم
+    @if(auth()->user()->isAdmin())
+        const qrRoute = '{{ route("admin.lessons.qr.generate", $lesson) }}';
+    @else
+        const qrRoute = '{{ route("teacher.lessons.qr.generate", $lesson) }}';
+    @endif
+    
     // توليد QR Code مباشرة
-    fetch('{{ route("admin.lessons.qr.generate", $lesson) }}', {
+    fetch(qrRoute, {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),

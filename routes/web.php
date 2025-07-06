@@ -74,6 +74,8 @@ Route::prefix('admin')->group(function () {
             ->name('admin.lessons.qr.display');
         Route::get('lessons/{lesson}/qr-info', [QRCodeController::class, 'getTokenInfo'])
             ->name('admin.lessons.qr.info');
+        Route::post('lessons/{lesson}/qr-generate', [QRCodeController::class, 'generateQR'])
+            ->name('admin.lessons.qr.generate');
         Route::post('lessons/{lesson}/qr-refresh', [QRCodeController::class, 'refreshToken'])
             ->name('admin.lessons.qr.refresh');
     });
@@ -115,6 +117,8 @@ Route::middleware('teacher')->group(function () {
         ->name('teacher.lessons.qr.display');
     Route::get('/teacher/lessons/{lesson}/qr-info', [QRCodeController::class, 'getTokenInfo'])
         ->name('teacher.lessons.qr.info');
+    Route::post('/teacher/lessons/{lesson}/qr-generate', [QRCodeController::class, 'generateQR'])
+        ->name('teacher.lessons.qr.generate');
     Route::post('/teacher/lessons/{lesson}/qr-refresh', [QRCodeController::class, 'refreshToken'])
         ->name('teacher.lessons.qr.refresh');
 });
