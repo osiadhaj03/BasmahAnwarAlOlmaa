@@ -4,13 +4,13 @@
     <meta charse        .login-logo .logo-circle {
             width: 85px;
             height: 85px;
-            background: linear-gradient(135deg, var(--anwar-teal) 0%, var(--anwar-teal-dark) 100%);
+            background: transparent;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto;
-            box-shadow: 0 8px 25px var(--anwar-shadow-teal);
+            box-shadow: none;
         }    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول - أنوار العلماء</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -95,10 +95,10 @@
         .login-logo .logo-image {
             width: 85px;
             height: 85px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            object-fit: contain;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
         }
         
         /* الشعار الاحتياطي */
