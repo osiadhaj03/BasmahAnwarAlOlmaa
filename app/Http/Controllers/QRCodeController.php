@@ -198,10 +198,10 @@ class QrCodeController extends Controller
 
             $validToken = $lesson->getValidQRToken();
             
-            // التحقق من أن الدرس ما زال في وقته
+            // التحقق من أن الدرس ما زال في وقته (بدون استثناءات)
             $canGenerate = $lesson->canGenerateQR();
             
-            // إذا انتهى وقت الدرس، أزل أي tokens صالحة
+            // إذا انتهى وقت الدرس، أزل أي tokens صالحة فوراً
             if (!$canGenerate && $validToken) {
                 $validToken->update(['expires_at' => now()->subMinute()]);
                 $validToken = null;
@@ -250,21 +250,7 @@ class QrCodeController extends Controller
                 abort(403);
             }
             
-            // في بيئة التطوير، السماح بتوليد QR في أي وقت
-            if (env('APP_ENV') === 'local' || env('APP_DEBUG') === true) {
-                $newToken = $lesson->forceGenerateQRToken();
-                
-                $remainingMinutes = (int)now()->diffInMinutes($newToken->expires_at);
-                
-                return response()->json([
-                    'success' => true,
-                    'message' => 'تم توليد رمز QR جديد للتجربة - صالح لمدة ساعة',
-                    'token_expires_at' => $newToken->expires_at->format('Y-m-d H:i:s'),
-                    'token_remaining_minutes' => $remainingMinutes
-                ]);
-            }
-            
-            // التحقق من إمكانية توليد QR في الوقت الحالي (للإنتاج فقط)
+            // التحقق من إمكانية توليد QR في الوقت الحالي (لجميع البيئات)
             if (!$lesson->canGenerateQR()) {
                 $timeUntil = $lesson->getTimeUntilQRGeneration();
                 $message = 'لا يمكن توليد QR Code إلا خلال وقت الدرس';

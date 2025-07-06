@@ -287,17 +287,32 @@ let tokenData = null;
 // Initialize QR display
 document.addEventListener('DOMContentLoaded', function() {
     checkQRStatus();
-    // تحديث حالة QR كل 10 ثوانٍ
+    
+    // تحديث حالة QR كل 5 ثوانٍ (أسرع للكشف عن انتهاء الوقت)
     window.qrStatusInterval = setInterval(() => {
-        // التحقق من أن tokenData موجود وأن الدرس لم ينته
-        if (tokenData && tokenData.can_generate_qr && tokenData.lesson_remaining_minutes > 0) {
+        // التحقق الذكي من حالة النظام
+        if (!tokenData) {
             checkQRStatus();
-        } else {
-            // إيقاف التحديث إذا انتهى الدرس
+            return;
+        }
+        
+        // إذا انتهى الدرس، أوقف التحديث نهائياً
+        if (tokenData.lesson_remaining_minutes !== undefined && tokenData.lesson_remaining_minutes <= 0) {
             clearInterval(window.qrStatusInterval);
             showExpiredQR();
+            return;
         }
-    }, 10000);
+        
+        // إذا QR غير مسموح، أوقف التحديث
+        if (!tokenData.can_generate_qr) {
+            clearInterval(window.qrStatusInterval);
+            showExpiredQR();
+            return;
+        }
+        
+        // استمر في التحديث إذا كان الدرس نشط
+        checkQRStatus();
+    }, 5000);
 });
 
 function checkQRStatus() {
@@ -305,29 +320,36 @@ function checkQRStatus() {
         .then(response => response.json())
         .then(data => {
             tokenData = data;
-            updateQRDisplay(data);
             
-            // التحقق من انتهاء وقت الدرس
-            if (!data.can_generate_qr && data.has_valid_token) {
-                // الدرس انتهى والـ token لا يزال موجود - أوقف كل شيء
+            // التحقق الصارم من انتهاء وقت الدرس
+            const lessonEnded = data.lesson_remaining_minutes !== undefined && data.lesson_remaining_minutes <= 0;
+            const qrNotAllowed = !data.can_generate_qr;
+            
+            if (lessonEnded || (qrNotAllowed && data.has_valid_token)) {
+                // الدرس انتهى - أوقف كل شيء فوراً
                 showExpiredQR();
+                clearInterval(window.qrStatusInterval); // إيقاف التحديث
                 return;
             }
             
-            if (data.has_valid_token && data.can_generate_qr) {
+            updateQRDisplay(data);
+            
+            if (data.has_valid_token && data.can_generate_qr && !lessonEnded) {
                 loadQRImage();
-                // استخدام الوقت المتبقي للدرس
-                const countdownMins = data.lesson_remaining_minutes || data.token_remaining_minutes || 0;
+                const countdownMins = data.lesson_remaining_minutes || 0;
                 
-                // إذا كان الوقت المتبقي صفر أو أقل، أوقف المؤقت
                 if (countdownMins <= 0) {
                     showExpiredQR();
+                    clearInterval(window.qrStatusInterval);
                     return;
                 }
                 
                 startCountdown(countdownMins);
             } else {
                 showExpiredQR();
+                if (lessonEnded) {
+                    clearInterval(window.qrStatusInterval);
+                }
             }
         })
         .catch(error => {

@@ -232,11 +232,6 @@ class Lesson extends Model
      */
     public function canGenerateQR()
     {
-        // للتجربة والتطوير - السماح بتوليد QR في أي وقت
-        if (env('APP_ENV') === 'local' || env('APP_DEBUG') === true) {
-            return true;
-        }
-        
         // التحقق من وجود معلومات الدرس المطلوبة
         if (!$this->day_of_week || !$this->start_time || !$this->end_time) {
             return false;
