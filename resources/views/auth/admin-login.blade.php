@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charse        .login-logo .logo-circle {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, var(--anwar-teal) 0%, var(--anwar-teal-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-shadow: 0 8px 25px var(--anwar-shadow-teal);
+        }    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول - أنوار العلماء</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
