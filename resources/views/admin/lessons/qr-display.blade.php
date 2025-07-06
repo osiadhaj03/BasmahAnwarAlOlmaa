@@ -209,6 +209,77 @@
     </div>
 </div>
 
+<style>
+.timer-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.timer-container:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+
+#countdown-timer {
+    font-size: 1.8rem !important;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    min-width: 120px;
+    display: inline-block;
+}
+
+.timer-label {
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.progress {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 1s ease-in-out, background-color 0.3s ease;
+}
+
+.alert {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.timer-warning {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
+
+/* تحسين الألوان للمواضيع المظلمة */
+@media (prefers-color-scheme: dark) {
+    .timer-container {
+        background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+}
+</style>
+
 <script>
 let currentTimer;
 let tokenData = null;
@@ -320,13 +391,37 @@ function loadQRImage() {
 
 function showExpiredQR() {
     const container = document.getElementById('qr-container');
+    const currentTime = new Date().toLocaleTimeString('ar-SA', {hour: '2-digit', minute: '2-digit'});
+    
     container.innerHTML = `
         <div class="text-center p-4">
             <i class="fas fa-clock text-warning" style="font-size: 4rem;"></i>
-            <h5 class="mt-3">انتهى وقت الدرس</h5>
-            <p class="text-muted">QR Code غير صالح بعد انتهاء وقت الدرس</p>
+            <h5 class="mt-3 text-warning">انتهى وقت الدرس</h5>
+            <p class="text-muted">انتهت صلاحية QR Code في الوقت: ${currentTime}</p>
+            <small class="text-info">QR Code غير صالح بعد انتهاء وقت الدرس المحدد</small>
         </div>
     `;
+    
+    // تحديث المؤقت ليظهر انتهاء الوقت
+    const timerEl = document.getElementById('countdown-timer');
+    if (timerEl) {
+        timerEl.textContent = '00:00';
+        timerEl.className = 'badge bg-danger fs-4';
+    }
+    
+    // تحديث شريط التقدم
+    const progressBar = document.querySelector('#lesson-progress .progress-bar');
+    if (progressBar) {
+        progressBar.style.width = '100%';
+        progressBar.className = 'progress-bar bg-danger';
+    }
+    
+    // تحديث معلومات الوقت
+    const infoElement = document.getElementById('lesson-time-info');
+    if (infoElement) {
+        infoElement.innerHTML = `انتهى الدرس في: ${currentTime} - <span class="text-danger">QR Code غير نشط</span>`;
+    }
+    
     clearTimeout(currentTimer);
 }
 
@@ -410,9 +505,18 @@ function startCountdown(minutes) {
         if (timerElement) {
             timerElement.textContent = timerText;
             
-            // تغيير اللون حسب الوقت المتبقي
-            if (totalSeconds <= 300) { // آخر 5 دقائق
-                timerElement.className = 'badge bg-danger fs-4';
+            // إزالة جميع الفئات المتحركة أولاً
+            timerElement.classList.remove('pulse-animation', 'timer-warning');
+            
+            // تغيير اللون والتأثيرات حسب الوقت المتبقي
+            if (totalSeconds <= 60) { // آخر دقيقة
+                timerElement.className = 'badge bg-danger fs-4 timer-warning';
+                // إضافة تأثير الوميض
+                if (!timerElement.classList.contains('timer-warning')) {
+                    timerElement.classList.add('timer-warning');
+                }
+            } else if (totalSeconds <= 300) { // آخر 5 دقائق
+                timerElement.className = 'badge bg-danger fs-4 pulse-animation';
             } else if (totalSeconds <= 900) { // آخر 15 دقيقة
                 timerElement.className = 'badge bg-warning fs-4';
             } else {
