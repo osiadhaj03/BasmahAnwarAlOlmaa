@@ -23,7 +23,9 @@ class QrCodeController extends Controller
             $user = auth()->user();
             if (!$user || (!$user->isAdmin() && $lesson->teacher_id !== $user->id)) {
                 abort(403, 'غير مسموح لك بالوصول لهذا الدرس');
-            }            // السماح بتوليد QR في جميع الأوقات - التحقق من الوقت سيتم عند المسح
+            }
+
+            // السماح بتوليد QR في جميع الأوقات - التحقق من الوقت سيتم عند المسح
 
             // الحصول على token صالح أو إنشاء جديد
             $qrToken = $lesson->getValidQRToken();
@@ -39,6 +41,17 @@ class QrCodeController extends Controller
                 ->errorCorrection('H')
                 ->generate($scanUrl);
 
+            // إذا كان الطلب يتوقع JSON (من واجهة QR display)
+            if ($request->expectsJson() || $request->header('Accept') === 'application/json') {
+                return response()->json([
+                    'success' => true,
+                    'qr_code' => $qrCode,
+                    'token' => $qrToken->token,
+                    'expires_at' => $qrToken->expires_at
+                ]);
+            }
+
+            // إرجاع SVG مباشرة للاستخدامات الأخرى
             return response($qrCode)
                 ->header('Content-Type', 'image/svg+xml')
                 ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
@@ -47,7 +60,7 @@ class QrCodeController extends Controller
                 
         } catch (\Exception $e) {
             \Log::error('QR Generation Error: ' . $e->getMessage());
-            return response()->json(['error' => 'حدث خطأ في توليد QR Code'], 500);
+            return response()->json(['error' => 'حدث خطأ في توليد QR Code: ' . $e->getMessage()], 500);
         }
     }
 

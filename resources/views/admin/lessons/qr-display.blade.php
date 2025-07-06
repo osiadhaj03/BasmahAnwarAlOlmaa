@@ -241,6 +241,8 @@ function generateQRCode() {
         const qrRoute = '{{ route("teacher.lessons.qr.generate", $lesson) }}';
     @endif
     
+    console.log('Generating QR Code using route:', qrRoute);
+    
     // توليد QR Code مباشرة
     fetch(qrRoute, {
         method: 'POST',
@@ -250,8 +252,13 @@ function generateQRCode() {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        return response.json();
+    })
     .then(data => {
+        console.log('Response data:', data);
         if (data.success) {
             document.getElementById('status-text').innerHTML = '<i class="fas fa-check-circle text-success me-1"></i>QR Code جاهز للاستخدام';
             document.getElementById('token-status').className = 'alert alert-success';
@@ -261,9 +268,14 @@ function generateQRCode() {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
+        console.error('Full error:', error);
         document.getElementById('status-text').innerHTML = '<i class="fas fa-exclamation-triangle text-danger me-1"></i>' + error.message;
         document.getElementById('token-status').className = 'alert alert-danger';
+        
+        // إضافة معلومات إضافية للتشخيص
+        if (error.name === 'SyntaxError') {
+            document.getElementById('status-text').innerHTML += '<br><small>خطأ في تحليل البيانات - قد يكون الرد ليس JSON</small>';
+        }
     });
 }
 
