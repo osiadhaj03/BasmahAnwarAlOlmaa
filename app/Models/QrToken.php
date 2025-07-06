@@ -33,16 +33,20 @@ class QrToken extends Model
 
     public function isUsed(): bool
     {
-        return !is_null($this->used_at);
+        // QR Token يمكن استخدامه عدة مرات من طلاب مختلفين
+        // لذا نعيد false دائماً
+        return false;
     }
 
     public function isValid(): bool
     {
-        return !$this->isExpired() && !$this->isUsed();
+        // QR صالح إذا لم ينته وقته
+        return !$this->isExpired();
     }
 
     public function markAsUsed(): void
     {
-        $this->update(['used_at' => now()]);
+        // لا نحتاج لتحديد QR كمستخدم لأنه يمكن استخدامه عدة مرات
+        // يمكن الاحتفاظ بهذه الدالة فارغة للتوافق مع الكود الموجود
     }
 }

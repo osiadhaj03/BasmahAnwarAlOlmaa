@@ -109,7 +109,7 @@ class QrCodeController extends Controller
         if (!$qrToken->isValid()) {
             return response()->json([
                 'success' => false,
-                'message' => $qrToken->isExpired() ? 'انتهت صلاحية رمز QR (انتهى وقت الدرس)' : 'تم استخدام رمز QR مسبقاً'
+                'message' => $qrToken->isExpired() ? 'انتهت صلاحية رمز QR (انتهى وقت الدرس)' : 'رمز QR غير صالح'
             ], 400);
         }
 
@@ -137,25 +137,32 @@ class QrCodeController extends Controller
             ], 400);
         }
 
+        // تحديد حالة الحضور حسب وقت المسح
+        $attendanceStatus = $lesson->getAttendanceStatus();
+        
         // تسجيل الحضور
         $attendance = Attendance::create([
             'student_id' => $user->id,
             'lesson_id' => $lesson->id,
             'date' => $today,
-            'status' => 'present',
-            'notes' => 'تم التسجيل عبر QR Code في ' . now()->format('H:i:s')
+            'status' => $attendanceStatus,
+            'notes' => 'تم التسجيل عبر QR Code في ' . now()->format('H:i:s') . ' - حالة: ' . ($attendanceStatus === 'present' ? 'حاضر' : 'متأخر')
         ]);
 
-        // تحديد Token كمستخدم
-        $qrToken->markAsUsed();
+        // لا نحتاج لتحديد Token كمستخدم لأنه يمكن استخدامه عدة مرات
+        // $qrToken->markAsUsed();
 
+        $statusText = $attendanceStatus === 'present' ? 'حاضر' : 'متأخر';
+        
         return response()->json([
             'success' => true,
-            'message' => 'تم تسجيل حضورك بنجاح في درس ' . $lesson->name,
+            'message' => 'تم تسجيل حضورك بنجاح في درس ' . $lesson->name . ' (حالة: ' . $statusText . ')',
             'attendance_id' => $attendance->id,
             'lesson_name' => $lesson->name,
             'subject' => $lesson->subject,
-            'time' => now()->format('H:i')
+            'time' => now()->format('H:i'),
+            'status' => $attendanceStatus,
+            'status_text' => $statusText
         ]);
     }
 
@@ -196,6 +203,7 @@ class QrCodeController extends Controller
                 'can_generate_qr' => $canGenerate,
                 'token_expires_at' => $validToken ? $validToken->expires_at->format('Y-m-d H:i:s') : null,
                 'token_remaining_minutes' => $validToken ? max(0, (int)$validToken->expires_at->diffInMinutes(now())) : 0,
+                'lesson_remaining_minutes' => $lesson->getRemainingLessonTime(),
                 'students_count' => $lesson->students()->count(),
                 'qr_url' => $canGenerate ? route('quick.qr', $lesson->id) : null
             ];
@@ -263,13 +271,14 @@ class QrCodeController extends Controller
             $newToken = $lesson->generateQRCodeToken();
             
             // حساب المدة المتبقية حتى نهاية الدرس
-            $remainingMinutes = (int)now()->diffInMinutes($newToken->expires_at);
+            $remainingMinutes = $lesson->getRemainingLessonTime();
             
             return response()->json([
                 'success' => true,
                 'message' => 'تم توليد رمز QR جديد - صالح حتى نهاية الدرس',
                 'token_expires_at' => $newToken->expires_at->format('Y-m-d H:i:s'),
-                'token_remaining_minutes' => $remainingMinutes
+                'token_remaining_minutes' => $remainingMinutes,
+                'lesson_remaining_minutes' => $remainingMinutes
             ]);
             
         } catch (\Exception $e) {

@@ -58,13 +58,17 @@
                             
                             <div class="attendance-info">
                                 <h6 class="text-muted">معلومات الحضور</h6>
-                                <div class="alert alert-info">
-                                    <i class="fas fa-clock me-2"></i>
-                                    <strong>نافذة الحضور:</strong> أول 15 دقيقة من بداية الدرس
+                                <div class="alert alert-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <strong>حاضر:</strong> مسح QR خلال أول 15 دقيقة من الدرس
                                 </div>
                                 <div class="alert alert-warning">
-                                    <i class="fas fa-exclamation-triangle me-2"></i>
-                                    يجب على الطلاب مسح QR Code خلال الـ 15 دقيقة الأولى فقط
+                                    <i class="fas fa-clock me-2"></i>
+                                    <strong>متأخر:</strong> مسح QR بعد أول 15 دقيقة من الدرس
+                                </div>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    QR Code صالح طوال مدة الدرس ويمكن مسحه من عدة طلاب
                                 </div>
                             </div>
                         </div>
@@ -93,8 +97,8 @@
                                 
                                 <p class="text-muted mt-3">
                                     <i class="fas fa-info-circle me-1"></i>
-                                    <strong>QR Code صالح لمدة 15 دقيقة فقط</strong><br>
-                                    <small>اطلب من الطلاب مسح الكود لتسجيل الحضور</small>
+                                    <strong>QR Code صالح طوال مدة الدرس</strong><br>
+                                    <small>يمكن لجميع الطلاب مسح نفس QR للتسجيل - حاضر (أول 15 دقيقة) أو متأخر (بعد ذلك)</small>
                                 </p>
                                 
                                 <div class="mt-4">
@@ -210,8 +214,8 @@ function checkQRStatus() {
             updateQRDisplay(data);
             if (data.has_valid_token && data.can_generate_qr) {
                 loadQRImage();
-                // في بيئة التطوير، استخدم 60 دقيقة إذا كان remaining = 0
-                const countdownMins = data.token_remaining_minutes > 0 ? data.token_remaining_minutes : 60;
+                // استخدام الوقت المتبقي للدرس
+                const countdownMins = data.lesson_remaining_minutes || data.token_remaining_minutes || 0;
                 startCountdown(countdownMins);
             } else {
                 showExpiredQR();
@@ -233,8 +237,8 @@ function updateQRDisplay(data) {
         if (data.has_valid_token) {
             statusEl.textContent = 'QR Code نشط - صالح للاستخدام';
             alertEl.className = 'alert alert-success';
-            // في بيئة التطوير، اعرض 60 دقيقة إذا كان remaining = 0
-            const remainingMins = data.token_remaining_minutes > 0 ? data.token_remaining_minutes : 60;
+            // استخدام الوقت المتبقي للدرس بدلاً من token
+            const remainingMins = data.lesson_remaining_minutes || data.token_remaining_minutes || 0;
             timerEl.textContent = formatTime(remainingMins);
             refreshBtn.disabled = false;
             refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
@@ -283,8 +287,8 @@ function showExpiredQR() {
     container.innerHTML = `
         <div class="text-center p-4">
             <i class="fas fa-clock text-warning" style="font-size: 4rem;"></i>
-            <h5 class="mt-3">QR Code منتهي الصلاحية</h5>
-            <p class="text-muted">اضغط على "توليد QR جديد" للبدء</p>
+            <h5 class="mt-3">انتهى وقت الدرس</h5>
+            <p class="text-muted">QR Code غير صالح بعد انتهاء وقت الدرس</p>
         </div>
     `;
     clearTimeout(currentTimer);

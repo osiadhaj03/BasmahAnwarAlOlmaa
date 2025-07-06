@@ -121,20 +121,35 @@ class Lesson extends Model
      * Generate new QR token for this lesson (valid until end of lesson)
      */
     public function generateQRCodeToken()
-    {        // التحقق من إمكانية توليد QR في الوقت الحالي
+    {
+        // التحقق من إمكانية توليد QR في الوقت الحالي
         if (!$this->canGenerateQR()) {
             throw new \Exception('لا يمكن توليد QR Code إلا خلال وقت الدرس من ' . $this->start_time->format('H:i') . ' إلى ' . $this->end_time->format('H:i'));
         }
 
-        // حذف جميع التوكن المنتهية الصلاحية أو المستخدمة لهذا الدرس
+        // التحقق من وجود QR نشط بالفعل لنفس اليوم
+        $today = now()->format('Y-m-d');
+        $existingToken = $this->qrTokens()
+            ->whereDate('generated_at', $today)
+            ->where('expires_at', '>', now())
+            ->first();
+
+        if ($existingToken) {
+            return $existingToken; // إرجاع التوكن الموجود بدلاً من إنشاء جديد
+        }
+
+        // حذف جميع التوكن المنتهية الصلاحية أو القديمة لهذا الدرس
         $this->qrTokens()->where(function($query) {
             $query->where('expires_at', '<', now())
-                  ->orWhereNotNull('used_at');
-        })->delete();        // توليد token جديد
+                  ->orWhereDate('generated_at', '<', now()->format('Y-m-d'));
+        })->delete();
+
+        // توليد token جديد
         $tokenData = [
             'lesson_id' => $this->id,
+            'date' => $today,
             'timestamp' => now()->timestamp,
-            'random' => Str::random(8) // تقليل الطول لتجنب مشكلة طول التوكن
+            'random' => Str::random(8)
         ];
         
         $encryptedToken = hash('sha256', json_encode($tokenData) . config('app.key'));
@@ -159,9 +174,10 @@ class Lesson extends Model
      */
     public function getValidQRToken()
     {
+        $today = now()->format('Y-m-d');
         return $this->qrTokens()
+                    ->whereDate('generated_at', $today)
                     ->where('expires_at', '>', now())
-                    ->whereNull('used_at')
                     ->latest('generated_at')
                     ->first();
     }
@@ -212,7 +228,7 @@ class Lesson extends Model
         
         return $now->between($lessonStart, $attendanceWindowEnd);
     }    /**
-     * Check if QR generation is allowed (during entire lesson time)
+     * Check if QR generation is allowed (during lesson time only)
      */
     public function canGenerateQR()
     {
@@ -244,9 +260,8 @@ class Lesson extends Model
         $lessonEnd = Carbon::createFromFormat('H:i', $this->end_time->format('H:i'));
         $lessonEnd->setDate($now->year, $now->month, $now->day);
         
-        // السماح بتوليد QR من 30 دقيقة قبل بداية الدرس حتى نهايته
-        $allowedStart = $lessonStart->copy()->subMinutes(30);
-        return $now->between($allowedStart, $lessonEnd);
+        // السماح بتوليد QR فقط خلال وقت الدرس
+        return $now->between($lessonStart, $lessonEnd);
     }/**
      * Get remaining time until QR generation is allowed
      */
@@ -410,5 +425,67 @@ class Lesson extends Model
         ]);
         
         return $qrToken;
+    }
+    
+    /**
+     * Get attendance status based on scan time
+     */
+    public function getAttendanceStatus()
+    {
+        $now = now();
+        $currentDay = strtolower($now->format('l'));
+        $lessonDay = strtolower($this->day_of_week);
+        
+        // التحقق من أن اليوم الحالي يطابق يوم الدرس
+        if ($lessonDay !== $currentDay) {
+            return 'absent';
+        }
+
+        // الحصول على وقت بداية الدرس اليوم
+        $lessonStart = Carbon::createFromFormat('H:i', $this->start_time->format('H:i'));
+        $lessonStart->setDate($now->year, $now->month, $now->day);
+        
+        // الحصول على وقت نهاية الدرس اليوم
+        $lessonEnd = Carbon::createFromFormat('H:i', $this->end_time->format('H:i'));
+        $lessonEnd->setDate($now->year, $now->month, $now->day);
+        
+        // إذا كان خارج وقت الدرس
+        if (!$now->between($lessonStart, $lessonEnd)) {
+            return 'absent';
+        }
+        
+        // حضور في أول 15 دقيقة = حاضر، بعد ذلك = متأخر
+        $lateThreshold = $lessonStart->copy()->addMinutes(15);
+        
+        if ($now->lte($lateThreshold)) {
+            return 'present';
+        } else {
+            return 'late';
+        }
+    }
+
+    /**
+     * Get remaining time until lesson ends
+     */
+    public function getRemainingLessonTime()
+    {
+        $now = now();
+        $currentDay = strtolower($now->format('l'));
+        $lessonDay = strtolower($this->day_of_week);
+        
+        // التحقق من أن اليوم الحالي يطابق يوم الدرس
+        if ($lessonDay !== $currentDay) {
+            return 0;
+        }
+
+        // الحصول على وقت نهاية الدرس اليوم
+        $lessonEnd = Carbon::createFromFormat('H:i', $this->end_time->format('H:i'));
+        $lessonEnd->setDate($now->year, $now->month, $now->day);
+        
+        if ($now->gte($lessonEnd)) {
+            return 0;
+        }
+        
+        return $now->diffInMinutes($lessonEnd);
     }
 }
