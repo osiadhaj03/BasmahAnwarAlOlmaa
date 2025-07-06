@@ -98,6 +98,28 @@
         </div>
     </div>    <!-- Lessons Column -->
     <div class="col-lg-8">
+        <!-- Lesson Registration Section -->
+        <div class="card mb-4" style="background: var(--anwar-gradient-gold); color: white;">
+            <div class="card-body text-center">
+                <h5 class="card-title">
+                    <i class="fas fa-user-plus me-2"></i>
+                    تسجيل في دروس جديدة
+                </h5>
+                <p class="mb-3 opacity-75">
+                    اكتشف وسجل في الدروس المتاحة التي تناسب جدولك الدراسي
+                </p>
+                <a href="{{ route('student.lessons.available') }}" class="btn btn-light btn-lg">
+                    <i class="fas fa-search me-2"></i>
+                    تصفح الدروس المتاحة
+                </a>
+                <div class="mt-3">
+                    <small class="opacity-75">
+                        <i class="fas fa-info-circle me-1"></i>
+                        يمكنك إلغاء التسجيل من أي درس في أي وقت
+                    </small>
+                </div>
+            </div>
+        </div>
         <!-- QR Code Scanner Section -->
         <div class="card mb-4 border-success">
             <div class="card-body text-center">

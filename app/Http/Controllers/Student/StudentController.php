@@ -162,4 +162,97 @@ class StudentController extends Controller
         return redirect()->route('student.dashboard')
             ->with('success', $message);
     }
+    
+    /**
+     * عرض الدروس المتاحة للتسجيل
+     */
+    public function availableLessons()
+    {
+        $user = auth()->user();
+        
+        // التأكد من أن المستخدم طالب
+        if ($user->role !== 'student') {
+            abort(403, 'غير مسموح لك بالوصول لهذه الصفحة');
+        }
+        
+        // جلب جميع الدروس
+        $allLessons = Lesson::with('teacher')->get();
+        
+        // جلب الدروس التي سجل فيها الطالب مسبقاً
+        $registeredLessonIds = $user->lessons()->pluck('lesson_id')->toArray();
+        
+        // تصفية الدروس المتاحة (غير مسجل فيها)
+        $availableLessons = $allLessons->whereNotIn('id', $registeredLessonIds);
+        
+        // جلب الدروس المسجل فيها
+        $myLessons = $allLessons->whereIn('id', $registeredLessonIds);
+        
+        return view('student.lessons.available', compact('availableLessons', 'myLessons'));
+    }
+    
+    /**
+     * تسجيل الطالب في درس
+     */
+    public function registerInLesson(Request $request, Lesson $lesson)
+    {
+        $user = auth()->user();
+        
+        // التأكد من أن المستخدم طالب
+        if ($user->role !== 'student') {
+            abort(403, 'غير مسموح لك بالوصول لهذه الصفحة');
+        }
+        
+        // التحقق من عدم تسجيل الطالب مسبقاً في هذا الدرس
+        if ($user->lessons()->where('lesson_id', $lesson->id)->exists()) {
+            return redirect()->back()->with('error', 'أنت مسجل مسبقاً في هذا الدرس');
+        }
+        
+        // تسجيل الطالب في الدرس
+        $user->lessons()->attach($lesson->id);
+        
+        return redirect()->back()->with('success', 'تم تسجيلك في الدرس: ' . ($lesson->name ?? $lesson->subject) . ' بنجاح!');
+    }
+    
+    /**
+     * إلغاء تسجيل الطالب من درس
+     */
+    public function unregisterFromLesson(Request $request, Lesson $lesson)
+    {
+        $user = auth()->user();
+        
+        // التأكد من أن المستخدم طالب
+        if ($user->role !== 'student') {
+            abort(403, 'غير مسموح لك بالوصول لهذه الصفحة');
+        }
+        
+        // التحقق من تسجيل الطالب في هذا الدرس
+        if (!$user->lessons()->where('lesson_id', $lesson->id)->exists()) {
+            return redirect()->back()->with('error', 'لست مسجلاً في هذا الدرس');
+        }
+        
+        // إلغاء تسجيل الطالب من الدرس
+        $user->lessons()->detach($lesson->id);
+        
+        return redirect()->back()->with('success', 'تم إلغاء تسجيلك من الدرس: ' . ($lesson->name ?? $lesson->subject));
+    }
+    
+    /**
+     * عرض دروس الطالب
+     */
+    public function myLessons()
+    {
+        $user = auth()->user();
+        
+        // التأكد من أن المستخدم طالب
+        if ($user->role !== 'student') {
+            abort(403, 'غير مسموح لك بالوصول لهذه الصفحة');
+        }
+        
+        // جلب دروس الطالب مع الإحصائيات
+        $lessons = $user->lessons()->with(['teacher', 'attendances' => function($query) use ($user) {
+            $query->where('student_id', $user->id);
+        }])->get();
+        
+        return view('student.lessons.my', compact('lessons'));
+    }
 }

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدروس المتاحة للتسجيل - أنوار العلماء</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* متغيرات ألوان أنوار العلماء */
+        :root {
+            --anwar-gold: #daa520;
+            --anwar-teal: #008080;
+            --anwar-teal-dark: #006666;
+            --anwar-gradient-gold: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+            --anwar-gradient-teal: linear-gradient(135deg, #008080 0%, #006666 100%);
+            --anwar-shadow-gold: rgba(218, 165, 32, 0.3);
+            --anwar-shadow-teal: rgba(0, 128, 128, 0.3);
+            --anwar-white: #ffffff;
+            --anwar-background: #f8fafc;
+            --anwar-gray-light: #e2e8f0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(0, 128, 128, 0.08) 100%);
+            min-height: 100vh;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 20px;
+            min-height: calc(100vh - 40px);
+            box-shadow: 0 20px 40px rgba(218, 165, 32, 0.1);
+        }
+        .header {
+            background: var(--anwar-gradient-teal);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            padding: 30px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .lesson-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .lesson-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-left-color: var(--anwar-teal);
+        }
+        
+        .border-success {
+            border-left-color: #28a745 !important;
+        }
+        
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+        }
+        
+        .bg-primary {
+            background: var(--anwar-gradient-teal) !important;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            border-color: #28a745;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+            border-color: #1e7e34;
+        }
+        
+        .text-primary {
+            color: var(--anwar-teal) !important;
+        }
+        
+        .badge.bg-info {
+            background-color: var(--anwar-teal) !important;
+        }
+        
+        .badge.bg-success {
+            background-color: #28a745 !important;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animated {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-user-graduate fa-2x me-3"></i>
+                        <div>
+                            <h3 class="mb-0">إدارة تسجيل الدروس</h3>
+                            <small class="opacity-75">أحمد محمد - طالب في أنوار العلماء</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <a href="#" class="btn btn-outline-light">
+                        <i class="fas fa-arrow-right me-2"></i>
+                        العودة للوحة التحكم
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-4">
+            <!-- Success Alert -->
+            <div class="alert alert-success alert-dismissible fade show animated" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                تم تسجيلك في الدرس: الرياضيات المتقدمة بنجاح!
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+
+            <!-- Available Lessons Section -->
+            <div class="card mb-4 animated">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>
+                        الدروس المتاحة للتسجيل (3)
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Available Lesson 1 -->
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card lesson-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h6 class="card-title mb-1">الكيمياء العضوية</h6>
+                                        <span class="badge bg-info">
+                                            <i class="fas fa-clock me-1"></i>
+                                            10:00
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-chalkboard-teacher me-1"></i>
+                                            د. سارة محمود
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            الثلاثاء
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            قاعة A205
+                                        </small>
+                                    </div>
+                                    
+                                    <p class="card-text small text-muted mb-3">دراسة التفاعلات الكيميائية والمركبات العضوية المتقدمة...</p>
+                                    
+                                    <div class="d-grid">
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="fas fa-user-plus me-2"></i>
+                                            تسجيل في الدرس
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Available Lesson 2 -->
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card lesson-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h6 class="card-title mb-1">علم الحاسوب</h6>
+                                        <span class="badge bg-info">
+                                            <i class="fas fa-clock me-1"></i>
+                                            14:00
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-chalkboard-teacher me-1"></i>
+                                            د. خالد أحمد
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            الخميس
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            مختبر الحاسوب
+                                        </small>
+                                    </div>
+                                    
+                                    <p class="card-text small text-muted mb-3">أساسيات البرمجة وتطوير التطبيقات الحديثة...</p>
+                                    
+                                    <div class="d-grid">
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="fas fa-user-plus me-2"></i>
+                                            تسجيل في الدرس
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Available Lesson 3 -->
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card lesson-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h6 class="card-title mb-1">الإنجليزية المتقدمة</h6>
+                                        <span class="badge bg-info">
+                                            <i class="fas fa-clock me-1"></i>
+                                            16:00
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-chalkboard-teacher me-1"></i>
+                                            أ. ليلى حسن
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            السبت
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            قاعة B102
+                                        </small>
+                                    </div>
+                                    
+                                    <p class="card-text small text-muted mb-3">تطوير مهارات اللغة الإنجليزية المتقدمة والمحادثة...</p>
+                                    
+                                    <div class="d-grid">
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="fas fa-user-plus me-2"></i>
+                                            تسجيل في الدرس
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Lessons Section -->
+            <div class="card animated">
+                <div class="card-header" style="background: var(--anwar-gradient-gold); color: white;">
+                    <h5 class="mb-0">
+                        <i class="fas fa-graduation-cap me-2"></i>
+                        دروسي المسجل بها (2)
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- My Lesson 1 -->
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card lesson-card h-100 border-success">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h6 class="card-title mb-1">الرياضيات المتقدمة</h6>
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check me-1"></i>
+                                            مسجل
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-chalkboard-teacher me-1"></i>
+                                            د. محمد أحمد
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            الأحد
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-clock me-1"></i>
+                                            09:00
+                                        </small>
+                                    </div>
+                                    
+                                    <p class="card-text small text-muted mb-3">دراسة متقدمة في الجبر والهندسة التحليلية...</p>
+                                    
+                                    <div class="d-grid">
+                                        <button class="btn btn-outline-danger btn-sm" onclick="return confirm('هل أنت متأكد من إلغاء التسجيل في هذا الدرس؟')">
+                                            <i class="fas fa-user-minus me-2"></i>
+                                            إلغاء التسجيل
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- My Lesson 2 -->
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="card lesson-card h-100 border-success">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h6 class="card-title mb-1">الفيزياء التطبيقية</h6>
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check me-1"></i>
+                                            مسجل
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-chalkboard-teacher me-1"></i>
+                                            د. فاطمة علي
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            الثلاثاء
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="fas fa-clock me-1"></i>
+                                            11:00
+                                        </small>
+                                    </div>
+                                    
+                                    <p class="card-text small text-muted mb-3">تطبيقات عملية في الفيزياء والتجارب المعملية...</p>
+                                    
+                                    <div class="d-grid">
+                                        <button class="btn btn-outline-danger btn-sm" onclick="return confirm('هل أنت متأكد من إلغاء التسجيل في هذا الدرس؟')">
+                                            <i class="fas fa-user-minus me-2"></i>
+                                            إلغاء التسجيل
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center py-3 border-top">
+            <small class="text-muted">
+                <i class="fas fa-graduation-cap me-1"></i>
+                أنوار العلماء - نظام إدارة الحضور الذكي
+            </small>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // تأثيرات الحركة للبطاقات
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = (index * 0.1) + 's';
+            });
+        });
+    </script>
+</body>
+</html>

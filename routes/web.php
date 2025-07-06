@@ -124,6 +124,12 @@ Route::middleware('student')->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
     Route::get('/check-in', [StudentController::class, 'checkIn'])->name('student.checkin');
     
+    // Student Lesson Registration Routes
+    Route::get('/student/lessons/available', [StudentController::class, 'availableLessons'])->name('student.lessons.available');
+    Route::post('/student/lessons/{lesson}/register', [StudentController::class, 'registerInLesson'])->name('student.lessons.register');
+    Route::delete('/student/lessons/{lesson}/unregister', [StudentController::class, 'unregisterFromLesson'])->name('student.lessons.unregister');
+    Route::get('/student/lessons/my', [StudentController::class, 'myLessons'])->name('student.lessons.my');
+    
     // QR Code Scanner for Students
     Route::get('/qr-scanner', [QRCodeController::class, 'scanner'])->name('student.qr.scanner');
 });
