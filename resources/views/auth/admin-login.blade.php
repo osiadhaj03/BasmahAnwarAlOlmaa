@@ -73,21 +73,9 @@
             margin-bottom: 1rem;
         }
         
-        .login-logo .logo-circle {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, var(--anwar-teal) 0%, var(--anwar-teal-dark) 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            box-shadow: 0 8px 25px var(--anwar-shadow-teal);
-        }
-        
         .login-logo .logo-icon {
             font-size: 2.5rem;
-            color: white;
+            color: var(--anwar-teal);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
@@ -191,16 +179,14 @@
             <div class="col-md-6 col-lg-4">
                 <div class="login-card p-5">                    <div class="text-center mb-4">
                         <div class="login-logo">
-                            <div class="logo-circle">
-                                <!-- شعار أنوار العلماء -->
-                                <img src="{{ asset('images/a5ae21f8-60bd-4487-9516-5b4206bf8a77.png') }}" 
-                                     alt="شعار أنوار العلماء" 
-                                     class="logo-image"
-                                     onerror="this.style.display='none'; this.parentElement.querySelector('.backup-icon').style.display='flex';">
-                                <!-- شعار احتياطي عند عدم تحميل الصورة -->
-                                <div class="backup-icon" style="display: none;">
-                                    <i class="fas fa-star-and-crescent logo-icon"></i>
-                                </div>
+                            <!-- شعار أنوار العلماء -->
+                            <img src="{{ asset('images/a5ae21f8-60bd-4487-9516-5b4206bf8a77.png') }}" 
+                                 alt="شعار أنوار العلماء" 
+                                 class="logo-image"
+                                 onerror="this.style.display='none'; this.parentElement.querySelector('.backup-icon').style.display='block';">
+                            <!-- شعار احتياطي عند عدم تحميل الصورة -->
+                            <div class="backup-icon" style="display: none;">
+                                <i class="fas fa-star-and-crescent logo-icon"></i>
                             </div>
                         </div>
                         <h2 class="app-title mb-3">أنوار العلماء</h2>
