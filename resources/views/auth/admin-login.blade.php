@@ -84,11 +84,21 @@
         
         /* تنسيق صورة الشعار */
         .login-logo .logo-image {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            filter: brightness(1.1) contrast(1.1);
-            border-radius: 8px;
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* الشعار الاحتياطي */
+        .backup-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .app-title {
@@ -173,7 +183,15 @@
                 <div class="login-card p-5">                    <div class="text-center mb-4">
                         <div class="login-logo">
                             <div class="logo-circle">
-                                <img src="{{ asset('images/logo.png') }}" alt="شعار أنوار العلماء" class="logo-image">
+                                <!-- شعار أنوار العلماء -->
+                                <img src="{{ asset('images/a5ae21f8-60bd-4487-9516-5b4206bf8a77.png') }}" 
+                                     alt="شعار أنوار العلماء" 
+                                     class="logo-image"
+                                     onerror="this.style.display='none'; this.parentElement.querySelector('.backup-icon').style.display='flex';">
+                                <!-- شعار احتياطي عند عدم تحميل الصورة -->
+                                <div class="backup-icon" style="display: none;">
+                                    <i class="fas fa-star-and-crescent logo-icon"></i>
+                                </div>
                             </div>
                         </div>
                         <h2 class="app-title mb-3">أنوار العلماء</h2>

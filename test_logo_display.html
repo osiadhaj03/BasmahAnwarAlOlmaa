@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الشعار - أنوار العلماء</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .test-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .logo-test {
+            margin-bottom: 2rem;
+        }
+        
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #DAA520 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 25px rgba(218, 165, 32, 0.3);
+        }
+        
+        .logo-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+        }
+        
+        .backup-icon {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .title {
+            color: #008080;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .info {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .path-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="title">اختبار شعار أنوار العلماء</h1>
+        
+        <div class="logo-test">
+            <div class="logo-circle">
+                <img src="public/images/a5ae21f8-60bd-4487-9516-5b4206bf8a77.png" 
+                     alt="شعار أنوار العلماء" 
+                     class="logo-image"
+                     onerror="this.style.display='none'; this.parentElement.querySelector('.backup-icon').style.display='block';">
+                <i class="fas fa-star-and-crescent backup-icon" style="display: none;"></i>
+            </div>
+        </div>
+        
+        <div class="info">
+            <p><strong>مسار الصورة المتوقع:</strong></p>
+            <div class="path-info">
+                public/images/a5ae21f8-60bd-4487-9516-5b4206bf8a77.png
+            </div>
+        </div>
+        
+        <div class="info">
+            <p><strong>ملاحظة:</strong> إذا ظهرت الأيقونة بدلاً من الصورة، فهذا يعني أن الصورة غير موجودة في المسار المحدد.</p>
+            <p>تأكد من وجود الملف في المجلد الصحيح وأن الخادم يعمل بشكل صحيح.</p>
+        </div>
+        
+        <div style="margin-top: 2rem; padding: 20px; background: #e8f5e8; border-radius: 10px;">
+            <h3 style="color: #28a745; margin-bottom: 1rem;">الحلول المقترحة:</h3>
+            <ul style="text-align: right; color: #333;">
+                <li>تشغيل الخادم باستخدام: <code>php artisan serve</code></li>
+                <li>التأكد من وجود الملف في مجلد public/images</li>
+                <li>مسح cache البراوزر</li>
+                <li>التأكد من صلاحيات الملف</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
