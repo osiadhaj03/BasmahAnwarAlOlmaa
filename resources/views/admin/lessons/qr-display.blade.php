@@ -2,6 +2,10 @@
 
 @section('title', 'عرض QR Code - ' . $lesson->name)
 
+@section('head')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -226,10 +230,6 @@ let tokenData = null;
 document.addEventListener('DOMContentLoaded', function() {
     // توليد QR مباشرة عند تحميل الصفحة
     generateQRCode();
-        
-        // استمر في التحديث إذا كان الدرس نشط
-        checkQRStatus();
-    }, 5000);
 });
 
 function generateQRCode() {
@@ -272,29 +272,26 @@ function generateQRCode() {
 
 // إزالة الدوال المعقدة - سنستخدم generateQRCode فقط
 
-function refreshQR() {
-    generateQRCode();
-}
-        }
-    })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // إعادة تحميل معلومات QR
-            setTimeout(() => {
-                checkQRStatus();
-                refreshBtn.disabled = false;
-                refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
-            }, 1000);
+            document.getElementById('status-text').innerHTML = '<i class="fas fa-check-circle text-success me-1"></i>QR Code جاهز للاستخدام';
+            document.getElementById('token-status').className = 'alert alert-success';
+            document.getElementById('qr-container').innerHTML = data.qr_code;
         } else {
-            alert('حدث خطأ في توليد QR جديد: ' + (data.message || 'خطأ غير معروف'));
-            refreshBtn.disabled = false;
-            refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
+            throw new Error(data.error || 'حدث خطأ في توليد QR Code');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-// إزالة جميع المؤقتات والدوال المعقدة - QR يعمل دائماً
+        document.getElementById('status-text').innerHTML = '<i class="fas fa-exclamation-triangle text-danger me-1"></i>' + error.message;
+        document.getElementById('token-status').className = 'alert alert-danger';
+    });
+}
+
+function refreshQR() {
+    generateQRCode();
+}
 
 </script>
 @endsection
