@@ -228,35 +228,12 @@ class Lesson extends Model
         
         return $now->between($lessonStart, $attendanceWindowEnd);
     }    /**
-     * Check if QR generation is allowed (during lesson time only)
+     * Check if QR generation is allowed (always allow for simplicity)
      */
     public function canGenerateQR()
     {
-        // التحقق من وجود معلومات الدرس المطلوبة
-        if (!$this->day_of_week || !$this->start_time || !$this->end_time) {
-            return false;
-        }
-
-        $now = now();
-        $currentDay = strtolower($now->format('l'));
-        
-        // تصحيح مقارنة الأيام
-        $lessonDay = strtolower($this->day_of_week);
-        
-        // التحقق من أن اليوم الحالي يطابق يوم الدرس
-        if ($lessonDay !== $currentDay) {
-            return false;
-        }
-
-        // الحصول على وقت بداية ونهاية الدرس اليوم
-        $lessonStart = Carbon::createFromFormat('H:i', $this->start_time->format('H:i'));
-        $lessonStart->setDate($now->year, $now->month, $now->day);
-        
-        $lessonEnd = Carbon::createFromFormat('H:i', $this->end_time->format('H:i'));
-        $lessonEnd->setDate($now->year, $now->month, $now->day);
-        
-        // السماح بتوليد QR فقط خلال وقت الدرس
-        return $now->between($lessonStart, $lessonEnd);
+        // السماح بتوليد QR في جميع الأوقات للتبسيط
+        return true;
     }/**
      * Get remaining time until QR generation is allowed
      */
@@ -423,7 +400,7 @@ class Lesson extends Model
     }
     
     /**
-     * Get attendance status based on scan time
+     * Get attendance status based on scan time (enhanced logic)
      */
     public function getAttendanceStatus()
     {
@@ -433,7 +410,7 @@ class Lesson extends Model
         
         // التحقق من أن اليوم الحالي يطابق يوم الدرس
         if ($lessonDay !== $currentDay) {
-            return 'absent';
+            return 'unavailable'; // الدرس غير متاح اليوم
         }
 
         // الحصول على وقت بداية الدرس اليوم
@@ -446,7 +423,7 @@ class Lesson extends Model
         
         // إذا كان خارج وقت الدرس
         if (!$now->between($lessonStart, $lessonEnd)) {
-            return 'absent';
+            return 'unavailable'; // الدرس غير متاح حالياً
         }
         
         // حضور في أول 15 دقيقة = حاضر، بعد ذلك = متأخر

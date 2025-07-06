@@ -23,20 +23,8 @@ class QrCodeController extends Controller
             $user = auth()->user();
             if (!$user || (!$user->isAdmin() && $lesson->teacher_id !== $user->id)) {
                 abort(403, 'غير مسموح لك بالوصول لهذا الدرس');
-            }            // التحقق من إمكانية توليد QR في الوقت الحالي
-            if (!$lesson->canGenerateQR()) {
-                $timeUntil = $lesson->getTimeUntilQRGeneration();
-                $message = 'لا يمكن توليد QR Code إلا خلال وقت الدرس';
-                
-                if ($timeUntil) {
-                    $message .= ' - الدرس سيبدأ في ' . $timeUntil->format('Y-m-d H:i');
-                } else {
-                    $message .= ' (' . $this->getDayInArabic($lesson->day_of_week) . ' ';
-                    $message .= 'من ' . $lesson->start_time->format('H:i') . ' إلى ' . $lesson->end_time->format('H:i') . ')';
-                }
-                
-                return response()->json(['error' => $message], 403);
-            }
+            }            // السماح بتوليد QR في جميع الأوقات
+            // التحقق من صحة الوقت سيتم عند مسح الطالب للـ QR
 
             // الحصول على token صالح أو إنشاء جديد
             $qrToken = $lesson->getValidQRToken();
@@ -115,14 +103,6 @@ class QrCodeController extends Controller
 
         $lesson = $qrToken->lesson;
 
-        // التحقق من أن الدرس ما زال في وقته المحدد
-        if (!$lesson->canGenerateQR()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'انتهى وقت الدرس - لا يمكن تسجيل الحضور بعد انتهاء الوقت المحدد'
-            ], 400);
-        }
-
         // التحقق من أن الطالب مسجل في هذا الدرس
         if (!$lesson->students()->where('student_id', $user->id)->exists()) {
             return response()->json([
@@ -148,6 +128,14 @@ class QrCodeController extends Controller
         // تحديد حالة الحضور حسب وقت المسح
         $attendanceStatus = $lesson->getAttendanceStatus();
         
+        // إذا كان الدرس غير متاح
+        if ($attendanceStatus === 'unavailable') {
+            return response()->json([
+                'success' => false,
+                'message' => 'الدرس غير متاح حالياً. يرجى المسح في يوم ووقت الدرس المحدد.'
+            ], 400);
+        }
+        
         // تسجيل الحضور
         $attendance = Attendance::create([
             'student_id' => $user->id,
@@ -156,9 +144,6 @@ class QrCodeController extends Controller
             'status' => $attendanceStatus,
             'notes' => 'تم التسجيل عبر QR Code في ' . now()->format('H:i:s') . ' - حالة: ' . ($attendanceStatus === 'present' ? 'حاضر' : 'متأخر')
         ]);
-
-        // لا نحتاج لتحديد Token كمستخدم لأنه يمكن استخدامه عدة مرات
-        // $qrToken->markAsUsed();
 
         $statusText = $attendanceStatus === 'present' ? 'حاضر' : 'متأخر';
         
@@ -198,14 +183,8 @@ class QrCodeController extends Controller
 
             $validToken = $lesson->getValidQRToken();
             
-            // التحقق من أن الدرس ما زال في وقته (بدون استثناءات)
-            $canGenerate = $lesson->canGenerateQR();
-            
-            // إذا انتهى وقت الدرس، أزل أي tokens صالحة فوراً
-            if (!$canGenerate && $validToken) {
-                $validToken->update(['expires_at' => now()->subMinute()]);
-                $validToken = null;
-            }
+            // السماح بتوليد QR دائماً (مبسط)
+            $canGenerate = true;
             
             $timeUntil = $lesson->getTimeUntilQRGeneration();
             
@@ -250,24 +229,7 @@ class QrCodeController extends Controller
                 abort(403);
             }
             
-            // التحقق من إمكانية توليد QR في الوقت الحالي (لجميع البيئات)
-            if (!$lesson->canGenerateQR()) {
-                $timeUntil = $lesson->getTimeUntilQRGeneration();
-                $message = 'لا يمكن توليد QR Code إلا خلال وقت الدرس';
-                
-                if ($timeUntil) {
-                    $message .= ' - الدرس سيبدأ في ' . $timeUntil->format('Y-m-d H:i');
-                } else {
-                    $message .= ' (' . $this->getDayInArabic($lesson->day_of_week) . ' ';
-                    $message .= 'من ' . $lesson->start_time->format('H:i') . ' إلى ' . $lesson->end_time->format('H:i') . ')';
-                }
-                
-                return response()->json([
-                    'success' => false,
-                    'message' => $message
-                ], 403);
-            }
-
+            // السماح بتوليد QR دائماً (مبسط)
             $newToken = $lesson->generateQRCodeToken();
             
             // حساب المدة المتبقية حتى نهاية الدرس

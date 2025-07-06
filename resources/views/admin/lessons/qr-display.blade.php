@@ -78,25 +78,8 @@
                                 
                                 <div class="qr-status mb-3">
                                     <div id="token-status" class="alert alert-info">
-                                        <i class="fas fa-clock me-2"></i>
-                                        <span id="status-text">جاري تحميل معلومات QR...</span>
-                                    </div>
-                                    <div id="timer-display" class="text-center mb-2">
-                                        <div class="timer-container p-3 bg-light rounded">
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <i class="fas fa-stopwatch text-primary me-2" style="font-size: 1.5rem;"></i>
-                                                <div class="timer-info">
-                                                    <div class="timer-label text-muted small">الوقت المتبقي للدرس</div>
-                                                    <span class="badge bg-primary fs-4" id="countdown-timer" style="font-family: 'Courier New', monospace;">--:--</span>
-                                                </div>
-                                            </div>
-                                            <div id="lesson-progress" class="progress mt-2" style="height: 6px;">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
-                                            </div>
-                                            <div class="text-center mt-1">
-                                                <small class="text-muted" id="lesson-time-info">وقت الدرس: {{ $lesson->start_time->format('H:i') }} - {{ $lesson->end_time->format('H:i') }}</small>
-                                            </div>
-                                        </div>
+                                        <i class="fas fa-qrcode me-2"></i>
+                                        <span id="status-text">جاري تحميل QR Code...</span>
                                     </div>
                                 </div>
                                 
@@ -116,7 +99,7 @@
                                 </p>
                                 
                                 <div class="mt-4">
-                                    <button class="btn btn-success btn-lg" onclick="generateNewQR()" id="refresh-btn">
+                                    <button class="btn btn-success btn-lg" onclick="refreshQR()" id="refresh-btn">
                                         <i class="fas fa-sync-alt me-2"></i>
                                         توليد QR جديد
                                     </button>
@@ -210,43 +193,6 @@
 </div>
 
 <style>
-.timer-container {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border: 2px solid #dee2e6;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
-.timer-container:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transform: translateY(-1px);
-}
-
-#countdown-timer {
-    font-size: 1.8rem !important;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    min-width: 120px;
-    display: inline-block;
-}
-
-.timer-label {
-    font-weight: 500;
-    font-size: 0.85rem;
-    margin-bottom: 0.25rem;
-}
-
-.progress {
-    background-color: #e9ecef;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    transition: width 1s ease-in-out, background-color 0.3s ease;
-}
-
 .alert {
     border: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -262,17 +208,9 @@
     100% { transform: scale(1); }
 }
 
-.timer-warning {
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    50% { opacity: 0.5; }
-}
-
 /* تحسين الألوان للمواضيع المظلمة */
 @media (prefers-color-scheme: dark) {
-    .timer-container {
+    .qr-container {
         background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
         border-color: #4a5568;
         color: #e2e8f0;
@@ -286,242 +224,50 @@ let tokenData = null;
 
 // Initialize QR display
 document.addEventListener('DOMContentLoaded', function() {
-    checkQRStatus();
-    
-    // تحديث حالة QR كل 5 ثوانٍ (أسرع للكشف عن انتهاء الوقت)
-    window.qrStatusInterval = setInterval(() => {
-        // التحقق الذكي من حالة النظام
-        if (!tokenData) {
-            checkQRStatus();
-            return;
-        }
-        
-        // إذا انتهى الدرس، أوقف التحديث نهائياً
-        if (tokenData.lesson_remaining_minutes !== undefined && tokenData.lesson_remaining_minutes <= 0) {
-            clearInterval(window.qrStatusInterval);
-            showExpiredQR();
-            return;
-        }
-        
-        // إذا QR غير مسموح، أوقف التحديث
-        if (!tokenData.can_generate_qr) {
-            clearInterval(window.qrStatusInterval);
-            showExpiredQR();
-            return;
-        }
+    // توليد QR مباشرة عند تحميل الصفحة
+    generateQRCode();
         
         // استمر في التحديث إذا كان الدرس نشط
         checkQRStatus();
     }, 5000);
 });
 
-function checkQRStatus() {
-    fetch('{{ route("admin.lessons.qr.info", $lesson) }}')
-        .then(response => response.json())
-        .then(data => {
-            tokenData = data;
-            
-            // التحقق الصارم من انتهاء وقت الدرس
-            const lessonEnded = data.lesson_remaining_minutes !== undefined && data.lesson_remaining_minutes <= 0;
-            const qrNotAllowed = !data.can_generate_qr;
-            
-            if (lessonEnded || (qrNotAllowed && data.has_valid_token)) {
-                // الدرس انتهى - أوقف كل شيء فوراً
-                showExpiredQR();
-                clearInterval(window.qrStatusInterval); // إيقاف التحديث
-                return;
-            }
-            
-            updateQRDisplay(data);
-            
-            if (data.has_valid_token && data.can_generate_qr && !lessonEnded) {
-                loadQRImage();
-                const countdownMins = data.lesson_remaining_minutes || 0;
-                
-                if (countdownMins <= 0) {
-                    showExpiredQR();
-                    clearInterval(window.qrStatusInterval);
-                    return;
-                }
-                
-                startCountdown(countdownMins);
-            } else {
-                showExpiredQR();
-                if (lessonEnded) {
-                    clearInterval(window.qrStatusInterval);
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showErrorQR();
-        });
-}
-
-function updateQRDisplay(data) {
-    const statusEl = document.getElementById('status-text');
-    const timerEl = document.getElementById('countdown-timer');
-    const alertEl = document.getElementById('token-status');
-    const refreshBtn = document.getElementById('refresh-btn');
+function generateQRCode() {
+    // إعداد رسالة التحميل
+    document.getElementById('status-text').innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>جاري توليد QR Code...';
+    document.getElementById('token-status').className = 'alert alert-info';
     
-    if (data.can_generate_qr) {
-        if (data.has_valid_token) {
-            statusEl.innerHTML = '<i class="fas fa-check-circle text-success me-1"></i>QR Code نشط وجاهز للاستخدام';
-            alertEl.className = 'alert alert-success';
-            // استخدام الوقت المتبقي للدرس بدلاً من token
-            const remainingMins = data.lesson_remaining_minutes || data.token_remaining_minutes || 0;
-            
-            // عرض معلومات إضافية
-            const currentTime = new Date().toLocaleTimeString('ar-SA', {hour: '2-digit', minute: '2-digit'});
-            let statusMessage = `QR Code نشط - الوقت الحالي: ${currentTime}`;
-            
-            if (remainingMins <= 15) {
-                statusMessage += ' - <span class="text-warning"><strong>قارب الدرس على الانتهاء!</strong></span>';
-            } else if (remainingMins <= 30) {
-                statusMessage += ' - <span class="text-info">متبقي نصف ساعة على انتهاء الدرس</span>';
-            }
-            
-            statusEl.innerHTML = '<i class="fas fa-check-circle text-success me-1"></i>' + statusMessage;
-            
-            refreshBtn.disabled = false;
-            refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
-        } else {
-            statusEl.innerHTML = '<i class="fas fa-exclamation-triangle text-warning me-1"></i>QR Code منتهي الصلاحية - يحتاج توليد جديد';
-            alertEl.className = 'alert alert-warning';
-            timerEl.textContent = '00:00';
-            timerEl.className = 'badge bg-secondary fs-4';
-            refreshBtn.disabled = false;
-            refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
-        }
-    } else {
-        // QR غير متاح في الوقت الحالي
-        const message = data.qr_availability_message || 'QR Code غير متاح في الوقت الحالي';
-        statusEl.innerHTML = '<i class="fas fa-info-circle text-info me-1"></i>' + message;
-        alertEl.className = 'alert alert-info';
-        timerEl.textContent = '--:--';
-        timerEl.className = 'badge bg-secondary fs-4';
-        refreshBtn.disabled = true;
-        refreshBtn.innerHTML = '<i class="fas fa-clock me-2"></i>غير متاح حالياً';
-        
-        // التحقق من انتهاء وقت الدرس
-        if (data.lesson_remaining_minutes !== undefined && data.lesson_remaining_minutes <= 0) {
-            statusEl.innerHTML = '<i class="fas fa-times-circle text-danger me-1"></i>انتهى وقت الدرس - QR Code غير نشط';
-            alertEl.className = 'alert alert-danger';
-            timerEl.textContent = '00:00';
-            timerEl.className = 'badge bg-danger fs-4';
-            refreshBtn.innerHTML = '<i class="fas fa-ban me-2"></i>انتهى الوقت';
-        } else if (data.minutes_until_available && data.minutes_until_available > 0) {
-            const hours = Math.floor(data.minutes_until_available / 60);
-            const mins = data.minutes_until_available % 60;
-            let timeText = '';
-            if (hours > 0) {
-                timeText = `${hours}:${mins.toString().padStart(2, '0')}:00`;
-            } else {
-                timeText = `${mins.toString().padStart(2, '0')}:00`;
-            }
-            timerEl.textContent = timeText + ' متبقي';
-            timerEl.className = 'badge bg-info fs-4';
-        }
-    }
-}
-
-function loadQRImage() {
-    const container = document.getElementById('qr-container');
-    if (tokenData && tokenData.can_generate_qr) {
-        // في بيئة التطوير، استخدم quick-qr route
-        const qrUrl = `{{ url('/quick-qr/' . $lesson->id) }}?t=${Date.now()}`;
-        container.innerHTML = `
-            <img src="${qrUrl}" 
-                 alt="QR Code" 
-                 class="img-fluid" 
-                 style="max-width: 300px;"
-                 onerror="showErrorQR()">
-        `;
-    } else if (!tokenData.can_generate_qr) {
-        showNotAvailableQR(tokenData.qr_availability_message);
-    }
-}
-
-function showExpiredQR() {
-    const container = document.getElementById('qr-container');
-    const currentTime = new Date().toLocaleTimeString('ar-SA', {hour: '2-digit', minute: '2-digit'});
-    
-    container.innerHTML = `
-        <div class="text-center p-4">
-            <i class="fas fa-clock text-warning" style="font-size: 4rem;"></i>
-            <h5 class="mt-3 text-warning">انتهى وقت الدرس</h5>
-            <p class="text-muted">انتهت صلاحية QR Code في الوقت: ${currentTime}</p>
-            <small class="text-info">QR Code غير صالح بعد انتهاء وقت الدرس المحدد</small>
-        </div>
-    `;
-    
-    // تحديث المؤقت ليظهر انتهاء الوقت
-    const timerEl = document.getElementById('countdown-timer');
-    if (timerEl) {
-        timerEl.textContent = '00:00';
-        timerEl.className = 'badge bg-danger fs-4';
-    }
-    
-    // تحديث شريط التقدم
-    const progressBar = document.querySelector('#lesson-progress .progress-bar');
-    if (progressBar) {
-        progressBar.style.width = '100%';
-        progressBar.className = 'progress-bar bg-danger';
-    }
-    
-    // تحديث معلومات الوقت
-    const infoElement = document.getElementById('lesson-time-info');
-    if (infoElement) {
-        infoElement.innerHTML = `انتهى الدرس في: ${currentTime} - <span class="text-danger">QR Code غير نشط</span>`;
-    }
-    
-    clearTimeout(currentTimer);
-}
-
-function showNotAvailableQR(message) {
-    const container = document.getElementById('qr-container');
-    container.innerHTML = `
-        <div class="text-center p-4">
-            <i class="fas fa-calendar-times text-info" style="font-size: 4rem;"></i>
-            <h5 class="mt-3">QR Code غير متاح</h5>
-            <p class="text-muted">${message || 'QR Code متاح فقط في أوقات الدرس المحددة'}</p>
-        </div>
-    `;
-    clearTimeout(currentTimer);
-}
-
-function showErrorQR() {
-    const container = document.getElementById('qr-container');
-    container.innerHTML = `
-        <div class="text-center p-4">
-            <i class="fas fa-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
-            <h5 class="mt-3">خطأ في تحميل QR Code</h5>
-            <p class="text-muted">يرجى المحاولة مرة أخرى</p>
-        </div>
-    `;
-}
-
-function generateNewQR() {
-    // التحقق من أن الدرس لم ينته
-    if (tokenData && tokenData.lesson_remaining_minutes !== undefined && tokenData.lesson_remaining_minutes <= 0) {
-        alert('لا يمكن توليد QR جديد - انتهى وقت الدرس');
-        return;
-    }
-    
-    if (tokenData && !tokenData.can_generate_qr) {
-        alert('لا يمكن توليد QR في الوقت الحالي');
-        return;
-    }
-    
-    const refreshBtn = document.getElementById('refresh-btn');
-    refreshBtn.disabled = true;
-    refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>جاري التوليد...';
-    
-    fetch('{{ route("admin.lessons.qr.refresh", $lesson) }}', {
+    // توليد QR Code مباشرة
+    fetch('{{ route("admin.lessons.qr.generate", $lesson) }}', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('status-text').innerHTML = '<i class="fas fa-check-circle text-success me-1"></i>QR Code جاهز للاستخدام';
+            document.getElementById('token-status').className = 'alert alert-success';
+            document.getElementById('qr-container').innerHTML = data.qr_code;
+        } else {
+            throw new Error(data.error || 'حدث خطأ في توليد QR Code');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('status-text').innerHTML = '<i class="fas fa-exclamation-triangle text-danger me-1"></i>' + error.message;
+        document.getElementById('token-status').className = 'alert alert-danger';
+    });
+}
+
+// إزالة الدوال المعقدة - سنستخدم generateQRCode فقط
+
+function refreshQR() {
+    generateQRCode();
+}
         }
     })
     .then(response => response.json())
@@ -541,108 +287,7 @@ function generateNewQR() {
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('حدث خطأ في الاتصال');
-        refreshBtn.disabled = false;
-        refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
-    });
-}
+// إزالة جميع المؤقتات والدوال المعقدة - QR يعمل دائماً
 
-function startCountdown(minutes) {
-    clearTimeout(currentTimer);
-    let totalSeconds = Math.max(0, minutes * 60);
-    const originalMinutes = minutes;
-    
-    function updateTimer() {
-        const hours = Math.floor(totalSeconds / 3600);
-        const mins = Math.floor((totalSeconds % 3600) / 60);
-        const secs = totalSeconds % 60;
-        
-        // تحديث عرض المؤقت
-        let timerText = '';
-        if (hours > 0) {
-            timerText = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        } else {
-            timerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-        
-        const timerElement = document.getElementById('countdown-timer');
-        if (timerElement) {
-            timerElement.textContent = timerText;
-            
-            // إزالة جميع الفئات المتحركة أولاً
-            timerElement.classList.remove('pulse-animation', 'timer-warning');
-            
-            // تغيير اللون والتأثيرات حسب الوقت المتبقي
-            if (totalSeconds <= 60) { // آخر دقيقة
-                timerElement.className = 'badge bg-danger fs-4 timer-warning';
-                // إضافة تأثير الوميض
-                if (!timerElement.classList.contains('timer-warning')) {
-                    timerElement.classList.add('timer-warning');
-                }
-            } else if (totalSeconds <= 300) { // آخر 5 دقائق
-                timerElement.className = 'badge bg-danger fs-4 pulse-animation';
-            } else if (totalSeconds <= 900) { // آخر 15 دقيقة
-                timerElement.className = 'badge bg-warning fs-4';
-            } else {
-                timerElement.className = 'badge bg-primary fs-4';
-            }
-        }
-        
-        // تحديث شريط التقدم
-        const progressBar = document.querySelector('#lesson-progress .progress-bar');
-        if (progressBar && originalMinutes > 0) {
-            const progressPercent = Math.max(0, ((originalMinutes * 60 - totalSeconds) / (originalMinutes * 60)) * 100);
-            progressBar.style.width = progressPercent + '%';
-            
-            // تغيير لون شريط التقدم
-            if (progressPercent >= 80) {
-                progressBar.className = 'progress-bar bg-warning';
-            } else if (progressPercent >= 50) {
-                progressBar.className = 'progress-bar bg-info';
-            } else {
-                progressBar.className = 'progress-bar bg-success';
-            }
-        }
-        
-        // تحديث معلومات إضافية
-        const infoElement = document.getElementById('lesson-time-info');
-        if (infoElement && totalSeconds > 0) {
-            const currentTime = new Date().toLocaleTimeString('ar-SA', {hour: '2-digit', minute: '2-digit'});
-            if (totalSeconds <= 900) { // آخر 15 دقيقة
-                infoElement.innerHTML = `الوقت الحالي: ${currentTime} - <span class="text-warning">يُنصح بإنهاء الدرس قريباً</span>`;
-            } else {
-                infoElement.innerHTML = `الوقت الحالي: ${currentTime} - وقت الدرس: {{ $lesson->start_time->format('H:i') }} - {{ $lesson->end_time->format('H:i') }}`;
-            }
-        }
-        
-        if (totalSeconds <= 0) {
-            // توقف المؤقت وأظهر انتهاء الدرس
-            showExpiredQR();
-            // إيقاف تحديث معلومات QR
-            clearInterval(window.qrStatusInterval);
-            return;
-        }
-        
-        totalSeconds--;
-        currentTimer = setTimeout(updateTimer, 1000);
-    }
-    
-    updateTimer();
-}
-
-function formatTime(minutes) {
-    const mins = Math.floor(minutes);
-    const secs = Math.round((minutes - mins) * 60);
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-}
-
-// Update attendance stats every 30 seconds
-setInterval(function() {
-    updateAttendanceStats();
-}, 30000);
-
-function updateAttendanceStats() {
-    // يمكن إضافة تحديث إحصائيات الحضور هنا لاحقاً
-}
 </script>
 @endsection
