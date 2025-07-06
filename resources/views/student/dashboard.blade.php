@@ -124,10 +124,16 @@
         <!-- Today's Lessons with Check-in -->
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title text-primary">
-                    <i class="fas fa-calendar-day me-2"></i>
-                    دروس اليوم - تسجيل الحضور
-                </h5>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title text-primary mb-0">
+                        <i class="fas fa-calendar-day me-2"></i>
+                        دروس اليوم
+                    </h5>
+                    <a href="https://basmah.anwaralolmaa.com/qr-scanner" class="btn btn-check-in text-white">
+                        <i class="fas fa-qrcode me-2"></i>
+                        مسح رمز QR للحضور
+                    </a>
+                </div>
                 
                 <!-- Debug Information -->
                 <div class="alert alert-info mb-3">
@@ -209,20 +215,7 @@
                                 <p class="card-text small text-muted mb-3">{{ Str::limit($lesson->description, 80) }}</p>
                                 @endif
                                 
-                                <div class="d-grid">
-                                    @if($hasCheckedInToday)
-                                        <button class="btn btn-outline-success disabled">
-                                            <i class="fas fa-check me-2"></i>
-                                            تم تسجيل الحضور
-                                        </button>
-                                    @else
-                                        <a href="{{ route('student.checkin', ['lesson' => $lesson->id, 'student' => auth()->id()]) }}" 
-                                           class="btn btn-check-in text-white">
-                                            <i class="fas fa-sign-in-alt me-2"></i>
-                                            تسجيل الحضور
-                                        </a>
-                                    @endif
-                                </div>
+                                <!-- تم إزالة أزرار تسجيل الحضور من دروس اليوم -->
                             </div>
                         </div>
                     </div>
