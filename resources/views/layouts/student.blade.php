@@ -92,6 +92,53 @@
             background-color: rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.5);
         }
+        
+        /* شعار أنوار العلماء */
+        .anwar-logo {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .anwar-logo::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--anwar-gold) 0%, #b8860b 100%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .anwar-logo .logo-icon {
+            font-size: 1.8rem;
+            background: var(--anwar-gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(218, 165, 32, 0.3);
+        }
+        
+        .anwar-logo .logo-text {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9);
+            white-space: nowrap;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
     </style>
     @stack('styles')
 </head>
@@ -101,7 +148,10 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <div class="d-flex align-items-center mb-2">
-                        <i class="fas fa-user-graduate fa-2x me-3"></i>
+                        <div class="anwar-logo me-3">
+                            <i class="fas fa-star logo-icon"></i>
+                            <div class="logo-text">أنوار العلماء</div>
+                        </div>
                         <div>
                             <h3 class="mb-0">مرحباً {{ auth()->user()->name }}</h3>
                             <small class="opacity-75">طالب في أنوار العلماء</small>

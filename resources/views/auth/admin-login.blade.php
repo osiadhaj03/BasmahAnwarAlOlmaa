@@ -57,6 +57,31 @@
             font-weight: 800;
         }
         
+        /* شعار مخصص لصفحة تسجيل الدخول */
+        .login-logo {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .login-logo .logo-circle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--anwar-gold) 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-shadow: 0 8px 25px var(--anwar-shadow-gold);
+        }
+        
+        .login-logo .logo-icon {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
         .app-title {
             font-family: 'Amiri', serif;
             color: var(--anwar-teal-dark);
@@ -137,7 +162,11 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="login-card p-5">                    <div class="text-center mb-4">
-                        <i class="fas fa-graduation-cap logo"></i>
+                        <div class="login-logo">
+                            <div class="logo-circle">
+                                <i class="fas fa-star logo-icon"></i>
+                            </div>
+                        </div>
                         <h2 class="app-title mb-3">أنوار العلماء</h2>
                         <p class="text-muted">تسجيل الدخول إلى نظام البصمة </p>
                         <small class="text-info">للطلاب والمعلمين والإداريين</small>
