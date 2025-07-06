@@ -82,6 +82,15 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
+        /* تنسيق صورة الشعار */
+        .login-logo .logo-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            filter: brightness(1.1) contrast(1.1);
+            border-radius: 8px;
+        }
+        
         .app-title {
             font-family: 'Amiri', serif;
             color: var(--anwar-teal-dark);
@@ -164,7 +173,7 @@
                 <div class="login-card p-5">                    <div class="text-center mb-4">
                         <div class="login-logo">
                             <div class="logo-circle">
-                                <i class="fas fa-star logo-icon"></i>
+                                <img src="{{ asset('images/logo.png') }}" alt="شعار أنوار العلماء" class="logo-image">
                             </div>
                         </div>
                         <h2 class="app-title mb-3">أنوار العلماء</h2>
