@@ -84,8 +84,8 @@
         
         /* تنسيق صورة الشعار */
         .login-logo .logo-image {
-            width: 70px;
-            height: 70px;
+            width: 52px;
+            height: 52px;
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid rgba(255, 255, 255, 0.9);
