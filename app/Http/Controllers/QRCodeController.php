@@ -23,8 +23,7 @@ class QrCodeController extends Controller
             $user = auth()->user();
             if (!$user || (!$user->isAdmin() && $lesson->teacher_id !== $user->id)) {
                 abort(403, 'غير مسموح لك بالوصول لهذا الدرس');
-            }            // السماح بتوليد QR في جميع الأوقات
-            // التحقق من صحة الوقت سيتم عند مسح الطالب للـ QR
+            }            // السماح بتوليد QR في جميع الأوقات - التحقق من الوقت سيتم عند المسح
 
             // الحصول على token صالح أو إنشاء جديد
             $qrToken = $lesson->getValidQRToken();
@@ -74,7 +73,9 @@ class QrCodeController extends Controller
     public function scanAttendance(Request $request)
     {
         $request->validate([
-            'token' => 'required|string'
+            'token' => 'required|string',
+            'local_time' => 'nullable|string', // الوقت المحلي من المتصفح
+            'local_day' => 'nullable|string'   // اليوم المحلي من المتصفح
         ]);
 
         $user = auth()->user();
@@ -126,13 +127,22 @@ class QrCodeController extends Controller
         }
 
         // تحديد حالة الحضور حسب وقت المسح
-        $attendanceStatus = $lesson->getAttendanceStatus();
+        // إذا تم إرسال الوقت المحلي، استخدمه
+        if ($request->has('local_time') && $request->has('local_day')) {
+            $attendanceStatus = $lesson->getAttendanceStatusWithLocalTime(
+                $request->local_time, 
+                $request->local_day
+            );
+        } else {
+            // استخدم وقت الخادم (الطريقة القديمة)
+            $attendanceStatus = $lesson->getAttendanceStatus();
+        }
         
         // إذا كان الدرس غير متاح
         if ($attendanceStatus === 'unavailable') {
             return response()->json([
                 'success' => false,
-                'message' => 'الدرس غير متاح حالياً. يرجى المسح في يوم ووقت الدرس المحدد.'
+                'message' => 'الدرس حالياً غير متاح - يرجى المسح في يوم ووقت الدرس المحدد فقط'
             ], 400);
         }
         
@@ -146,10 +156,13 @@ class QrCodeController extends Controller
         ]);
 
         $statusText = $attendanceStatus === 'present' ? 'حاضر' : 'متأخر';
+        $statusMessage = $attendanceStatus === 'present' ? 
+            '✅ تم تسجيل حضورك بنجاح!' : 
+            '⚠️ تم تسجيل حضورك متأخراً';
         
         return response()->json([
             'success' => true,
-            'message' => 'تم تسجيل حضورك بنجاح في درس ' . $lesson->name . ' (حالة: ' . $statusText . ')',
+            'message' => $statusMessage . ' في درس ' . $lesson->name . ' (حالة: ' . $statusText . ')',
             'attendance_id' => $attendance->id,
             'lesson_name' => $lesson->name,
             'subject' => $lesson->subject,

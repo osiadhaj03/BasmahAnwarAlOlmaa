@@ -223,9 +223,6 @@
 </style>
 
 <script>
-let currentTimer;
-let tokenData = null;
-
 // Initialize QR display
 document.addEventListener('DOMContentLoaded', function() {
     // توليد QR مباشرة عند تحميل الصفحة
@@ -253,25 +250,6 @@ function generateQRCode() {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById('status-text').innerHTML = '<i class="fas fa-check-circle text-success me-1"></i>QR Code جاهز للاستخدام';
-            document.getElementById('token-status').className = 'alert alert-success';
-            document.getElementById('qr-container').innerHTML = data.qr_code;
-        } else {
-            throw new Error(data.error || 'حدث خطأ في توليد QR Code');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('status-text').innerHTML = '<i class="fas fa-exclamation-triangle text-danger me-1"></i>' + error.message;
-        document.getElementById('token-status').className = 'alert alert-danger';
-    });
-}
-
-// إزالة الدوال المعقدة - سنستخدم generateQRCode فقط
-
     .then(response => response.json())
     .then(data => {
         if (data.success) {

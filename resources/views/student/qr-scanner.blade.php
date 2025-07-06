@@ -162,15 +162,24 @@ function processQRCode(qrData) {
         token = urlParams.get('token');
     }
     
-    // إنشاء URL مع المعاملات
-    const url = '{{ route("attendance.scan") }}?token=' + encodeURIComponent(token);
+    // الحصول على الوقت المحلي
+    const now = new Date();
+    const localTime = now.toTimeString().substr(0, 5); // HH:MM
+    const localDay = now.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
     
-    fetch(url, {
-        method: 'GET',
+    // إرسال بيانات الحضور مع الوقت المحلي
+    fetch('{{ route("attendance.scan") }}', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        }
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            token: token,
+            local_time: localTime,
+            local_day: localDay
+        })
     })
     .then(response => response.json())
     .then(data => {

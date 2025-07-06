@@ -460,4 +460,61 @@ class Lesson extends Model
         
         return $now->diffInMinutes($lessonEnd);
     }
+
+    /**
+     * Get attendance status using local time from browser
+     */
+    public function getAttendanceStatusWithLocalTime($localTime, $localDay)
+    {
+        // تحويل اليوم المحلي إلى الشكل المطلوب
+        $currentDay = strtolower($localDay);
+        $lessonDay = strtolower($this->day_of_week);
+        
+        // التحقق من أن اليوم الحالي يطابق يوم الدرس
+        if ($lessonDay !== $currentDay) {
+            return 'unavailable'; // الدرس غير متاح اليوم
+        }
+
+        // الوقت المحلي بصيغة H:i
+        $currentTime = $localTime;
+        $lessonStart = $this->start_time->format('H:i');
+        $lessonEnd = $this->end_time->format('H:i');
+        
+        // التحقق من أن الوقت ضمن وقت الدرس
+        if (!$this->isTimeInRange($currentTime, $lessonStart, $lessonEnd)) {
+            return 'unavailable'; // الدرس غير متاح حالياً
+        }
+        
+        // حساب الدقائق من بداية الدرس
+        $minutesFromStart = $this->getMinutesDifference($lessonStart, $currentTime);
+        
+        // حضور في أول 15 دقيقة = حاضر، بعد ذلك = متأخر
+        if ($minutesFromStart <= 15) {
+            return 'present';
+        } else {
+            return 'late';
+        }
+    }
+
+    /**
+     * Check if time is within range
+     */
+    private function isTimeInRange($currentTime, $startTime, $endTime)
+    {
+        return $currentTime >= $startTime && $currentTime <= $endTime;
+    }
+
+    /**
+     * Get minutes difference between two times
+     */
+    private function getMinutesDifference($startTime, $currentTime)
+    {
+        [$startHour, $startMin] = explode(':', $startTime);
+        [$currentHour, $currentMin] = explode(':', $currentTime);
+        
+        $startMinutes = ($startHour * 60) + $startMin;
+        $currentMinutes = ($currentHour * 60) + $currentMin;
+        
+        return $currentMinutes - $startMinutes;
+    }
 }
