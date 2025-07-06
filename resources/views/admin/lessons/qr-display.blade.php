@@ -249,32 +249,54 @@ function updateQRDisplay(data) {
     
     if (data.can_generate_qr) {
         if (data.has_valid_token) {
-            statusEl.textContent = 'QR Code نشط - صالح للاستخدام';
+            statusEl.innerHTML = '<i class="fas fa-check-circle text-success me-1"></i>QR Code نشط وجاهز للاستخدام';
             alertEl.className = 'alert alert-success';
             // استخدام الوقت المتبقي للدرس بدلاً من token
             const remainingMins = data.lesson_remaining_minutes || data.token_remaining_minutes || 0;
-            timerEl.textContent = formatTime(remainingMins);
+            
+            // عرض معلومات إضافية
+            const currentTime = new Date().toLocaleTimeString('ar-SA', {hour: '2-digit', minute: '2-digit'});
+            let statusMessage = `QR Code نشط - الوقت الحالي: ${currentTime}`;
+            
+            if (remainingMins <= 15) {
+                statusMessage += ' - <span class="text-warning"><strong>قارب الدرس على الانتهاء!</strong></span>';
+            } else if (remainingMins <= 30) {
+                statusMessage += ' - <span class="text-info">متبقي نصف ساعة على انتهاء الدرس</span>';
+            }
+            
+            statusEl.innerHTML = '<i class="fas fa-check-circle text-success me-1"></i>' + statusMessage;
+            
             refreshBtn.disabled = false;
             refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
         } else {
-            statusEl.textContent = 'QR Code منتهي الصلاحية - يحتاج توليد جديد';
+            statusEl.innerHTML = '<i class="fas fa-exclamation-triangle text-warning me-1"></i>QR Code منتهي الصلاحية - يحتاج توليد جديد';
             alertEl.className = 'alert alert-warning';
             timerEl.textContent = '00:00';
+            timerEl.className = 'badge bg-secondary fs-4';
             refreshBtn.disabled = false;
             refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>توليد QR جديد';
         }
     } else {
         // QR غير متاح في الوقت الحالي
-        statusEl.textContent = data.qr_availability_message || 'QR Code غير متاح في الوقت الحالي';
+        const message = data.qr_availability_message || 'QR Code غير متاح في الوقت الحالي';
+        statusEl.innerHTML = '<i class="fas fa-info-circle text-info me-1"></i>' + message;
         alertEl.className = 'alert alert-info';
         timerEl.textContent = '--:--';
+        timerEl.className = 'badge bg-secondary fs-4';
         refreshBtn.disabled = true;
         refreshBtn.innerHTML = '<i class="fas fa-clock me-2"></i>غير متاح حالياً';
         
         if (data.minutes_until_available && data.minutes_until_available > 0) {
             const hours = Math.floor(data.minutes_until_available / 60);
             const mins = data.minutes_until_available % 60;
-            timerEl.textContent = `${hours}:${mins.toString().padStart(2, '0')} متبقي`;
+            let timeText = '';
+            if (hours > 0) {
+                timeText = `${hours}:${mins.toString().padStart(2, '0')}:00`;
+            } else {
+                timeText = `${mins.toString().padStart(2, '0')}:00`;
+            }
+            timerEl.textContent = timeText + ' متبقي';
+            timerEl.className = 'badge bg-info fs-4';
         }
     }
 }
