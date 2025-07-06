@@ -82,7 +82,21 @@
                                         <span id="status-text">جاري تحميل معلومات QR...</span>
                                     </div>
                                     <div id="timer-display" class="text-center mb-2">
-                                        <span class="badge bg-primary fs-6" id="countdown-timer">--:--</span>
+                                        <div class="timer-container p-3 bg-light rounded">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <i class="fas fa-stopwatch text-primary me-2" style="font-size: 1.5rem;"></i>
+                                                <div class="timer-info">
+                                                    <div class="timer-label text-muted small">الوقت المتبقي للدرس</div>
+                                                    <span class="badge bg-primary fs-4" id="countdown-timer" style="font-family: 'Courier New', monospace;">--:--</span>
+                                                </div>
+                                            </div>
+                                            <div id="lesson-progress" class="progress mt-2" style="height: 6px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                                            </div>
+                                            <div class="text-center mt-1">
+                                                <small class="text-muted" id="lesson-time-info">وقت الدرس: {{ $lesson->start_time->format('H:i') }} - {{ $lesson->end_time->format('H:i') }}</small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -354,13 +368,62 @@ function generateNewQR() {
 
 function startCountdown(minutes) {
     clearTimeout(currentTimer);
-    let totalSeconds = minutes * 60;
+    let totalSeconds = Math.max(0, minutes * 60);
+    const originalMinutes = minutes;
     
     function updateTimer() {
-        const mins = Math.floor(totalSeconds / 60);
+        const hours = Math.floor(totalSeconds / 3600);
+        const mins = Math.floor((totalSeconds % 3600) / 60);
         const secs = totalSeconds % 60;
-        document.getElementById('countdown-timer').textContent = 
-            `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        
+        // تحديث عرض المؤقت
+        let timerText = '';
+        if (hours > 0) {
+            timerText = `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        } else {
+            timerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        const timerElement = document.getElementById('countdown-timer');
+        if (timerElement) {
+            timerElement.textContent = timerText;
+            
+            // تغيير اللون حسب الوقت المتبقي
+            if (totalSeconds <= 300) { // آخر 5 دقائق
+                timerElement.className = 'badge bg-danger fs-4';
+            } else if (totalSeconds <= 900) { // آخر 15 دقيقة
+                timerElement.className = 'badge bg-warning fs-4';
+            } else {
+                timerElement.className = 'badge bg-primary fs-4';
+            }
+        }
+        
+        // تحديث شريط التقدم
+        const progressBar = document.querySelector('#lesson-progress .progress-bar');
+        if (progressBar && originalMinutes > 0) {
+            const progressPercent = Math.max(0, ((originalMinutes * 60 - totalSeconds) / (originalMinutes * 60)) * 100);
+            progressBar.style.width = progressPercent + '%';
+            
+            // تغيير لون شريط التقدم
+            if (progressPercent >= 80) {
+                progressBar.className = 'progress-bar bg-warning';
+            } else if (progressPercent >= 50) {
+                progressBar.className = 'progress-bar bg-info';
+            } else {
+                progressBar.className = 'progress-bar bg-success';
+            }
+        }
+        
+        // تحديث معلومات إضافية
+        const infoElement = document.getElementById('lesson-time-info');
+        if (infoElement && totalSeconds > 0) {
+            const currentTime = new Date().toLocaleTimeString('ar-SA', {hour: '2-digit', minute: '2-digit'});
+            if (totalSeconds <= 900) { // آخر 15 دقيقة
+                infoElement.innerHTML = `الوقت الحالي: ${currentTime} - <span class="text-warning">يُنصح بإنهاء الدرس قريباً</span>`;
+            } else {
+                infoElement.innerHTML = `الوقت الحالي: ${currentTime} - وقت الدرس: {{ $lesson->start_time->format('H:i') }} - {{ $lesson->end_time->format('H:i') }}`;
+            }
+        }
         
         if (totalSeconds <= 0) {
             showExpiredQR();
