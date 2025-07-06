@@ -189,7 +189,7 @@
                                 <i class="fas fa-star-and-crescent logo-icon"></i>
                             </div>
                         </div>
-                        <h2 class="app-title mb-3">أنوار العلماء</h2>
+                        <h2 class="app-title mb-3"> أنوار العلماء</h2>
                         <p class="text-muted">تسجيل الدخول إلى نظام البصمة </p>
                         <small class="text-info">للطلاب والمعلمين والإداريين</small>
                     </div>

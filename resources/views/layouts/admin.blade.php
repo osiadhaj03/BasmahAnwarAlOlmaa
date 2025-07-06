@@ -101,6 +101,34 @@
             font-size: 1.8rem;
         }
         
+        /* شعار لوحة التحكم */
+        .admin-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .admin-logo-image {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+        }
+        
+        /* دور المستخدم بخلفية ذهبية */
+        .admin-role-badge {
+            background: var(--anwar-gradient-gold) !important;
+            color: white !important;
+            border: none !important;
+            padding: 8px 16px !important;
+            border-radius: 20px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px var(--anwar-shadow-gold) !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+        }
+        
         .main-content {
             padding: 30px;
             background: var(--anwar-background);
@@ -362,11 +390,19 @@
             <!-- Sidebar -->
             <div class="col-md-3 col-lg-2 sidebar">
                 <div class="logo-section">
-                    <i class="fas fa-graduation-cap fa-3x mb-3" style="color: #6c757d;"></i>
+                    <!-- شعار أنوار العلماء -->
+                    <div class="admin-logo mb-3">
+                        <img src="{{ asset('images/a5ae21f8-60bd-4487-9516-5b4206bf8a77.png') }}" 
+                             alt="شعار أنوار العلماء" 
+                             class="admin-logo-image"
+                             onerror="this.style.display='none'; this.parentElement.querySelector('.admin-backup-icon').style.display='block';">
+                        <!-- شعار احتياطي -->
+                        <i class="fas fa-star-and-crescent admin-backup-icon fa-3x" style="display: none; color: white;"></i>
+                    </div>
                     <h4 style="font-family: 'Amiri', serif; color: white;">أنوار العلماء</h4>
                     <small style="color: rgba(255,255,255,0.8);">{{ auth()->user()->name }}</small>
                     <br>
-                    <small class="badge mt-2" style="background: #6c757d; color: white;">
+                    <small class="badge mt-2 admin-role-badge">
                         {{ auth()->user()->role === 'admin' ? 'مدير' : 'معلم' }}
                     </small>
                 </div>
