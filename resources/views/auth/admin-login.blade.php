@@ -65,8 +65,8 @@
         }
         
         .login-logo .logo-circle {
-            width: 80px;
-            height: 80px;
+            width: 72px;
+            height: 72px;
             background: linear-gradient(135deg, var(--anwar-teal) 0%, var(--anwar-teal-dark) 100%);
             border-radius: 50%;
             display: flex;
@@ -84,8 +84,8 @@
         
         /* تنسيق صورة الشعار */
         .login-logo .logo-image {
-            width: 52px;
-            height: 52px;
+            width: 65px;
+            height: 65px;
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid rgba(255, 255, 255, 0.9);
