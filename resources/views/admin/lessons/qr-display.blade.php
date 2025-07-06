@@ -151,18 +151,38 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('admin.lessons.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-right me-2"></i>
-                            العودة للدروس
-                        </a>                        <div>
-                            <a href="{{ route('admin.lessons.show', $lesson) }}" class="btn btn-info">
-                                <i class="fas fa-eye me-2"></i>
-                                عرض الدرس
+                        @if(auth()->user()->isAdmin())
+                            <a href="{{ route('admin.lessons.index') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-right me-2"></i>
+                                العودة للدروس
                             </a>
-                            <a href="{{ route('admin.attendances.index') }}?lesson_id={{ $lesson->id }}" class="btn btn-primary">
-                                <i class="fas fa-list me-2"></i>
-                                مراجعة الحضور
+                        @else
+                            <a href="{{ route('teacher.dashboard') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-right me-2"></i>
+                                العودة للوحة المعلم
                             </a>
+                        @endif
+                        
+                        <div>
+                            @if(auth()->user()->isAdmin())
+                                <a href="{{ route('admin.lessons.show', $lesson) }}" class="btn btn-info">
+                                    <i class="fas fa-eye me-2"></i>
+                                    عرض الدرس
+                                </a>
+                                <a href="{{ route('admin.attendances.index') }}?lesson_id={{ $lesson->id }}" class="btn btn-primary">
+                                    <i class="fas fa-list me-2"></i>
+                                    مراجعة الحضور
+                                </a>
+                            @else
+                                <a href="{{ route('teacher.lessons.show', $lesson) }}" class="btn btn-info">
+                                    <i class="fas fa-eye me-2"></i>
+                                    عرض الدرس
+                                </a>
+                                <a href="{{ route('teacher.lessons.index') }}" class="btn btn-primary">
+                                    <i class="fas fa-list me-2"></i>
+                                    دروسي
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>

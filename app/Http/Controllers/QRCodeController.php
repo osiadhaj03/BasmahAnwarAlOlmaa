@@ -74,7 +74,10 @@ class QrCodeController extends Controller
             abort(403, 'غير مسموح لك بالوصول لهذا الدرس');
         }
 
-        return view('admin.lessons.qr-display', compact('lesson'));
+        // تحديد layout بناءً على دور المستخدم
+        $layout = $user->isAdmin() ? 'layouts.admin' : 'layouts.admin';
+        
+        return view('admin.lessons.qr-display', compact('lesson', 'layout'));
     }
 
     /**
