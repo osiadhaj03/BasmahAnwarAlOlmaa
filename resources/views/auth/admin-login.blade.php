@@ -67,13 +67,13 @@
         .login-logo .logo-circle {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, var(--anwar-gold) 0%, #b8860b 100%);
+            background: linear-gradient(135deg, var(--anwar-teal) 0%, var(--anwar-teal-dark) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto;
-            box-shadow: 0 8px 25px var(--anwar-shadow-gold);
+            box-shadow: 0 8px 25px var(--anwar-shadow-teal);
         }
         
         .login-logo .logo-icon {
