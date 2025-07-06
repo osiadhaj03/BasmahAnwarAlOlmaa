@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - أنوار العلماء</title>
+    <title>اختبار تصميم تسجيل الدخول - أنوار العلماء</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts - Arabic -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Anwar Al-Oloma Colors -->
-    <link href="{{ asset('css/anwar-colors.css') }}" rel="stylesheet">
     
     <style>
+        /* متغيرات الألوان - تدرج أخضر "أنوار العلماء" */
+        :root {
+            --anwar-white: #ffffff;
+            --anwar-background: #f8fafc;
+            --anwar-gray-light: #e2e8f0;
+            --anwar-gray-dark: #334155;
+            --anwar-off-white: #f1f5f9;
+        }
+
         body {
             background: var(--anwar-background);
             min-height: 100vh;
@@ -22,7 +29,7 @@
             color: var(--anwar-gray-dark);
         }
         
-        /* خلفية مبسطة ومريحة */
+        /* خلفية مبسطة ومريحة بالتدرج الأخضر */
         body::before {
             content: '';
             position: absolute;
@@ -31,61 +38,68 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(135deg, 
-                rgba(218, 165, 32, 0.015) 0%, 
-                rgba(0, 128, 128, 0.01) 50%,
-                rgba(218, 165, 32, 0.008) 100%);
-            opacity: 0.7;
+                rgba(5, 150, 105, 0.02) 0%, 
+                rgba(13, 148, 136, 0.015) 50%,
+                rgba(5, 150, 105, 0.01) 100%);
+            opacity: 0.8;
             pointer-events: none;
         }
         
         .login-card {
             background: var(--anwar-white);
             border-radius: 30px;
-            box-shadow: 0 25px 80px var(--anwar-shadow-gold);
+            box-shadow: 0 25px 80px rgba(5, 150, 105, 0.15);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(218, 165, 32, 0.08);
+            border: 1px solid rgba(5, 150, 105, 0.08);
             position: relative;
             z-index: 1;
         }
         
         .logo {
-            color: var(--anwar-gold);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            text-shadow: 0 4px 8px var(--anwar-shadow-gold);
-            font-family: var(--font-arabic);
+            text-shadow: 0 4px 8px rgba(5, 150, 105, 0.2);
+            font-family: 'Cairo', sans-serif;
             font-weight: 800;
         }
         
         .app-title {
             font-family: 'Amiri', serif;
-            color: var(--anwar-teal-dark);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-weight: 700;
             font-size: 2rem;
             margin-bottom: 0.5rem;
         }
         
         .btn-primary {
-            background: var(--anwar-gradient-gold);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             border: none;
             border-radius: 25px;
             padding: 15px 35px;
             font-weight: 600;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 25px var(--anwar-shadow-gold);
-            font-family: var(--font-main);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);
+            font-family: 'Cairo', sans-serif;
             letter-spacing: 0.5px;
         }
         
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px var(--anwar-shadow-gold);
+            box-shadow: 0 15px 40px rgba(5, 150, 105, 0.4);
+            background: linear-gradient(135deg, #047857 0%, #0f766e 100%);
             color: white;
         }
         
         .btn-outline-success {
-            border: 2px solid var(--anwar-teal);
-            color: var(--anwar-teal);
+            border: 2px solid #059669;
+            color: #059669;
             background: transparent;
             border-radius: 20px;
             padding: 10px 25px;
@@ -94,10 +108,10 @@
         }
         
         .btn-outline-success:hover {
-            background: var(--anwar-teal);
+            background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px var(--anwar-shadow-teal);
+            box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
         }
         
         .form-control {
@@ -105,13 +119,13 @@
             border: 2px solid var(--anwar-gray-light);
             padding: 15px 20px;
             transition: all 0.4s ease;
-            font-family: var(--font-main);
+            font-family: 'Cairo', sans-serif;
             background: var(--anwar-off-white);
         }
         
         .form-control:focus {
-            border-color: var(--anwar-gold);
-            box-shadow: 0 0 0 0.3rem var(--anwar-shadow-gold);
+            border-color: #059669;
+            box-shadow: 0 0 0 0.3rem rgba(5, 150, 105, 0.25);
             transform: translateY(-1px);
             background: var(--anwar-white);
         }
@@ -120,15 +134,22 @@
             background: var(--anwar-gray-light);
             border: 2px solid var(--anwar-gray-light);
             border-radius: 15px 0 0 15px;
-            color: var(--anwar-teal);
+            color: #059669;
         }
         
         .text-info {
-            color: var(--anwar-teal) !important;
+            color: #059669 !important;
         }
         
         .border-top {
             border-top: 2px solid var(--anwar-gray-light) !important;
+        }
+
+        .alert-danger {
+            background-color: #fef2f2;
+            border-color: #fecaca;
+            color: #dc2626;
+            border-radius: 15px;
         }
     </style>
 </head>
@@ -136,34 +157,30 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
-                <div class="login-card p-5">                    <div class="text-center mb-4">
+                <div class="login-card p-5">
+                    <div class="text-center mb-4">
                         <i class="fas fa-graduation-cap logo"></i>
                         <h2 class="app-title mb-3">أنوار العلماء</h2>
-                        <p class="text-muted">تسجيل الدخول إلى نظام البصمة </p>
+                        <p class="text-muted">تسجيل الدخول</p>
                         <small class="text-info">للطلاب والمعلمين والإداريين</small>
                     </div>
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                                <div>{{ $error }}</div>
-                            @endforeach
-                        </div>
-                    @endif
+                    <!-- مثال على رسالة خطأ -->
+                    <div class="alert alert-danger" style="display: none;">
+                        <div>البريد الإلكتروني أو كلمة المرور غير صحيحة</div>
+                    </div>
 
-                    <form method="POST" action="{{ route('admin.login') }}">
-                        @csrf
+                    <form>
                         <div class="mb-3">
                             <label for="email" class="form-label">البريد الإلكتروني</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                 <input type="email" 
-                                       class="form-control @error('email') is-invalid @enderror" 
+                                       class="form-control" 
                                        id="email" 
                                        name="email" 
-                                       value="{{ old('email') }}" 
-                                       required 
-                                       autofocus>
+                                       placeholder="example@anwar.edu.sa"
+                                       required>
                             </div>
                         </div>
 
@@ -172,9 +189,10 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 <input type="password" 
-                                       class="form-control @error('password') is-invalid @enderror" 
+                                       class="form-control" 
                                        id="password" 
                                        name="password" 
+                                       placeholder="أدخل كلمة المرور"
                                        required>
                             </div>
                         </div>
@@ -185,7 +203,9 @@
                                 تسجيل الدخول
                             </button>
                         </div>
-                    </form>                    <div class="text-center mt-4">
+                    </form>
+
+                    <div class="text-center mt-4">
                         <small class="text-muted">
                             <i class="fas fa-info-circle me-1"></i>
                             سيتم توجيهك للوحة المناسبة بناءً على دورك
@@ -195,7 +215,7 @@
                         <div class="mt-3">
                             <div class="border-top pt-3">
                                 <p class="text-muted small mb-2">طالب جديد؟</p>
-                                <a href="{{ route('student.register.form') }}" class="btn btn-outline-success btn-sm">
+                                <a href="#" class="btn btn-outline-success btn-sm">
                                     <i class="fas fa-user-plus me-2"></i>
                                     إنشاء حساب طالب جديد
                                 </a>
@@ -208,5 +228,29 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- تأثيرات تفاعلية -->
+    <script>
+        // إظهار رسالة الخطأ عند الحاجة
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                document.querySelector('.alert-danger').style.display = 'block';
+                document.querySelector('.alert-danger div').textContent = 'يرجى إدخال البريد الإلكتروني وكلمة المرور';
+            } else {
+                alert('تم تسجيل الدخول بنجاح! (هذا مجرد اختبار للتصميم)');
+            }
+        });
+        
+        // إخفاء رسالة الخطأ عند الكتابة
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('input', function() {
+                document.querySelector('.alert-danger').style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
