@@ -30,6 +30,6 @@ class EditLesson extends EditRecord
     
     protected function getRedirectUrl(): string
     {
-        return route('filament.admin.resources.lessons.index');
+        return route('admin.lessons.index');
     }
 }
