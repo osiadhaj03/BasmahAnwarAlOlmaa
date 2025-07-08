@@ -24,9 +24,12 @@ class LessonResource extends Resource
     
     protected static ?string $pluralModelLabel = 'الدروس';
     
+    protected static ?string $navigationGroup = 'إدارة التدريس';
+    
     public static function getNavigationUrl(): string
     {
-        return route('admin.lessons.index');
+        // This resource is only for teacher panel, not admin panel
+        return static::getUrl('index');
     }
 
     public static function form(Form $form): Form
@@ -163,12 +166,8 @@ class LessonResource extends Resource
                     ->visible(fn () => auth()->user()?->role === 'admin'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->label('عرض')
-                    ->url(fn ($record) => route('admin.lessons.show', $record)),
-                Tables\Actions\EditAction::make()
-                    ->label('تعديل')
-                    ->url(fn ($record) => route('admin.lessons.edit', $record)),
+                Tables\Actions\ViewAction::make()->label('عرض'),
+                Tables\Actions\EditAction::make()->label('تعديل'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

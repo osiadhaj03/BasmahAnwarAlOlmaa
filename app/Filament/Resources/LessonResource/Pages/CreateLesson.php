@@ -21,6 +21,6 @@ class CreateLesson extends CreateRecord
     
     protected function getRedirectUrl(): string
     {
-        return route('admin.lessons.index');
+        return static::getResource()::getUrl('index');
     }
 }

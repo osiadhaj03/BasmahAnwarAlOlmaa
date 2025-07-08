@@ -17,23 +17,24 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Resources\LessonResource;
+use App\Filament\Resources\AttendanceResource;
 
-class AdminPanelProvider extends PanelProvider
+class TeacherPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('teacher')
+            ->path('teacher/panel')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Green,
             ])
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->resources([
-                // Admin panel will only use AttendanceResource
-                // LessonResource is moved to TeacherPanel
-                \App\Filament\Resources\AttendanceResource::class,
+                LessonResource::class,
+                AttendanceResource::class,
             ])
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -57,6 +58,13 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->authGuard('web')
+            ->navigationGroups([
+                'إدارة التدريس' => [
+                    'label' => 'إدارة التدريس',
+                    'icon' => 'heroicon-o-academic-cap',
+                ],
             ]);
     }
 }

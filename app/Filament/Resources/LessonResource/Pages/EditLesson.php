@@ -13,15 +13,11 @@ class EditLesson extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make()
-                ->label('عرض')
-                ->successRedirectUrl(route('admin.lessons.index')),
-            Actions\DeleteAction::make()
-                ->label('حذف')
-                ->successRedirectUrl(route('admin.lessons.index')),
+            Actions\ViewAction::make()->label('عرض'),
+            Actions\DeleteAction::make()->label('حذف'),
             Actions\Action::make('back')
                 ->label('العودة للقائمة')
-                ->url(route('admin.lessons.index'))
+                ->url(static::getResource()::getUrl('index'))
                 ->icon('heroicon-o-arrow-left'),
         ];
     }
@@ -38,6 +34,6 @@ class EditLesson extends EditRecord
     
     protected function getRedirectUrl(): string
     {
-        return route('admin.lessons.index');
+        return static::getResource()::getUrl('index');
     }
 }
