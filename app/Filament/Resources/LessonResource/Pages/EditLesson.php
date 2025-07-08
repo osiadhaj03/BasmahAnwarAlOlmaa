@@ -14,10 +14,15 @@ class EditLesson extends EditRecord
     {
         return [
             Actions\ViewAction::make()
-                ->label('عرض'),
+                ->label('عرض')
+                ->successRedirectUrl(route('admin.lessons.index')),
             Actions\DeleteAction::make()
                 ->label('حذف')
                 ->successRedirectUrl(route('admin.lessons.index')),
+            Actions\Action::make('back')
+                ->label('العودة للقائمة')
+                ->url(route('admin.lessons.index'))
+                ->icon('heroicon-o-arrow-left'),
         ];
     }
     

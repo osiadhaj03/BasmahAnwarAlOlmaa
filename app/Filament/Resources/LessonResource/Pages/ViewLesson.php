@@ -14,7 +14,8 @@ class ViewLesson extends ViewRecord
     {
         return [
             Actions\EditAction::make()
-                ->label('تعديل'),
+                ->label('تعديل')
+                ->successRedirectUrl(route('admin.lessons.index')),
             Actions\DeleteAction::make()
                 ->label('حذف')
                 ->successRedirectUrl(route('admin.lessons.index')),

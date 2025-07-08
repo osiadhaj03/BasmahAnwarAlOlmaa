@@ -22,7 +22,14 @@ class LessonResource extends Resource
     
     protected static ?string $modelLabel = 'درس';
     
-    protected static ?string $pluralModelLabel = 'الدروس';    public static function form(Form $form): Form
+    protected static ?string $pluralModelLabel = 'الدروس';
+    
+    public static function getNavigationUrl(): string
+    {
+        return route('admin.lessons.index');
+    }
+
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([                Forms\Components\TextInput::make('name')
