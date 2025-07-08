@@ -111,24 +111,12 @@ Route::middleware('teacher')->group(function () {
         ->name('teacher.lessons.students');
     Route::get('/teacher/students/{student}/lessons', [TeacherLessonController::class, 'getStudentLessons'])
         ->name('teacher.students.lessons');
-        
-    // Teacher QR Code Routes (using admin routes)
-    Route::get('/teacher/lessons/{lesson}/qr-display', [QRCodeController::class, 'displayQR'])
-        ->name('teacher.lessons.qr.display');
-    Route::get('/teacher/lessons/{lesson}/qr-info', [QRCodeController::class, 'getTokenInfo'])
-        ->name('teacher.lessons.qr.info');
-    Route::post('/teacher/lessons/{lesson}/qr-generate', [QRCodeController::class, 'generateQR'])
-        ->name('teacher.lessons.qr.generate');
-    Route::post('/teacher/lessons/{lesson}/qr-refresh', [QRCodeController::class, 'refreshToken'])
-        ->name('teacher.lessons.qr.refresh');
 });
 
 // Student Routes
 Route::middleware('student')->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
-    Route::get('/student/lessons', function () {
-        return view('student.lessons');
-    })->name('student.lessons');
+
     Route::get('/check-in', [StudentController::class, 'checkIn'])->name('student.checkin');
     
     // Student Lesson Registration Routes

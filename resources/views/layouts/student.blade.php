@@ -149,7 +149,7 @@
                 <div>
                     <div class="d-flex align-items-center mb-2">
                         <div class="anwar-logo me-3">
-                            <i class="fas fa-star logo-icon"></i>
+                            <i class="fas fa-mosque logo-icon"></i>
                             <div class="logo-text">أنوار العلماء</div>
                         </div>
                         <div>
