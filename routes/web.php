@@ -126,6 +126,9 @@ Route::middleware('teacher')->group(function () {
 // Student Routes
 Route::middleware('student')->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
+    Route::get('/student/lessons', function () {
+        return view('student.lessons');
+    })->name('student.lessons');
     Route::get('/check-in', [StudentController::class, 'checkIn'])->name('student.checkin');
     
     // Student Lesson Registration Routes
@@ -188,5 +191,30 @@ if (env('APP_ENV') === 'local') {
     Route::get('/quick-qr/{lesson}', [\App\Http\Controllers\QRCodeController::class, 'quickGenerate'])
         ->name('quick.qr');
 }
+
+// Attendance Code Routes
+Route::middleware('auth')->group(function () {
+    // Teacher/Admin route to display attendance code interface
+    Route::get('lessons/{lesson}/attendance-code', function (App\Models\Lesson $lesson) {
+        // Check if user can manage this lesson
+        $user = auth()->user();
+        if ($user->role !== 'admin' && $lesson->teacher_id !== $user->id) {
+            abort(403, 'غير مسموح لك بإدارة هذا الدرس');
+        }
+        
+        return view('attendance.code-display', compact('lesson'));
+    })->name('lessons.attendance.code');
+    
+    // Student route to submit attendance code
+    Route::get('lessons/{lesson}/attendance-submit', function (App\Models\Lesson $lesson) {
+        // Check if user is a student
+        $user = auth()->user();
+        if ($user->role !== 'student') {
+            abort(403, 'هذه الصفحة للطلاب فقط');
+        }
+        
+        return view('attendance.student-submit', compact('lesson'));
+    })->name('lessons.attendance.submit');
+});
 
 // End of routes - Filament integration removed to use custom design

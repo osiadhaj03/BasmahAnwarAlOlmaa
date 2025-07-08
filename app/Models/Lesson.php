@@ -79,6 +79,14 @@ class Lesson extends Model
     }
 
     /**
+     * Get all attendance sessions for this lesson
+     */
+    public function attendanceSessions(): HasMany
+    {
+        return $this->hasMany(AttendanceSession::class);
+    }
+
+    /**
      * Get attendances for a specific date
      */
     public function attendancesForDate($date): HasMany

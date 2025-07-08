@@ -104,9 +104,31 @@
                                 <i class="fas fa-lightning-bolt me-2"></i>إجراءات سريعة
                             </h5>
                         </div>                        <div class="card-body">
-                            <div class="alert alert-info mb-2">
-                                <i class="fas fa-qrcode me-2"></i>تسجيل الحضور متاح للطلاب فقط عبر QR Code
+                            <!-- New Attendance System -->
+                            <div class="alert alert-success mb-3">
+                                <h6 class="alert-heading">
+                                    <i class="fas fa-star me-2"></i>نظام الحضور الجديد
+                                </h6>
+                                <p class="mb-2">اختر من طريقتين لتسجيل الحضور:</p>
+                                <div class="d-grid gap-2">
+                                    <a href="{{ route('lessons.attendance.code', $lesson) }}" 
+                                       class="btn btn-primary btn-sm">
+                                        <i class="fas fa-hashtag me-2"></i>
+                                        تسجيل الحضور بالكود الرقمي
+                                    </a>
+                                    <a href="{{ route('admin.lessons.qr.display', $lesson) }}" 
+                                       class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-qrcode me-2"></i>
+                                        تسجيل الحضور بـ QR Code
+                                    </a>
+                                </div>
                             </div>
+                            
+                            <div class="alert alert-info mb-2">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <small>الطلاب يمكنهم تسجيل الحضور عبر الطريقتين</small>
+                            </div>
+                            
                             <a href="{{ route('admin.attendances.index', ['lesson_id' => $lesson->id]) }}" 
                                class="btn btn-info btn-block">
                                 <i class="fas fa-list me-2"></i>مراجعة سجلات الحضور
