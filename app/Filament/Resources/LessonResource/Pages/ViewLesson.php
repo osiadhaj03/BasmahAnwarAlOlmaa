@@ -15,19 +15,19 @@ class ViewLesson extends ViewRecord
         return [
             Actions\EditAction::make()
                 ->label('تعديل')
-                ->successRedirectUrl(route('admin.lessons.index')),
+                ->successRedirectUrl(static::getResource()::getUrl('index')),
             Actions\DeleteAction::make()
                 ->label('حذف')
-                ->successRedirectUrl(route('admin.lessons.index')),
+                ->successRedirectUrl(static::getResource()::getUrl('index')),
             Actions\Action::make('back')
                 ->label('العودة للقائمة')
-                ->url(route('admin.lessons.index'))
+                ->url(static::getResource()::getUrl('index'))
                 ->icon('heroicon-o-arrow-left'),
         ];
     }
-    
+
     protected function getRedirectUrl(): string
     {
-        return route('admin.lessons.index');
+        return static::getResource()::getUrl('index');
     }
 }
