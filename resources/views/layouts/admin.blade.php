@@ -180,20 +180,20 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border: 1px solid rgba(0,0,0,0.1);
-            color: #495057;
+            background: linear-gradient(135deg, #E6B800 0%, #DAA520 50%, #B8860B 100%);
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            color: white;
             border-radius: 15px;
             padding: 12px 30px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
             font-family: var(--font-main);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 30px var(--anwar-shadow-gold);
+            box-shadow: 0 8px 20px rgba(218, 165, 32, 0.4);
             background: linear-gradient(135deg, #E6B800 0%, #DAA520 50%, #B8860B 100%);
         }
         
@@ -210,14 +210,6 @@
         .btn-secondary:hover {
             transform: translateY(-2px);
             box-shadow: 0 12px 30px var(--anwar-shadow-teal);
-        }
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--anwar-shadow);
         }
         
         .stats-card {

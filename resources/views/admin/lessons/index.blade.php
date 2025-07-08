@@ -116,10 +116,13 @@
     .btn-primary {
         background-color: #DAA520;
         color: white;
+        transition: all 0.3s ease;
     }
     
     .btn-primary:hover {
-        background-color: #c6951c;
+        background-color: #DAA520;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(218, 165, 32, 0.3);
     }
     
     .btn-outline {
