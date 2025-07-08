@@ -14,8 +14,7 @@ class EditLesson extends EditRecord
     {
         return [
             Actions\ViewAction::make()
-                ->label('عرض')
-                ->url(fn ($record) => route('filament.admin.resources.lessons.view', $record)),
+                ->label('عرض'),
             Actions\DeleteAction::make()
                 ->label('حذف')
                 ->successRedirectUrl(route('admin.lessons.index')),
