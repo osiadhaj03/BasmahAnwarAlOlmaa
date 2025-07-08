@@ -15,13 +15,13 @@ class EditLesson extends EditRecord
         return [
             Actions\ViewAction::make()
                 ->label('عرض')
-                ->successRedirectUrl(static::getResource()::getUrl('index')),
+                ->successRedirectUrl(route('admin.lessons.index')),
             Actions\DeleteAction::make()
                 ->label('حذف')
-                ->successRedirectUrl(static::getResource()::getUrl('index')),
+                ->successRedirectUrl(route('admin.lessons.index')),
             Actions\Action::make('back')
                 ->label('العودة للقائمة')
-                ->url(static::getResource()::getUrl('index'))
+                ->url(route('admin.lessons.index'))
                 ->icon('heroicon-o-arrow-left'),
         ];
     }

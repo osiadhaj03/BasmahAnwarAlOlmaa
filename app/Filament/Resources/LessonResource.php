@@ -163,8 +163,12 @@ class LessonResource extends Resource
                     ->visible(fn () => auth()->user()?->role === 'admin'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->label('عرض'),
-                Tables\Actions\EditAction::make()->label('تعديل'),
+                Tables\Actions\ViewAction::make()
+                    ->label('عرض')
+                    ->url(fn ($record) => route('admin.lessons.show', $record)),
+                Tables\Actions\EditAction::make()
+                    ->label('تعديل')
+                    ->url(fn ($record) => route('admin.lessons.edit', $record)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
