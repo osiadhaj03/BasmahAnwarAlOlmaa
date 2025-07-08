@@ -13,8 +13,12 @@ class EditLesson extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make()->label('عرض'),
-            Actions\DeleteAction::make()->label('حذف'),
+            Actions\ViewAction::make()
+                ->label('عرض')
+                ->url(fn ($record) => route('filament.admin.resources.lessons.view', $record)),
+            Actions\DeleteAction::make()
+                ->label('حذف')
+                ->successRedirectUrl(route('admin.lessons.index')),
         ];
     }
     

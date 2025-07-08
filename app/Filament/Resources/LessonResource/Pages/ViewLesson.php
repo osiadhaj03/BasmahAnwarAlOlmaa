@@ -13,11 +13,20 @@ class ViewLesson extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make()->label('تعديل'),
+            Actions\EditAction::make()
+                ->label('تعديل'),
+            Actions\DeleteAction::make()
+                ->label('حذف')
+                ->successRedirectUrl(route('admin.lessons.index')),
             Actions\Action::make('back')
                 ->label('العودة للقائمة')
-                ->url('/admin/lessons')
+                ->url(route('admin.lessons.index'))
                 ->icon('heroicon-o-arrow-left'),
         ];
+    }
+    
+    protected function getRedirectUrl(): string
+    {
+        return route('admin.lessons.index');
     }
 }
